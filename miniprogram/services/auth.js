@@ -17,14 +17,13 @@ function loginByPassword(username, password) {
             success(res) {
                 const data = res.data || {};
                 if (res.statusCode === 200 && data.success) {
-                    // 后端返回格式: { success: true, user: {...} }
-                    // 使用一个模拟 token（基于用户ID和角色）
+                    // 后端返回格式: { success: true, token: "...", user: {...} }
                     const user = data.user || { id: 0, username };
-                    const mockToken = 'mock_' + user.id + '_' + Date.now();
-                    // 存储用户信息
-                    wx.setStorageSync('token', mockToken);
+                    const token = data.token || ('mock_' + user.id + '_' + Date.now());
+                    // 存储 token 和用户信息
+                    wx.setStorageSync('token', token);
                     wx.setStorageSync('userInfo', user);
-                    resolve({ token: mockToken, user });
+                    resolve({ token, user });
                 }
                 else if (data.error) {
                     reject(new Error(data.error));
