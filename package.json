@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "miniprogram-api-typings": "^5.2.0",
+    "miniprogram-ci": "^2.1.31"
+  }
+}

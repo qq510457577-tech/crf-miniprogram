@@ -1,0 +1,13 @@
+.page { min-height: 100vh; background: linear-gradient(135deg, #0052D9, #4364E7, #6FB1FC); display: flex; flex-direction: column; }
+.nav-bar { padding: 0 32rpx 24rpx; }
+.nav-title { font-size: 36rpx; font-weight: 600; color: #fff; text-align: center; }
+.logo-section { display: flex; flex-direction: column; align-items: center; padding: 60rpx 0 40rpx; }
+.logo-icon { width: 160rpx; height: 160rpx; background: rgba(255,255,255,0.2); border-radius: 40rpx; display: flex; align-items: center; justify-content: center; margin-bottom: 32rpx; backdrop-filter: blur(10px); }
+.logo-title { font-size: 32rpx; font-weight: 600; color: #fff; text-align: center; margin-bottom: 12rpx; }
+.logo-sub { font-size: 24rpx; color: rgba(255,255,255,0.7); }
+.form-section { flex: 1; background: #fff; border-radius: 40rpx 40rpx 0 0; padding: 48rpx 40rpx 40rpx; }
+.form-title { font-size: 40rpx; font-weight: 600; color: #333; margin-bottom: 48rpx; }
+.form-item { margin-bottom: 32rpx; }
+.form-label { font-size: 28rpx; color: #666; margin-bottom: 12rpx; font-weight: 500; }
+.form-actions { margin-top: 48rpx; }
+.footer { text-align: center; padding: 24rpx; font-size: 22rpx; color: rgba(255,255,255,0.6); }

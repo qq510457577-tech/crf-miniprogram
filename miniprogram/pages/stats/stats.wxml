@@ -1,0 +1,121 @@
+<!-- 统计页面 -->
+<view class="page-container">
+  <!-- 自定义导航栏 -->
+  <t-navbar
+    leftIcon
+    title="数据统计"
+    fixed
+    t-class-title="navbar-title"
+    bind:left-click="onBack"
+  />
+
+  <!-- 加载状态 -->
+  <t-loading size="large" text="加载中..." />
+
+  <block wx:if="{{!loading}}">
+    <!-- 分组统计卡片 -->
+    <view class="section-title">分组统计</view>
+    <view class="group-stats">
+      <view class="stat-card stat-card-1" bind:tap="onFilterByGroup" data-group="八段锦训练">
+        <view class="stat-value">{{stats.bajiaojin}}</view>
+        <view class="stat-label">八段锦训练</view>
+        <view class="stat-icon">?</view>
+      </view>
+      <view class="stat-card stat-card-2" bind:tap="onFilterByGroup" data-group="PRE训练">
+        <view class="stat-value">{{stats.pre}}</view>
+        <view class="stat-label">PRE训练</view>
+        <view class="stat-icon">?</view>
+      </view>
+      <view class="stat-card stat-card-3" bind:tap="onFilterByGroup" data-group="PRE+八段锦联合训练">
+        <view class="stat-value">{{stats.preBajiaojin}}</view>
+        <view class="stat-label">联合训练</view>
+        <view class="stat-icon">?️</view>
+      </view>
+    </view>
+
+    <!-- 总计概览 -->
+    <view class="overview-card">
+      <view class="overview-item">
+        <text class="overview-value">{{stats.total}}</text>
+        <text class="overview-label">总受试者数</text>
+      </view>
+      <view class="overview-divider"></view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.active}}</text>
+        <text class="overview-label">在研人数</text>
+      </view>
+      <view class="overview-divider"></view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.exited}}</text>
+        <text class="overview-label">已退出</text>
+      </view>
+    </view>
+
+    <!-- 肿瘤类型分布 -->
+    <view class="section-title">肿瘤类型分布</view>
+    <view class="distribution-card">
+      <view class="distribution-item" wx:for="{{tumorDistribution}}" wx:key="type">
+        <view class="distribution-header">
+          <text class="distribution-name">{{item.type}}</text>
+          <text class="distribution-count">{{item.count}}人</text>
+        </view>
+        <view class="distribution-bar">
+          <view class="distribution-fill" style="width: {{item.percent}}%"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 临床分期分布 -->
+    <view class="section-title">临床分期分布</view>
+    <view class="stage-card">
+      <view class="stage-item" wx:for="{{stageDistribution}}" wx:key="stage">
+        <view class="stage-badge stage-{{item.stage}}">{{item.stage}}</view>
+        <view class="stage-count">{{item.count}}人</view>
+      </view>
+    </view>
+
+    <!-- 数据导出 -->
+    <view class="section-title">数据导出</view>
+    <view class="export-section">
+      <view class="export-item" bind:tap="onExport" data-type="all">
+        <view class="export-info">
+          <text class="export-title">导出全部数据</text>
+          <text class="export-desc">导出所有受试者完整数据</text>
+        </view>
+        <t-button size="small" theme="primary" loading="{{exporting === 'all'}}">导出</t-button>
+      </view>
+
+      <t-divider />
+
+      <view class="export-item" bind:tap="onExport" data-type="bajiaojin">
+        <view class="export-info">
+          <text class="export-title">八段锦训练组</text>
+          <text class="export-desc">导出八段锦训练组数据</text>
+        </view>
+        <t-button size="small" theme="primary" loading="{{exporting === 'bajiaojin'}}">导出</t-button>
+      </view>
+
+      <view class="export-item" bind:tap="onExport" data-type="pre">
+        <view class="export-info">
+          <text class="export-title">PRE训练组</text>
+          <text class="export-desc">导出PRE训练组数据</text>
+        </view>
+        <t-button size="small" theme="primary" loading="{{exporting === 'pre'}}">导出</t-button>
+      </view>
+
+      <view class="export-item" bind:tap="onExport" data-type="preBajiaojin">
+        <view class="export-info">
+          <text class="export-title">联合训练组</text>
+          <text class="export-desc">导出联合训练组数据</text>
+        </view>
+        <t-button size="small" theme="primary" loading="{{exporting === 'preBajiaojin'}}">导出</t-button>
+      </view>
+    </view>
+
+    <!-- 填充底部 -->
+    <view class="bottom-spacer"></view>
+  </block>
+
+  <!-- Toast -->
+  <t-toast id="t-toast" />
+</view>

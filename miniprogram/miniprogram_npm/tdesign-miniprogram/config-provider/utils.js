@@ -1,0 +1,1 @@
+const{toKebabCase}=require("../common/utils");module.exports= function themeVarsToCSS(t,e="--td-"){const o={};return Object.keys(t).forEach(r=>{let s;s=r.startsWith("--")?r:r.includes("-")?`${e}${r}`:`${e}${toKebabCase(r)}`,o[s]=String(t[r])}),o}

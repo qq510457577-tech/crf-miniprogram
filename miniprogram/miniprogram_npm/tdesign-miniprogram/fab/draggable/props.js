@@ -1,0 +1,1 @@
+const props={direction:{type:String,value:"all"}};module.exports= props;

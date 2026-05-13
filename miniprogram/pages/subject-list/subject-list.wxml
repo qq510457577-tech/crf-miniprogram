@@ -1,0 +1,52 @@
+<view class="page">
+  <view class="nav-bar" style="padding-top: {{statusBarHeight}}px">
+    <t-navbar title="受试者管理" leftIcon="arrow-left" bind:click-left="onBack" fixed />
+  </view>
+
+  <view class="search-section">
+    <t-search value="{{searchValue}}" placeholder="搜索受试者编号/姓名" bind:change="onSearchChange" bind:clear="onSearchClear" bind:submit="onSearchSubmit" confirm-type="search" />
+    <view class="filter-row">
+      <t-dropdown-menu>
+        <t-dropdown-item value="{{selectedGroup}}" options="{{groupOptions}}" bind:change="onGroupChange" />
+      </t-dropdown-menu>
+      <text class="total-count">共 {{total}} 人</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y enable-back-to-top bind:scrolltolower="onReachBottom" class="subject-list">
+    <view wx:if="{{subjects.length === 0 && !loading}}" class="empty-wrap">
+      <t-empty icon="search" description="暂无符合条件的受试者" />
+      <t-button theme="primary" size="medium" bind:tap="goToAdd">新增受试者</t-button>
+    </view>
+
+    <view wx:for="{{subjects}}" wx:key="id" class="subject-card" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="card-header">
+        <view class="card-avatar">{{item.gender === '女' ? '?' : '?'}}</view>
+        <view class="card-title-row">
+          <text class="card-title">{{item.subjectUniqueId}}</text>
+          <t-tag wx:if="{{item.interventionGroup}}" theme="primary" size="small" variant="light">{{item.interventionGroup}}</t-tag>
+          <t-tag wx:else theme="default" size="small" variant="outline">未分组</t-tag>
+        </view>
+      </view>
+      <view class="card-info">
+        <view class="info-row"><text class="info-label">性别</text><text class="info-value">{{item.gender || '--'}}</text></view>
+        <view class="info-row"><text class="info-label">年龄</text><text class="info-value">{{item.age || '--'}}岁</text></view>
+        <view class="info-row"><text class="info-label">肿瘤</text><text class="info-value">{{item.tumorType || '--'}}</text></view>
+        <view class="info-row"><text class="info-label">分期</text><text class="info-value">{{item.clinicalStage || '--'}}</text></view>
+      </view>
+      <view class="card-footer">
+        <text class="footer-text">入组: {{item.enrollmentDate || '--'}}</text>
+        <t-icon name="chevron-right" size="32" color="#CCC" />
+      </view>
+    </view>
+
+    <view wx:if="{{hasMore && subjects.length > 0}}" class="load-more" bindtap="loadMore">
+      <text>{{loadingMore ? '加载中...' : '加载更多'}}</text>
+    </view>
+    <view wx:if="{{!hasMore && subjects.length > 0}}" class="no-more"><text>— 已加载全部 {{total}} 条 —</text></view>
+  </scroll-view>
+
+  <view class="fab" bindtap="goToAdd"><t-icon name="add" size="48" color="#fff" /></view>
+  <t-toast id="t-toast" />
+  <t-loading indicator size="large" content="加载中..." fullscreen="{{loading}}" />
+</view>

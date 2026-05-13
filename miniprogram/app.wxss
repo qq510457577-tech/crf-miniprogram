@@ -1,0 +1,5 @@
+page {
+  --td-brand-color: #0052D9;
+  --td-brand-color-light: #E8F4FF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}

@@ -1,0 +1,1 @@
+const props={index:{type:null}};module.exports= props;

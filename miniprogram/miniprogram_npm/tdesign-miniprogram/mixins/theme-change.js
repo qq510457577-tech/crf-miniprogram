@@ -1,0 +1,1 @@
+const{appBaseInfo}=require("../common/utils");const themeChangeBehavior=Behavior({data:{theme:"light"},attached(){this._initTheme()},methods:{_initTheme(){const e=this;e.setData({theme:appBaseInfo.theme}),wx.onThemeChange(t=>{e.setData({theme:t.theme})})}}});module.exports= themeChangeBehavior;

@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="nav-bar" style="padding-top: {{statusBarHeight}}px">
+    <view class="nav-title">CRF数据采集平台</view>
+  </view>
+
+  <view class="logo-section">
+    <view class="logo-icon">
+      <t-icon name="user" size="80" color="#0052D9" />
+    </view>
+    <view class="logo-title">八段锦联合渐进性抗阻训练研究</view>
+    <view class="logo-sub">CRF Data Collection Platform</view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-title">用户登录</view>
+
+    <view class="form-item">
+      <view class="form-label">用户名</view>
+      <t-input value="{{username}}" placeholder="请输入用户名" bind:change="onUsernameChange" size="large" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">密码</view>
+      <t-input value="{{password}}" type="password" placeholder="请输入密码" bind:change="onPasswordChange" size="large" />
+    </view>
+
+    <view class="form-actions">
+      <t-button theme="primary" size="large" block loading="{{loading}}" disabled="{{loading}}" bind:tap="handleLogin">
+        登录
+      </t-button>
+    </view>
+  </view>
+
+  <view class="footer">© 2026 中医药知识服务平台</view>
+  <t-toast id="t-toast" />
+</view>

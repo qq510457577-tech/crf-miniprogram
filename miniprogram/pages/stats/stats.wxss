@@ -1,0 +1,7 @@
+/* stats page styles */
+.page-container { min-height: 100vh; background: #f5f5f5; }
+.section-title { padding: 32rpx; font-size: 32rpx; font-weight: bold; }
+.group-stats { display: flex; gap: 24rpx; padding: 0 32rpx; }
+.stat-card { flex: 1; padding: 32rpx; border-radius: 16rpx; background: #fff; }
+.stat-value { font-size: 48rpx; font-weight: bold; }
+.stat-label { font-size: 24rpx; color: #666; }

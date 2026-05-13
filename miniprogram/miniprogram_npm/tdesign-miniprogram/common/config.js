@@ -1,0 +1,1 @@
+module.exports={prefix:"t"};export const prefix="t";

@@ -1,0 +1,12 @@
+{
+  "name": "crf-platform-miniprogram",
+  "version": "1.0.0",
+  "description": "CRF数据采集平台微信小程序",
+  "main": "app.js",
+  "dependencies": {
+    "tdesign-miniprogram": "^1.14.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,202 @@
+/* 受试者详情页面样式 */
+
+.page-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+/* 信息卡片 */
+.info-card {
+  margin: 24rpx;
+  padding: 32rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.subject-id {
+  display: flex;
+  flex-direction: column;
+}
+
+.subject-id .label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 4rpx;
+}
+
+.subject-id .value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx 32rpx;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 6rpx;
+}
+
+.item-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 退出信息 */
+.exit-info {
+  margin-top: 24rpx;
+}
+
+.exit-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #e34d4d;
+  margin-bottom: 16rpx;
+}
+
+.exit-row {
+  display: flex;
+  margin-bottom: 8rpx;
+}
+
+.exit-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.exit-value {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.exit-reason {
+  color: #e34d4d;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  margin-top: 32rpx;
+  display: flex;
+  gap: 24rpx;
+}
+
+.action-buttons t-button {
+  flex: 1;
+}
+
+/* 记录区域 */
+.records-section {
+  margin: 24rpx;
+}
+
+.record-list {
+  margin-top: 24rpx;
+}
+
+.record-item {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.record-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.record-date {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.record-summary {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.record-weight,
+.record-score {
+  font-size: 28rpx;
+  color: #0052d9;
+  font-weight: 500;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64rpx 0;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 24rpx;
+}
+
+.add-btn-wrapper {
+  margin-top: 24rpx;
+}
+
+/* 错误状态 */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 32rpx;
+}
+
+/* TDesign Override */
+.t-class-navbar {
+  background: linear-gradient(135deg, #0052d9 0%, #4378ff 100%);
+  color: #fff !important;
+}
+
+.navbar-title {
+  color: #fff !important;
+}

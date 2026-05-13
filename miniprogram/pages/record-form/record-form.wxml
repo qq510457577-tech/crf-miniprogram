@@ -1,0 +1,707 @@
+<!-- 记录表单页面 -->
+<view class="page-container">
+  <!-- 自定义导航栏 -->
+  <t-navbar
+    leftIcon
+    title="{{pageTitle}}"
+    fixed
+    t-class-title="navbar-title"
+    bind:left-click="onBack"
+  />
+
+  <!-- 加载状态 -->
+  <t-loading size="large" text="加载中..." />
+
+  <block wx:if="{{!loading}}">
+    <!-- 受试者基本信息（新增记录时显示） -->
+    <view wx:if="{{mode === 'add' && subjectInfo}}" class="subject-tip">
+      <text class="tip-text">为受试者 {{subjectInfo.subjectUniqueId}} 添加记录</text>
+    </view>
+
+    <!-- ============ 干预记录表单 ============ -->
+    <view wx:if="{{recordType === 'intervention'}}" class="form-section">
+      <!-- 周次选择 -->
+      <view class="form-item">
+        <text class="form-label required">记录周次</text>
+        <t-radio-group value="{{formData.week}}" bind:change="onWeekChange">
+          <t-radio value="{{1}}">第1周</t-radio>
+          <t-radio value="{{2}}">第2周</t-radio>
+          <t-radio value="{{3}}">第3周</t-radio>
+          <t-radio value="{{4}}">第4周</t-radio>
+          <t-radio value="{{5}}">第5周</t-radio>
+          <t-radio value="{{6}}">第6周</t-radio>
+          <t-radio value="{{7}}">第7周</t-radio>
+          <t-radio value="{{8}}">第8周</t-radio>
+          <t-radio value="{{9}}">第9周</t-radio>
+          <t-radio value="{{10}}">第10周</t-radio>
+          <t-radio value="{{11}}">第11周</t-radio>
+          <t-radio value="{{12}}">第12周</t-radio>
+        </t-radio-group>
+      </view>
+
+      <!-- 运动频率 -->
+      <view class="form-item">
+        <text class="form-label">运动频率</text>
+        <t-radio-group value="{{formData.exerciseFrequency}}" bind:change="onFieldChange" data-field="exerciseFrequency">
+          <t-radio value="每周1-2次">每周1-2次</t-radio>
+          <t-radio value="每周3-4次">每周3-4次</t-radio>
+          <t-radio value="每周5次以上">每周5次以上</t-radio>
+        </t-radio-group>
+      </view>
+
+      <!-- 运动时长 -->
+      <view class="form-item">
+        <text class="form-label">运动时长</text>
+        <t-radio-group value="{{formData.exerciseDuration}}" bind:change="onFieldChange" data-field="exerciseDuration">
+          <t-radio value="30分钟以下">30分钟以下</t-radio>
+          <t-radio value="30-60分钟">30-60分钟</t-radio>
+          <t-radio value="60分钟以上">60分钟以上</t-radio>
+        </t-radio-group>
+      </view>
+
+      <!-- 运动类型 -->
+      <view class="form-item">
+        <text class="form-label">运动类型</text>
+        <t-input
+          value="{{formData.exerciseType}}"
+          placeholder="请输入运动类型"
+          bind:change="onFieldChange"
+          data-field="exerciseType"
+        />
+      </view>
+
+      <!-- 依从性 -->
+      <view class="form-item">
+        <text class="form-label">依从性</text>
+        <t-radio-group value="{{formData.adherence}}" bind:change="onFieldChange" data-field="adherence">
+          <t-radio value="完全依从">完全依从</t-radio>
+          <t-radio value="部分依从">部分依从</t-radio>
+          <t-radio value="不依从">不依从</t-radio>
+        </t-radio-group>
+      </view>
+
+      <!-- 不良事件 -->
+      <view class="form-item">
+        <text class="form-label">不良反应</text>
+        <t-textarea
+          value="{{formData.adverseEvents}}"
+          placeholder="请描述不良反应（无则填无）"
+          maxlength="200"
+          bind:change="onFieldChange"
+          data-field="adverseEvents"
+        />
+      </view>
+
+      <!-- 疲劳程度 -->
+      <view class="form-item">
+        <text class="form-label">疲劳程度</text>
+        <t-slider
+          value="{{formData.fatigue}}"
+          min="0"
+          max="10"
+          step="1"
+          show-text
+          bind:change="onSliderChange"
+          data-field="fatigue"
+        />
+      </view>
+
+      <!-- 食欲评分 -->
+      <view class="form-item">
+        <text class="form-label">食欲评分</text>
+        <t-slider
+          value="{{formData.appetiteScore}}"
+          min="0"
+          max="10"
+          step="1"
+          show-text
+          bind:change="onSliderChange"
+          data-field="appetiteScore"
+        />
+      </view>
+
+      <!-- 体重 -->
+      <view class="form-item">
+        <text class="form-label">当前体重 (kg)</text>
+        <t-stepper
+          value="{{formData.weight}}"
+          min="30"
+          max="200"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="weight"
+        />
+      </view>
+
+      <!-- 备注 -->
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <t-textarea
+          value="{{formData.notes}}"
+          placeholder="其他补充说明"
+          maxlength="500"
+          bind:change="onFieldChange"
+          data-field="notes"
+        />
+      </view>
+    </view>
+
+    <!-- ============ 体重记录表单 ============ -->
+    <view wx:if="{{recordType === 'weight'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">记录日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.recordDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="recordDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label required">体重 (kg)</text>
+        <t-stepper
+          value="{{formData.weight}}"
+          min="30"
+          max="200"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="weight"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">BMI</text>
+        <t-input
+          value="{{formData.bmi}}"
+          placeholder="自动计算或手动输入"
+          type="digit"
+          bind:change="onFieldChange"
+          data-field="bmi"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <t-textarea
+          value="{{formData.notes}}"
+          placeholder="其他说明"
+          maxlength="200"
+          bind:change="onFieldChange"
+          data-field="notes"
+        />
+      </view>
+    </view>
+
+    <!-- ============ 体成分表单 ============ -->
+    <view wx:if="{{recordType === 'bodyComposition'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">记录日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.recordDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="recordDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">小腿围左 (cm)</text>
+        <t-stepper
+          value="{{formData.calfCircumferenceLeft}}"
+          min="20"
+          max="60"
+          step="0.5"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="calfCircumferenceLeft"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">小腿围右 (cm)</text>
+        <t-stepper
+          value="{{formData.calfCircumferenceRight}}"
+          min="20"
+          max="60"
+          step="0.5"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="calfCircumferenceRight"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">骨骼肌质量 (kg)</text>
+        <t-stepper
+          value="{{formData.skeletalMuscleMass}}"
+          min="10"
+          max="80"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="skeletalMuscleMass"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">体脂肪率 (%)</text>
+        <t-stepper
+          value="{{formData.bodyFatPercentage}}"
+          min="5"
+          max="60"
+          step="0.5"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="bodyFatPercentage"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">体水分率 (%)</text>
+        <t-stepper
+          value="{{formData.bodyWaterPercentage}}"
+          min="30"
+          max="80"
+          step="0.5"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="bodyWaterPercentage"
+        />
+      </view>
+    </view>
+
+    <!-- ============ 握力记录表单 ============ -->
+    <view wx:if="{{recordType === 'gripStrength'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">记录日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.recordDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="recordDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">左手握力 (kg)</text>
+        <t-stepper
+          value="{{formData.leftHand}}"
+          min="5"
+          max="80"
+          step="0.5"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="leftHand"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">右手握力 (kg)</text>
+        <t-stepper
+          value="{{formData.rightHand}}"
+          min="5"
+          max="80"
+          step="0.5"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="rightHand"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">握力指数</text>
+        <t-input
+          value="{{formData.gripStrengthIndex}}"
+          placeholder="自动计算"
+          type="digit"
+          disabled
+        />
+        <text class="form-hint">握力指数 = (左手+右手) / BMI</text>
+      </view>
+    </view>
+
+    <!-- ============ PG-SGA评估表单 ============ -->
+    <view wx:if="{{recordType === 'pgsga'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">评估日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.recordDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="recordDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">体重丢失</text>
+        <t-radio-group value="{{formData.weightLoss}}" bind:change="onFieldChange" data-field="weightLoss">
+          <t-radio value="0分(无变化)">0分</t-radio>
+          <t-radio value="1分(1-5%)">1分(1-5%)</t-radio>
+          <t-radio value="2分(5-10%)">2分(5-10%)</t-radio>
+          <t-radio value="4分(>10%)">4分(>10%)</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">进食情况</text>
+        <t-radio-group value="{{formData.foodIntake}}" bind:change="onFieldChange" data-field="foodIntake">
+          <t-radio value="0分(正常)">0分(正常)</t-radio>
+          <t-radio value="1分(减少不多)">1分</t-radio>
+          <t-radio value="2分(严重减少)">2分</t-radio>
+          <t-radio value="3分(流食/肠营养)">3分</t-radio>
+          <t-radio value="4分(肠内营养/口服)">4分</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">症状</text>
+        <t-checkbox-group value="{{formData.symptoms}}" bind:change="onCheckboxChange" data-field="symptoms">
+          <t-checkbox value="无">无</t-checkbox>
+          <t-checkbox value="没有胃口">没有胃口</t-checkbox>
+          <t-checkbox value="恶心">恶心</t-checkbox>
+          <t-checkbox value="呕吐">呕吐</t-checkbox>
+          <t-checkbox value="口腔溃疡">口腔溃疡</t-checkbox>
+          <t-checkbox value="吞咽困难">吞咽困难</t-checkbox>
+          <t-checkbox value="腹泻">腹泻</t-checkbox>
+          <t-checkbox value="便秘">便秘</t-checkbox>
+        </t-checkbox-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">功能状态</text>
+        <t-radio-group value="{{formData.functionalStatus}}" bind:change="onFieldChange" data-field="functionalStatus">
+          <t-radio value="0分(正常)">0分(正常)</t-radio>
+          <t-radio value="1分(稍减退)">1分(稍减退)</t-radio>
+          <t-radio value="2分(严重减退)">2分(严重减退)</t-radio>
+          <t-radio value="3分(走动困难)">3分(走动困难)</t-radio>
+          <t-radio value="4分(卧床)">4分(卧床)</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">疾病与营养需求</text>
+        <t-radio-group value="{{formData.disease}}" bind:change="onFieldChange" data-field="disease">
+          <t-radio value="0分">0分</t-radio>
+          <t-radio value="1分">1分</t-radio>
+          <t-radio value="2分">2分</t-radio>
+        </t-radio-group>
+        <text class="form-hint">根据原发疾病状态评分</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">代谢需求</text>
+        <t-radio-group value="{{formData.metabolicDemand}}" bind:change="onFieldChange" data-field="metabolicDemand">
+          <t-radio value="0分(无应激)">0分(无应激)</t-radio>
+          <t-radio value="1分(低)">1分(低)</t-radio>
+          <t-radio value="2分(中)">2分(中)</t-radio>
+          <t-radio value="3分(高)">3分(高)</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">体格检查</text>
+        <t-radio-group value="{{formData.physicalExam}}" bind:change="onFieldChange" data-field="physicalExam">
+          <t-radio value="0分(无亏损)">0分(无亏损)</t-radio>
+          <t-radio value="1分(可疑)">1分(可疑)</t-radio>
+          <t-radio value="2分(轻度)">2分(轻度)</t-radio>
+          <t-radio value="3分(中度)">3分(中度)</t-radio>
+        </t-radio-group>
+        <text class="form-hint">评估皮下脂肪、肌肉、水肿情况</text>
+      </view>
+
+      <view class="form-item result-item">
+        <text class="form-label">PG-SGA总分</text>
+        <view class="score-display">
+          <text class="score-value">{{formData.totalScore || 0}}</text>
+          <text class="score-level">（{{getPgsgaLevel(formData.totalScore)}}）</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ============ 食欲记录表单 ============ -->
+    <view wx:if="{{recordType === 'appetite'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">记录日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.recordDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="recordDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">食欲评分 (0-10)</text>
+        <t-slider
+          value="{{formData.score}}"
+          min="0"
+          max="10"
+          step="1"
+          show-text
+          bind:change="onSliderChange"
+          data-field="score"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">食欲变化</text>
+        <t-radio-group value="{{formData.change}}" bind:change="onFieldChange" data-field="change">
+          <t-radio value="明显改善">明显改善</t-radio>
+          <t-radio value="略有改善">略有改善</t-radio>
+          <t-radio value="无变化">无变化</t-radio>
+          <t-radio value="略有下降">略有下降</t-radio>
+          <t-radio value="明显下降">明显下降</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">摄入量</text>
+        <t-radio-group value="{{formData.intake}}" bind:change="onFieldChange" data-field="intake">
+          <t-radio value="正常进食">正常进食</t-radio>
+          <t-radio value="进食减少&lt;25%">进食减少&lt;25%</t-radio>
+          <t-radio value="进食减少25-50%">进食减少25-50%</t-radio>
+          <t-radio value="进食减少&gt;50%">进食减少&gt;50%</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <t-textarea
+          value="{{formData.notes}}"
+          placeholder="其他情况说明"
+          maxlength="200"
+          bind:change="onFieldChange"
+          data-field="notes"
+        />
+      </view>
+    </view>
+
+    <!-- ============ 炎症指标表单 ============ -->
+    <view wx:if="{{recordType === 'inflammation'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">记录日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.recordDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="recordDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">C反应蛋白 CRP (mg/L)</text>
+        <t-stepper
+          value="{{formData.crp}}"
+          min="0"
+          max="200"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="crp"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">白蛋白 (g/L)</text>
+        <t-stepper
+          value="{{formData.albumin}}"
+          min="10"
+          max="60"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="albumin"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">前白蛋白 (mg/L)</text>
+        <t-stepper
+          value="{{formData.prealbumin}}"
+          min="50"
+          max="400"
+          step="1"
+          bind:change="onStepperChange"
+          data-field="prealbumin"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">白细胞计数 (×10⁹/L)</text>
+        <t-stepper
+          value="{{formData.wbc}}"
+          min="1"
+          max="30"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="wbc"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">中性粒细胞 (×10⁹/L)</text>
+        <t-stepper
+          value="{{formData.neutrophil}}"
+          min="0.5"
+          max="20"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="neutrophil"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <t-textarea
+          value="{{formData.notes}}"
+          placeholder="其他炎症指标说明"
+          maxlength="200"
+          bind:change="onFieldChange"
+          data-field="notes"
+        />
+      </view>
+    </view>
+
+    <!-- ============ 受试者信息编辑表单 ============ -->
+    <view wx:if="{{recordType === 'subject'}}" class="form-section">
+      <view class="form-item">
+        <text class="form-label required">受试者编号</text>
+        <t-input
+          value="{{formData.subjectUniqueId}}"
+          placeholder="请输入受试者编号"
+          disabled="{{mode === 'edit'}}"
+          bind:change="onFieldChange"
+          data-field="subjectUniqueId"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">性别</text>
+        <t-radio-group value="{{formData.gender}}" bind:change="onFieldChange" data-field="gender">
+          <t-radio value="男">男</t-radio>
+          <t-radio value="女">女</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">年龄</text>
+        <t-stepper
+          value="{{formData.age}}"
+          min="18"
+          max="100"
+          step="1"
+          bind:change="onStepperChange"
+          data-field="age"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">身高 (cm)</text>
+        <t-stepper
+          value="{{formData.height}}"
+          min="100"
+          max="220"
+          step="1"
+          bind:change="onStepperChange"
+          data-field="height"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">基线体重 (kg)</text>
+        <t-stepper
+          value="{{formData.baselineWeight}}"
+          min="30"
+          max="200"
+          step="0.1"
+          decimal-length="1"
+          bind:change="onStepperChange"
+          data-field="baselineWeight"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">肿瘤类型</text>
+        <t-radio-group value="{{formData.tumorType}}" bind:change="onFieldChange" data-field="tumorType">
+          <t-radio value="口咽癌">口咽癌</t-radio>
+          <t-radio value="食管癌">食管癌</t-radio>
+          <t-radio value="胃癌">胃癌</t-radio>
+          <t-radio value="肝癌">肝癌</t-radio>
+          <t-radio value="胆囊癌">胆囊癌</t-radio>
+          <t-radio value="胰腺癌">胰腺癌</t-radio>
+          <t-radio value="结直肠癌">结直肠癌</t-radio>
+          <t-radio value="其他">其他</t-radio>
+        </t-radio-group>
+        <t-input wx:if="{{formData.tumorType === '其他'}}" value="{{formData.tumorTypeOther}}" placeholder="请输入其他肿瘤类型" bind:change="onFieldChange" data-field="tumorTypeOther" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">临床分期</text>
+        <t-radio-group value="{{formData.clinicalStage}}" bind:change="onFieldChange" data-field="clinicalStage">
+          <t-radio value="I期">I期</t-radio>
+          <t-radio value="II期">II期</t-radio>
+          <t-radio value="III期">III期</t-radio>
+          <t-radio value="IV期">IV期</t-radio>
+          <t-radio value="未知">未知</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">干预分组</text>
+        <t-radio-group value="{{formData.interventionGroup}}" bind:change="onFieldChange" data-field="interventionGroup">
+          <t-radio value="八段锦训练">八段锦训练</t-radio>
+          <t-radio value="PRE训练">PRE训练</t-radio>
+          <t-radio value="PRE+八段锦联合训练">PRE+八段锦联合训练</t-radio>
+        </t-radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">知情同意日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.consentDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="consentDate"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">入组日期</text>
+        <t-date-picker
+          title="选择日期"
+          value="{{formData.enrollmentDate}}"
+          format="YYYY-MM-DD"
+          bind:change="onDateChange"
+          data-field="enrollmentDate"
+        />
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="form-actions" wx:if="{{mode !== 'view'}}">
+      <t-button theme="primary" block size="large" loading="{{submitting}}" bind:tap="onSubmit">
+        {{mode === 'add' ? '保存' : '更新'}}
+      </t-button>
+    </view>
+
+    <!-- 仅查看模式时的返回按钮 -->
+    <view class="form-actions" wx:if="{{mode === 'view'}}">
+      <t-button theme="default" block size="large" bind:tap="onBack">返回</t-button>
+    </view>
+  </block>
+
+  <!-- Toast -->
+  <t-toast id="t-toast" />
+</view>

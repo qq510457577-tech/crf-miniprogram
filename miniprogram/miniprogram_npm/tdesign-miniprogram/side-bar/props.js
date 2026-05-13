@@ -1,0 +1,1 @@
+const props={value:{type:null,value:null},defaultValue:{type:null}};module.exports= props;

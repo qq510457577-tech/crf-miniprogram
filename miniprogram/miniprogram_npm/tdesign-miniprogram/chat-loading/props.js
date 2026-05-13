@@ -1,0 +1,1 @@
+const props={animation:{type:String,value:"moving"},text:{type:String,value:""}};module.exports= props;

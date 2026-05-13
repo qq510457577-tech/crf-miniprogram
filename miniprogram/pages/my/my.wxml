@@ -1,0 +1,112 @@
+<!-- 个人中心页面 -->
+<view class="page-container">
+  <!-- 自定义导航栏 -->
+  <t-navbar
+    leftIcon
+    title="我的"
+    fixed
+    t-class-title="navbar-title"
+    bind:left-click="onBack"
+  />
+
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar-wrapper">
+      <image
+        class="avatar"
+        src="{{userInfo.avatar || '/assets/images/default-avatar.png'}}"
+        mode="aspectFill"
+      />
+      <view class="role-badge">{{userInfo.role || '研究者'}}</view>
+    </view>
+    <view class="user-info">
+      <view class="user-name">{{userInfo.name || '未登录'}}</view>
+      <view class="user-dept">{{userInfo.department || '中山大学肿瘤防治中心'}}</view>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="quick-item" bind:tap="onNavigate" data-url="/pages/subject-list/subject-list">
+      <view class="quick-icon">?</view>
+      <text class="quick-label">我的受试者</text>
+    </view>
+    <view class="quick-item" bind:tap="onNavigate" data-url="/pages/stats/stats">
+      <view class="quick-icon">?</view>
+      <text class="quick-label">数据统计</text>
+    </view>
+    <view class="quick-item" bind:tap="onShowAbout">
+      <view class="quick-icon">ℹ️</view>
+      <text class="quick-label">关于系统</text>
+    </view>
+  </view>
+
+  <!-- 设置列表 -->
+  <view class="settings-section">
+    <t-cell-group>
+      <t-cell
+        title="清除缓存"
+        note="{{cacheSize}}"
+        arrow
+        bordered="{{false}}"
+        bind:click="onClearCache"
+      />
+      <t-cell
+        title="检查更新"
+        note="当前版本 v{{version}}"
+        arrow
+        bordered="{{false}}"
+        bind:click="onCheckUpdate"
+      />
+    </t-cell-group>
+  </view>
+
+  <!-- 安全设置 -->
+  <view class="settings-section">
+    <t-cell-group title="安全">
+      <t-cell
+        title="修改密码"
+        arrow
+        bordered="{{false}}"
+        bind:click="onChangePassword"
+      />
+      <t-cell
+        title="退出登录"
+        arrow
+        bordered="{{false}}"
+        theme="danger"
+        bind:click="onLogout"
+      />
+    </t-cell-group>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="footer-info">
+    <text class="footer-text">CRF 数据采集系统</text>
+    <text class="footer-version">v{{version}} | 基于 tRPC 协议</text>
+  </view>
+
+  <!-- 关于对话框 -->
+  <t-dialog
+    visible="{{showAbout}}"
+    title="关于系统"
+    content="CRF数据采集系统 v{{version}}\n\n面向肿瘤患者营养干预研究的移动端数据采集工具。\n\n支持功能：\n• 受试者管理\n• 多种评估量表\n• 数据导出与统计\n\n© 中山大学肿瘤防治中心"
+    confirm-btn="知道了"
+    bind:confirm="onCloseAbout"
+  />
+
+  <!-- 退出确认对话框 -->
+  <t-dialog
+    visible="{{showLogoutConfirm}}"
+    title="确认退出"
+    content="确定要退出登录吗？"
+    confirm-btn="退出"
+    cancel-btn="取消"
+    theme="danger"
+    bind:confirm="onConfirmLogout"
+    bind:cancel="onCancelLogout"
+  />
+
+  <!-- Toast -->
+  <t-toast id="t-toast" />
+</view>
