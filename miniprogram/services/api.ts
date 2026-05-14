@@ -1,7 +1,21 @@
 // tRPC API 服务层
 // 后端地址: https://zhongyibianzhengdafen.fun/CRF
+// 后端使用 superjson transformer
 
 const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
+
+// 简单的 superjson 兼容序列化
+// superjson 将值包装在 {"v": value} 中，然后 base64 编码
+function superjsonSerialize(value: any): string {
+  const wrapped = { v: value };
+  const json = JSON.stringify(wrapped);
+  // Base64 编码并转换为 URL 安全格式
+  const base64 = btoa(unescape(encodeURIComponent(json)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+  return base64;
+}
 
 function getToken(): string {
   const app = getApp<IAppOption>();
@@ -20,15 +34,16 @@ interface TrpcResponse<T> {
   error?: { message: string };
 }
 
-// tRPC 查询总是使用 GET，参数通过 URL 查询参数传递
+// tRPC 查询使用 GET，参数需要 superjson 序列化
 function trpcQuery<T = any>(
   endpoint: string,
   params?: any
 ): Promise<T> {
   const headers = getHeaders();
-  let url = `${API_BASE}.${endpoint}`;
+  let url = `${API_BASE}/${endpoint}`;
   if (params !== undefined) {
-    url += `?input=${encodeURIComponent(JSON.stringify(params))}`;
+    // 使用 superjson 序列化参数
+    url += `?input=${superjsonSerialize(params)}`;
   }
 
   return new Promise((resolve, reject) => {
@@ -52,7 +67,7 @@ function trpcQuery<T = any>(
   });
 }
 
-// tRPC 变更使用 POST
+// tRPC 变更使用 POST，使用 superjson 的 json 格式
 function trpcMutation<T = any>(
   endpoint: string,
   data?: any
@@ -61,9 +76,10 @@ function trpcMutation<T = any>(
 
   return new Promise((resolve, reject) => {
     wx.request({
-      url: `${API_BASE}.${endpoint}`,
+      url: `${API_BASE}/${endpoint}`,
       method: 'POST',
-      data: data !== undefined ? { input: data } : undefined,
+      // superjson transformer 期望 {"json": ...} 格式
+      data: data !== undefined ? { json: data } : undefined,
       header: headers,
       timeout: 30000,
       success(res) {
@@ -106,7 +122,7 @@ export const interventionApi = {
     return trpcQuery<any[]>('crf.intervention.list', { subjectId });
   },
   upsert(subjectId: number, week: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.intervention.upsert', { subjectId, week, data });
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.intervention.upsert', { subjectId, week, data });
   },
   delete(id: number) {
     return trpcMutation<{ success: boolean }>('crf.intervention.delete', { id });
@@ -118,8 +134,8 @@ export const weightApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.weight.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.weight.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.weight.upsert', { subjectId, week, data });
   },
   delete(id: number) {
     return trpcMutation<{ success: boolean }>('crf.weight.delete', { id });
@@ -131,8 +147,8 @@ export const bodyCompositionApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.bodyComposition.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.bodyComposition.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.bodyComposition.upsert', { subjectId, week, data });
   },
 };
 
@@ -141,8 +157,8 @@ export const gripStrengthApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.gripStrength.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.gripStrength.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.gripStrength.upsert', { subjectId, week, data });
   },
   delete(id: number) {
     return trpcMutation<{ success: boolean }>('crf.gripStrength.delete', { id });
@@ -154,8 +170,8 @@ export const pgsgaApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.pgsga.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.pgsga.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.pgsga.upsert', { subjectId, week, data });
   },
 };
 
@@ -164,8 +180,8 @@ export const mfsiApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.mfsi.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.mfsi.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.mfsi.upsert', { subjectId, week, data });
   },
 };
 
@@ -174,8 +190,8 @@ export const appetiteApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.appetite.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.appetite.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.appetite.upsert', { subjectId, week, data });
   },
 };
 
@@ -184,8 +200,8 @@ export const inflammationApi = {
   list(subjectId: number) {
     return trpcQuery<any[]>('crf.inflammation.list', { subjectId });
   },
-  upsert(subjectId: number, data: any) {
-    return trpcMutation<{ success: boolean }>('crf.inflammation.upsert', { subjectId, data });
+  upsert(subjectId: number, week: number, data: any) {
+    return trpcMutation<{ id: number; created?: boolean; updated?: boolean }>('crf.inflammation.upsert', { subjectId, week, data });
   },
 };
 
@@ -204,7 +220,7 @@ export const exportApi = {
   subjects(params?: { group?: string }) {
     const token = getToken();
     return new Promise<string>((resolve, reject) => {
-      let url = `${API_BASE}.export.subjects`;
+      let url = `${API_BASE}/export.subjects`;  // 注意：用 / 而不是 . 分隔
       if (params) {
         url += `?input=${encodeURIComponent(JSON.stringify(params))}`;
       }

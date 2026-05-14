@@ -16,6 +16,7 @@
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
+    "packNpmManually": false,
     "minifyWXSS": true,
     "disableUseStrict": false,
     "minifyWXML": true,

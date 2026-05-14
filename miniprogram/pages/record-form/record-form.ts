@@ -203,7 +203,7 @@ Page({
           break;
 
         case 'weight':
-          await weightApi.upsert(subjectId, {
+          await weightApi.upsert(subjectId, formData.week || 1, {
             recordDate: formData.recordDate,
             weight: formData.weight,
             bmi: formData.bmi,
@@ -212,7 +212,7 @@ Page({
           break;
 
         case 'bodyComposition':
-          await bodyCompositionApi.upsert(subjectId, {
+          await bodyCompositionApi.upsert(subjectId, formData.week || 1, {
             recordDate: formData.recordDate,
             calfCircumferenceLeft: formData.calfCircumferenceLeft,
             calfCircumferenceRight: formData.calfCircumferenceRight,
@@ -223,7 +223,7 @@ Page({
           break;
 
         case 'gripStrength':
-          await gripStrengthApi.upsert(subjectId, {
+          await gripStrengthApi.upsert(subjectId, formData.week || 1, {
             recordDate: formData.recordDate,
             leftHand: formData.leftHand,
             rightHand: formData.rightHand,
@@ -231,7 +231,7 @@ Page({
           break;
 
         case 'pgsga':
-          await pgsgaApi.upsert(subjectId, {
+          await pgsgaApi.upsert(subjectId, formData.week || 1, {
             recordDate: formData.recordDate,
             weightLoss: formData.weightLoss,
             foodIntake: formData.foodIntake,
@@ -245,7 +245,7 @@ Page({
           break;
 
         case 'appetite':
-          await appetiteApi.upsert(subjectId, {
+          await appetiteApi.upsert(subjectId, formData.week || 1, {
             recordDate: formData.recordDate,
             score: formData.score,
             change: formData.change,
@@ -255,7 +255,7 @@ Page({
           break;
 
         case 'inflammation':
-          await inflammationApi.upsert(subjectId, {
+          await inflammationApi.upsert(subjectId, formData.week || 1, {
             recordDate: formData.recordDate,
             crp: formData.crp,
             albumin: formData.albumin,
