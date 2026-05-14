@@ -3,7 +3,7 @@ App<IAppOption>({
     userInfo: null as any,
     token: '' as string,
     isLoggedIn: false,
-    apiBase: 'https://zhongyibianzhengdafen.fun:8000/CRF',
+    apiBase: 'https://zhongyibianzhengdafen.fun/CRF',
     statusBarHeight: 0,
   },
 

@@ -1,6 +1,6 @@
 <!-- 受试者详情页面 -->
 <view class="page-container">
-  <!-- 自定义导航栏 -->
+  <!-- 顶部导航栏 -->
   <t-navbar
     leftIcon
     title="受试者详情"
@@ -9,7 +9,7 @@
     bind:left-click="onBack"
   />
 
-  <!-- 加载状态 -->
+  <!-- 加载中状态 -->
   <t-loading size="large" text="加载中..." />
 
   <block wx:if="{{!loading && subject}}">
@@ -17,7 +17,7 @@
     <view class="info-card">
       <view class="card-header">
         <view class="subject-id">
-          <text class="label">编号</text>
+          <text class="label">受试者编号</text>
           <text class="value">{{subject.subjectUniqueId}}</text>
         </view>
         <t-tag
@@ -70,11 +70,11 @@
         <view class="exit-info">
           <view class="exit-title">退出信息</view>
           <view class="exit-row">
-            <text class="exit-label">退出日期：</text>
+            <text class="exit-label">退出日期</text>
             <text class="exit-value">{{subject.exitDate || '-'}}</text>
           </view>
           <view class="exit-row">
-            <text class="exit-label">退出原因：</text>
+            <text class="exit-label">退出原因</text>
             <text class="exit-value exit-reason">{{subject.exitReason || '-'}}{{subject.exitReasonOther ? '(' + subject.exitReasonOther + ')' : ''}}</text>
           </view>
         </view>
@@ -82,12 +82,12 @@
 
       <!-- 操作按钮 -->
       <view class="action-buttons">
-        <t-button theme="primary" size="medium" block bind:tap="onEdit" icon="edit">编辑信息</t-button>
+        <t-button theme="primary" size="medium" block bind:tap="onEdit" icon="edit">编辑受试者信息</t-button>
         <t-button theme="danger" size="medium" block variant="outline" bind:tap="onDelete" icon="delete">删除受试者</t-button>
       </view>
     </view>
 
-    <!-- 记录Tab切换 -->
+    <!-- 记录Tab标签页 -->
     <view class="records-section">
       <t-tabs
         value="{{activeTab}}"
@@ -95,16 +95,16 @@
         sticky
         swipeable
       >
-        <t-tab-panel label="干预记录" value="intervention" />
+        <t-tab-panel label="干预措施记录" value="intervention" />
         <t-tab-panel label="体重记录" value="weight" />
-        <t-tab-panel label="体成分" value="bodyComposition" />
-        <t-tab-panel label="握力" value="gripStrength" />
+        <t-tab-panel label="体成分记录" value="bodyComposition" />
+        <t-tab-panel label="握力记录" value="gripStrength" />
         <t-tab-panel label="PG-SGA" value="pgsga" />
-        <t-tab-panel label="食欲" value="appetite" />
-        <t-tab-panel label="炎症指标" value="inflammation" />
+        <t-tab-panel label="食欲评估" value="appetite" />
+        <t-tab-panel label="炎性指标记录" value="inflammation" />
       </t-tabs>
 
-      <!-- 干预记录列表 -->
+      <!-- 干预措施记录列表 -->
       <view wx:if="{{activeTab === 'intervention'}}" class="record-list">
         <view
           wx:for="{{interventionRecords}}"
@@ -120,17 +120,17 @@
             <text class="record-date">{{item.createdAt}}</text>
           </view>
           <view class="record-summary">
-            运动频率: {{item.data?.exerciseFrequency || '-'}}
+            运动频率: {{item.data && item.data.exerciseFrequency ? item.data.exerciseFrequency : '-'}}
           </view>
         </view>
 
         <view wx:if="{{interventionRecords.length === 0}}" class="empty-state">
-          <text class="empty-text">暂无干预记录</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="intervention">添加记录</t-button>
+          <text class="empty-text">暂无干预措施记录</text>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="intervention">添加干预措施记录</t-button>
         </view>
 
         <view wx:if="{{interventionRecords.length > 0}}" class="add-btn-wrapper">
-          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="intervention">+ 添加干预记录</t-button>
+          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="intervention">+ 添加干预措施记录</t-button>
         </view>
       </view>
 
@@ -145,14 +145,14 @@
           data-id="{{item.id}}"
         >
           <view class="record-header">
-            <text class="record-title">{{item.recordDate || '未填写日期'}}</text>
+            <text class="record-title">{{item.recordDate || '记录日期'}}</text>
             <text class="record-weight">{{item.weight || '-'}}{{item.weight ? ' kg' : ''}}</text>
           </view>
         </view>
 
         <view wx:if="{{weightRecords.length === 0}}" class="empty-state">
           <text class="empty-text">暂无体重记录</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="weight">添加记录</t-button>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="weight">添加体重记录</t-button>
         </view>
 
         <view wx:if="{{weightRecords.length > 0}}" class="add-btn-wrapper">
@@ -171,16 +171,16 @@
           data-id="{{item.id}}"
         >
           <view class="record-header">
-            <text class="record-title">{{item.recordDate || '未填写日期'}}</text>
+            <text class="record-title">{{item.recordDate || '记录日期'}}</text>
           </view>
           <view class="record-summary">
-            小腿围: {{item.calfCircumference || '-'}} | 肌量: {{item.skeletalMuscleMass || '-'}}
+            小腿围: {{item.calfCircumference || '-'}} | 骨骼肌: {{item.skeletalMuscleMass || '-'}}
           </view>
         </view>
 
         <view wx:if="{{bodyCompositionRecords.length === 0}}" class="empty-state">
           <text class="empty-text">暂无体成分记录</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="bodyComposition">添加记录</t-button>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="bodyComposition">添加体成分记录</t-button>
         </view>
 
         <view wx:if="{{bodyCompositionRecords.length > 0}}" class="add-btn-wrapper">
@@ -199,16 +199,16 @@
           data-id="{{item.id}}"
         >
           <view class="record-header">
-            <text class="record-title">{{item.recordDate || '未填写日期'}}</text>
+            <text class="record-title">{{item.recordDate || '记录日期'}}</text>
           </view>
           <view class="record-summary">
-            左手: {{item.leftHand || '-'}} kg | 右手: {{item.rightHand || '-'}} kg
+            左手握力: {{item.leftHand || '-'}} kg | 右手握力: {{item.rightHand || '-'}} kg
           </view>
         </view>
 
         <view wx:if="{{gripStrengthRecords.length === 0}}" class="empty-state">
           <text class="empty-text">暂无握力记录</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="gripStrength">添加记录</t-button>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="gripStrength">添加握力记录</t-button>
         </view>
 
         <view wx:if="{{gripStrengthRecords.length > 0}}" class="add-btn-wrapper">
@@ -216,7 +216,7 @@
         </view>
       </view>
 
-      <!-- PG-SGA记录列表 -->
+      <!-- PG-SGA评分记录 -->
       <view wx:if="{{activeTab === 'pgsga'}}" class="record-list">
         <view
           wx:for="{{pgsgaRecords}}"
@@ -227,22 +227,22 @@
           data-id="{{item.id}}"
         >
           <view class="record-header">
-            <text class="record-title">{{item.recordDate || '未填写日期'}}</text>
+            <text class="record-title">{{item.recordDate || '记录日期'}}</text>
             <text class="record-score">PG-SGA: {{item.totalScore || '-'}}</text>
           </view>
         </view>
 
         <view wx:if="{{pgsgaRecords.length === 0}}" class="empty-state">
-          <text class="empty-text">暂无PG-SGA评估</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="pgsga">添加评估</t-button>
+          <text class="empty-text">暂无PG-SGA评分</text>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="pgsga">添加PG-SGA评分</t-button>
         </view>
 
         <view wx:if="{{pgsgaRecords.length > 0}}" class="add-btn-wrapper">
-          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="pgsga">+ 添加PG-SGA评估</t-button>
+          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="pgsga">+ 添加PG-SGA评分</t-button>
         </view>
       </view>
 
-      <!-- 食欲记录列表 -->
+      <!-- 食欲评估记录列表 -->
       <view wx:if="{{activeTab === 'appetite'}}" class="record-list">
         <view
           wx:for="{{appetiteRecords}}"
@@ -253,23 +253,23 @@
           data-id="{{item.id}}"
         >
           <view class="record-header">
-            <text class="record-title">{{item.recordDate || '未填写日期'}}</text>
+            <text class="record-title">{{item.recordDate || '记录日期'}}</text>
             <text class="record-score">评分: {{item.score || '-'}}</text>
           </view>
           <view class="record-summary">{{item.notes || '-'}}</view>
         </view>
 
         <view wx:if="{{appetiteRecords.length === 0}}" class="empty-state">
-          <text class="empty-text">暂无食欲记录</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="appetite">添加记录</t-button>
+          <text class="empty-text">暂无食欲评估记录</text>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="appetite">添加食欲评估记录</t-button>
         </view>
 
         <view wx:if="{{appetiteRecords.length > 0}}" class="add-btn-wrapper">
-          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="appetite">+ 添加食欲记录</t-button>
+          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="appetite">+ 添加食欲评估记录</t-button>
         </view>
       </view>
 
-      <!-- 炎症指标记录列表 -->
+      <!-- 炎性指标评分记录 -->
       <view wx:if="{{activeTab === 'inflammation'}}" class="record-list">
         <view
           wx:for="{{inflammationRecords}}"
@@ -280,7 +280,7 @@
           data-id="{{item.id}}"
         >
           <view class="record-header">
-            <text class="record-title">{{item.recordDate || '未填写日期'}}</text>
+            <text class="record-title">{{item.recordDate || '记录日期'}}</text>
           </view>
           <view class="record-summary">
             CRP: {{item.crp || '-'}} | 白蛋白: {{item.albumin || '-'}}
@@ -288,21 +288,21 @@
         </view>
 
         <view wx:if="{{inflammationRecords.length === 0}}" class="empty-state">
-          <text class="empty-text">暂无炎症指标记录</text>
-          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="inflammation">添加记录</t-button>
+          <text class="empty-text">暂无炎性指标记录</text>
+          <t-button size="small" theme="primary" bind:tap="onAddRecord" data-type="inflammation">添加炎性指标记录</t-button>
         </view>
 
         <view wx:if="{{inflammationRecords.length > 0}}" class="add-btn-wrapper">
-          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="inflammation">+ 添加炎症指标</t-button>
+          <t-button size="small" theme="primary" variant="outline" block bind:tap="onAddRecord" data-type="inflammation">+ 添加炎性指标记录</t-button>
         </view>
       </view>
     </view>
   </block>
 
-  <!-- 错误/空状态 -->
+  <!-- 加载失败/未找到 -->
   <view wx:if="{{!loading && !subject}}" class="error-state">
-    <text class="error-text">未找到该受试者信息</text>
-    <t-button size="small" theme="primary" bind:tap="onBack">返回列表</t-button>
+    <text class="error-text">无法加载受试者详情</text>
+    <t-button size="small" theme="primary" bind:tap="onBack">返回上一页</t-button>
   </view>
 
   <!-- Toast -->

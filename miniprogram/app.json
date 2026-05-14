@@ -1,6 +1,12 @@
 {
   "pages": [
-    "pages/login/login"
+    "pages/login/login",
+    "pages/home/home",
+    "pages/subject-list/subject-list",
+    "pages/subject-detail/subject-detail",
+    "pages/record-form/record-form",
+    "pages/stats/stats",
+    "pages/my/my"
   ],
   "window": {
     "navigationBarTitleText": "CRF数据采集平台",
@@ -9,5 +15,39 @@
     "backgroundColor": "#F5F5F5",
     "backgroundTextStyle": "dark"
   },
-  "style": "v2"
+  "style": "v2",
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#0052D9",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/tab-home.png",
+        "selectedIconPath": "assets/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/subject-list/subject-list",
+        "text": "量表",
+        "iconPath": "assets/tab-subject.png",
+        "selectedIconPath": "assets/tab-subject-active.png"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计",
+        "iconPath": "assets/tab-stats.png",
+        "selectedIconPath": "assets/tab-stats-active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "assets/tab-my.png",
+        "selectedIconPath": "assets/tab-my-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
 }

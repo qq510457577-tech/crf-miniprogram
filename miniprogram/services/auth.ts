@@ -1,7 +1,7 @@
 // 认证服务
-// 后端地址: https://zhongyibianzhengdafen.fun:8000/CRF
+// 后端地址: https://zhongyibianzhengdafen.fun/CRF
 
-const API_BASE = 'https://zhongyibianzhengdafen.fun:8000/CRF';
+const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF';
 
 export interface LoginResult {
   token: string;

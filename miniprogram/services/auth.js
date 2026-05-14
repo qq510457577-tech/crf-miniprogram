@@ -1,10 +1,10 @@
 "use strict";
 // 认证服务
-// 后端地址: https://zhongyibianzhengdafen.fun:8000/CRF
+// 后端地址: https://zhongyibianzhengdafen.fun/CRF
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginByPassword = loginByPassword;
 exports.getCurrentUser = getCurrentUser;
-const API_BASE = 'https://zhongyibianzhengdafen.fun:8000/CRF';
+const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF';
 /** 用户名密码登录 */
 function loginByPassword(username, password) {
     return new Promise((resolve, reject) => {
