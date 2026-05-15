@@ -69,7 +69,7 @@
     <view class="section-title">临床分期分布</view>
     <view class="stage-card">
       <view class="stage-item" wx:for="{{stageDistribution}}" wx:key="stage">
-        <view class="stage-badge stage-{{item.stage}}">{{item.stage}}</view>
+        <view class="stage-badge stage-{{item.stage}}">{{item.stageLabel}}</view>
         <view class="stage-count">{{item.count}}人</view>
       </view>
     </view>

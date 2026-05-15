@@ -74,13 +74,17 @@ Page({
       // 临床分期分布
       const stageMap: Record<string, number> = {};
       subjects.forEach((s: any) => {
-        const stage = s.clinicalStage || '未知';
-        stageMap[stage] = (stageMap[stage] || 0) + 1;
+        const stageMapKey = s.clinicalStage || 'unknown';
+        stageMap[stageMapKey] = (stageMap[stageMapKey] || 0) + 1;
       });
-      const stageOrder = ['I期', 'II期', 'III期', 'IV期', '未知'];
+      const stageOrder = ['I', 'II', 'III', 'IV', 'unknown'];
       const stageDistribution = stageOrder
         .filter((s) => stageMap[s])
-        .map((stage) => ({ stage, count: stageMap[stage] }));
+        .map((stage) => ({
+          stage,
+          stageLabel: stage === 'unknown' ? '未知' : stage + '期',
+          count: stageMap[stage]
+        }));
 
       this.setData({ stats, tumorDistribution, stageDistribution, loading: false });
     } catch (err: any) {

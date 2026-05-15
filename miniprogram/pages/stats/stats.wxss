@@ -169,11 +169,11 @@
   font-weight: 600;
 }
 
-.stage-I期 { background: #E8F5E9; color: #2E7D32; }
-.stage-II期 { background: #E3F2FD; color: #1565C0; }
-.stage-III期 { background: #FFF3E0; color: #E65100; }
-.stage-IV期 { background: #FFF5F5; color: #C62828; }
-.stage-未知 { background: #F5F5F5; color: #9E9E9E; }
+.stage-I { background: #E8F5E9; color: #2E7D32; }
+.stage-II { background: #E3F2FD; color: #1565C0; }
+.stage-III { background: #FFF3E0; color: #E65100; }
+.stage-IV { background: #FFF5F5; color: #C62828; }
+.stage-unknown { background: #F5F5F5; color: #9E9E9E; }
 
 .stage-count {
   font-size: var(--font-base);
