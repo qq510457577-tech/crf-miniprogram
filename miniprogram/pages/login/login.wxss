@@ -1,13 +1,197 @@
-.page { min-height: 100vh; background: linear-gradient(135deg, #0052D9, #4364E7, #6FB1FC); display: flex; flex-direction: column; }
-.nav-bar { padding: 0 32rpx 24rpx; }
-.nav-title { font-size: 36rpx; font-weight: 600; color: #fff; text-align: center; }
-.logo-section { display: flex; flex-direction: column; align-items: center; padding: 60rpx 0 40rpx; }
-.logo-icon { width: 160rpx; height: 160rpx; background: rgba(255,255,255,0.2); border-radius: 40rpx; display: flex; align-items: center; justify-content: center; margin-bottom: 32rpx; backdrop-filter: blur(10px); }
-.logo-title { font-size: 32rpx; font-weight: 600; color: #fff; text-align: center; margin-bottom: 12rpx; }
-.logo-sub { font-size: 24rpx; color: rgba(255,255,255,0.7); }
-.form-section { flex: 1; background: #fff; border-radius: 40rpx 40rpx 0 0; padding: 48rpx 40rpx 40rpx; }
-.form-title { font-size: 40rpx; font-weight: 600; color: #333; margin-bottom: 48rpx; }
-.form-item { margin-bottom: 32rpx; }
-.form-label { font-size: 28rpx; color: #666; margin-bottom: 12rpx; font-weight: 500; }
-.form-actions { margin-top: 48rpx; }
-.footer { text-align: center; padding: 24rpx; font-size: 22rpx; color: rgba(255,255,255,0.6); }
+/* =============== 登录页 - 精美渐变 + 玻璃质感表单 =============== */
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #0052D9, #1a6bff, #4F7FF7, #2563EB);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ====== 装饰图形 ====== */
+.page::before,
+.page::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.page::before {
+  width: 600rpx;
+  height: 600rpx;
+  background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+  top: -200rpx;
+  right: -150rpx;
+}
+.page::after {
+  width: 400rpx;
+  height: 400rpx;
+  background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+  bottom: 100rpx;
+  left: -100rpx;
+}
+
+/* ====== 顶栏 ====== */
+.nav-bar {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--spacing-lg) var(--spacing-sm);
+}
+
+.nav-title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 2rpx;
+}
+
+/* ====== Logo 区域 ====== */
+.logo-section {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0 60rpx;
+}
+
+.logo-icon {
+  width: 180rpx;
+  height: 180rpx;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 36rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.12);
+  transition: var(--transition-normal);
+}
+
+.logo-icon:active {
+  transform: scale(0.95);
+}
+
+.logo-title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 12rpx;
+  text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.15);
+  letter-spacing: 1rpx;
+}
+
+.logo-sub {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 4rpx;
+  font-weight: 300;
+}
+
+/* ====== 表单卡片（玻璃质感） ====== */
+.form-section {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 56rpx 56rpx 0 0;
+  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
+  box-shadow: 0 -8rpx 48rpx rgba(0, 0, 0, 0.08);
+}
+
+.form-title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 48rpx;
+  letter-spacing: 1rpx;
+}
+
+/* 表单项 */
+.form-item {
+  margin-bottom: 36rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  letter-spacing: 1rpx;
+}
+
+/* TDesign Input 样式覆盖 */
+.form-item t-input {
+  --td-input-bg-color: #F5F7FA;
+  --td-input-border-color: transparent;
+  --td-input-radius: 16rpx;
+}
+
+.form-item t-input .t-input {
+  background: #F5F7FA !important;
+  border-radius: 16rpx !important;
+  padding: 24rpx 28rpx !important;
+  border: 2rpx solid transparent !important;
+  transition: var(--transition-fast) !important;
+}
+
+.form-item t-input .t-input:focus,
+.form-item t-input .t-input.t-input--focused {
+  border-color: var(--brand-1) !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4rpx rgba(0, 82, 217, 0.1) !important;
+}
+
+/* ====== 登录按钮 ====== */
+.form-actions {
+  margin-top: 56rpx;
+}
+
+.form-actions t-button {
+  --td-button-primary-bg: linear-gradient(135deg, #0052D9 0%, #2563EB 100%);
+  --td-button-primary-border-color: transparent;
+  --td-button-height: 96rpx;
+  --td-button-border-radius: 24rpx;
+  --td-button-font-size: var(--font-lg);
+  --td-button-font-weight: 600;
+}
+
+.form-actions t-button .t-button--primary {
+  background: linear-gradient(135deg, #0052D9 0%, #2563EB 100%) !important;
+  border: none !important;
+  box-shadow: 0 8rpx 24rpx rgba(0, 82, 217, 0.35) !important;
+  transition: var(--transition-fast) !important;
+}
+
+.form-actions t-button .t-button--primary:active {
+  transform: translateY(2rpx) !important;
+  box-shadow: 0 4rpx 12rpx rgba(0, 82, 217, 0.25) !important;
+}
+
+/* ====== 底部 ====== */
+.footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--spacing-sm);
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1rpx;
+}

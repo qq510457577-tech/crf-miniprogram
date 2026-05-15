@@ -1,33 +1,35 @@
-/* 受试者详情页面样式 */
+/* =============== 受试者详情页 - 专业医疗档案风格 =============== */
 
 .page-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--bg);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* 加载状态 */
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
+/* 导航栏 */
+.t-class-navbar {
+  background: var(--brand-gradient) !important;
 }
 
-/* 信息卡片 */
+.navbar-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* ====== 信息卡片 ====== */
 .info-card {
-  margin: 24rpx;
-  padding: 32rpx;
-  background: #fff;
-  border-radius: 16rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  margin: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32rpx;
+  margin-bottom: var(--spacing-lg);
 }
 
 .subject-id {
@@ -36,167 +38,187 @@
 }
 
 .subject-id .label {
-  font-size: 24rpx;
-  color: #999;
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
   margin-bottom: 4rpx;
+  letter-spacing: 1rpx;
 }
 
 .subject-id .value {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
+/* ====== 信息网格 ====== */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24rpx 32rpx;
+  gap: var(--spacing-md) var(--spacing-lg);
 }
 
 .info-item {
   display: flex;
   flex-direction: column;
+  gap: 4rpx;
 }
 
 .item-label {
-  font-size: 24rpx;
-  color: #999;
-  margin-bottom: 6rpx;
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  letter-spacing: 1rpx;
 }
 
 .item-value {
-  font-size: 28rpx;
-  color: #333;
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
-/* 退出信息 */
+/* ====== 退出信息 ====== */
 .exit-info {
-  margin-top: 24rpx;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: #FFF5F5;
+  border-radius: var(--radius-sm);
+  border: 2rpx solid #FFE0E0;
 }
 
 .exit-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #e34d4d;
-  margin-bottom: 16rpx;
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--danger);
+  margin-bottom: var(--spacing-sm);
 }
 
 .exit-row {
   display: flex;
-  margin-bottom: 8rpx;
+  gap: var(--spacing-sm);
+  margin-bottom: 4rpx;
 }
 
 .exit-label {
-  font-size: 26rpx;
-  color: #666;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  min-width: 120rpx;
 }
 
 .exit-value {
-  font-size: 26rpx;
-  color: #333;
+  font-size: var(--font-sm);
+  color: var(--text-primary);
 }
 
 .exit-reason {
-  color: #e34d4d;
+  color: var(--danger);
 }
 
-/* 操作按钮 */
+/* ====== 操作按钮 ====== */
 .action-buttons {
-  margin-top: 32rpx;
+  margin-top: var(--spacing-lg);
   display: flex;
-  gap: 24rpx;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
-.action-buttons t-button {
-  flex: 1;
+.action-buttons t-button .t-button {
+  border-radius: var(--radius-sm) !important;
+  height: 80rpx !important;
+  font-size: var(--font-base) !important;
+  font-weight: 500 !important;
 }
 
-/* 记录区域 */
+/* ====== 记录区域 ====== */
 .records-section {
-  margin: 24rpx;
+  margin: 0 var(--spacing-md);
 }
 
 .record-list {
-  margin-top: 24rpx;
+  margin-top: var(--spacing-sm);
+  padding-bottom: 60rpx;
 }
 
 .record-item {
-  background: #fff;
-  border-radius: 12rpx;
-  padding: 24rpx;
-  margin-bottom: 16rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
+  border: 2rpx solid transparent;
+}
+
+.record-item:active {
+  border-color: var(--brand-1);
+  transform: translateX(4rpx);
 }
 
 .record-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12rpx;
+  margin-bottom: var(--spacing-sm);
 }
 
 .record-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .record-date {
-  font-size: 24rpx;
-  color: #999;
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
 }
 
 .record-summary {
-  font-size: 26rpx;
-  color: #666;
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 .record-weight,
 .record-score {
-  font-size: 28rpx;
-  color: #0052d9;
-  font-weight: 500;
+  font-size: var(--font-base);
+  color: var(--brand-1);
+  font-weight: 600;
 }
 
-/* 空状态 */
+/* ====== 空状态 ====== */
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 64rpx 0;
+  padding: 80rpx 0;
+  gap: var(--spacing-md);
 }
 
 .empty-text {
-  font-size: 28rpx;
-  color: #999;
-  margin-bottom: 24rpx;
+  font-size: var(--font-base);
+  color: var(--text-tertiary);
 }
 
 .add-btn-wrapper {
-  margin-top: 24rpx;
+  margin-top: var(--spacing-md);
 }
 
-/* 错误状态 */
+/* ====== 错误状态 ====== */
 .error-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 60vh;
+  gap: var(--spacing-lg);
 }
 
 .error-text {
-  font-size: 28rpx;
-  color: #999;
-  margin-bottom: 32rpx;
+  font-size: var(--font-base);
+  color: var(--text-tertiary);
 }
 
-/* TDesign Override */
-.t-class-navbar {
-  background: linear-gradient(135deg, #0052d9 0%, #4378ff 100%);
-  color: #fff !important;
-}
-
-.navbar-title {
-  color: #fff !important;
+/* ====== TDesign Tabs 覆盖 ====== */
+.records-section .t-tabs {
+  --td-tab-item-color: var(--text-tertiary);
+  --td-tab-item-active-color: var(--brand-1);
+  --td-tab-track-color: var(--brand-1);
 }

@@ -11,7 +11,7 @@
     <view class="logo-sub">CRF Data Collection Platform</view>
   </view>
 
-  <view class="form-section">
+  <view class="form-section slide-up">
     <view class="form-title">用户登录</view>
 
     <view class="form-item">

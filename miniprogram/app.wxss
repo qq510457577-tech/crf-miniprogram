@@ -1,5 +1,178 @@
+/* =============== CRF 数据采集平台 - 全局样式系统 =============== */
+/* 设计系统：Medical Blue - 专业、信任、冷静 */
+
+/* CSS 变量 - 全局设计 Token */
+page {
+  /* 品牌色 */
+  --brand-1: #0052D9;
+  --brand-2: #366EF4;
+  --brand-3: #6A8FF8;
+  --brand-gradient: linear-gradient(135deg, #0052D9 0%, #2563EB 50%, #4F7FF7 100%);
+  --brand-gradient-light: linear-gradient(135deg, #E8F2FF 0%, #D6E8FF 100%);
+
+  /* 功能色 */
+  --success: #00A870;
+  --warning: #ED7B2F;
+  --danger: #E34D59;
+  --info: #0052D9;
+
+  /* 中性色 */
+  --bg: #F0F2F5;
+  --bg-card: #FFFFFF;
+  --text-primary: #1A1A2E;
+  --text-secondary: #5A5A72;
+  --text-tertiary: #8C8CA1;
+  --text-placeholder: #B0B0C0;
+  --border: #E8E8EE;
+  --border-light: #F0F0F5;
+  --divider: #F2F2F7;
+
+  /* 阴影系统 */
+  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  --shadow-brand: 0 4rpx 20rpx rgba(0, 82, 217, 0.25);
+
+  /* 圆角 */
+  --radius-sm: 12rpx;
+  --radius-md: 20rpx;
+  --radius-lg: 28rpx;
+  --radius-xl: 36rpx;
+
+  /* 间距 */
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+
+  /* 字体 */
+  --font-xs: 22rpx;
+  --font-sm: 24rpx;
+  --font-md: 26rpx;
+  --font-base: 28rpx;
+  --font-lg: 32rpx;
+  --font-xl: 36rpx;
+  --font-2xl: 48rpx;
+  --font-3xl: 64rpx;
+
+  /* 过渡 */
+  --transition-fast: all 0.2s ease;
+  --transition-normal: all 0.3s ease;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-size: var(--font-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* TDesign 主题覆盖 */
 page {
   --td-brand-color: #0052D9;
-  --td-brand-color-light: #E8F4FF;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --td-brand-color-light: #E8F2FF;
+  --td-brand-color-focus: #D6E8FF;
+  --td-brand-color-disabled: #B0C8F0;
+  --td-brand-color-hover: #366EF4;
+  --td-brand-color-active: #0045B8;
+  --td-error-color: #E34D59;
+  --td-warning-color: #ED7B2F;
+  --td-success-color: #00A870;
+  --td-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 4rpx;
+  height: 4rpx;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4rpx;
+}
+
+/* 通用卡片样式 */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* 通用页面容器 */
+.page-container {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 通用分区标题 */
+.section-title {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.section-more {
+  font-size: var(--font-md);
+  color: var(--brand-1);
+  font-weight: 500;
+}
+
+/* 空状态 */
+.empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl) 0;
+  color: var(--text-placeholder);
+  font-size: var(--font-base);
+}
+
+/* 操作类 */
+.text-link { color: var(--brand-1); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+
+/* 动画 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.slide-up {
+  animation: slideUp 0.4s ease forwards;
+}
+
+/* 占位渐变条纹 - loading 骨架屏 */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #F0F0F5 25%, #E8E8EE 37%, #F0F0F5 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+  border-radius: var(--radius-sm);
 }

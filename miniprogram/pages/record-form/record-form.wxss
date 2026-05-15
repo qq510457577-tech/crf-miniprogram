@@ -1,148 +1,173 @@
-/* 记录表单页面样式 */
+/* =============== 记录表单页 - 清爽录入体验 =============== */
 
 .page-container {
   min-height: 100vh;
-  background: #f5f5f5;
-  padding-bottom: 120rpx;
+  background: var(--bg);
+  padding-bottom: 140rpx;
 }
 
-/* 加载状态 */
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
+.navbar-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
 }
 
-/* 受试者提示 */
+/* ====== 受试者提示条 ====== */
 .subject-tip {
-  margin: 24rpx;
-  padding: 24rpx;
-  background: linear-gradient(135deg, #0052d9 0%, #4378ff 100%);
-  border-radius: 12rpx;
+  margin: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--brand-gradient);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brand);
 }
 
 .tip-text {
-  color: #fff;
-  font-size: 28rpx;
+  color: #ffffff;
+  font-size: var(--font-base);
+  font-weight: 500;
+  letter-spacing: 1rpx;
 }
 
-/* 表单区块 */
+/* ====== 表单区块 ====== */
 .form-section {
-  margin: 24rpx;
-  padding: 32rpx;
-  background: #fff;
-  border-radius: 16rpx;
+  margin: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
-/* 表单项 */
+/* 每组表单项加一个分隔 */
+.form-section .form-item:not(:last-child) {
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2rpx solid var(--border-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ====== 表单项 ====== */
 .form-item {
-  margin-bottom: 32rpx;
+  margin-bottom: var(--spacing-lg);
 }
 
 .form-item:last-child {
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .form-label {
   display: block;
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 16rpx;
-  font-weight: 500;
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
 }
 
 .form-label.required::after {
   content: ' *';
-  color: #e34d4d;
+  color: var(--danger);
 }
 
 .form-hint {
   display: block;
-  font-size: 24rpx;
-  color: #999;
-  margin-top: 8rpx;
-}
-
-/* picker值显示 */
-.picker-value {
-  padding: 24rpx;
-  background: #f5f5f5;
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: #F8F9FB;
   border-radius: 8rpx;
-  font-size: 28rpx;
-  color: #333;
 }
 
-/* radio 样式 */
-t-radio,
-t-radio-group {
-  display: block;
+/* ====== 输入框、选择器等背景覆盖 ====== */
+.form-section t-input,
+.form-section t-textarea {
+  --td-input-bg-color: #F5F7FA;
+  --td-textarea-bg-color: #F5F7FA;
 }
 
-/* PG-SGA 分数展示 */
+.form-section t-input .t-input {
+  background: #F5F7FA !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 20rpx 24rpx !important;
+  border: 2rpx solid transparent !important;
+  transition: var(--transition-fast) !important;
+}
+
+.form-section t-input .t-input:focus,
+.form-section t-input .t-input.t-input--focused {
+  border-color: var(--brand-1) !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4rpx rgba(0, 82, 217, 0.1) !important;
+}
+
+t-textarea {
+  background: #F5F7FA !important;
+  border-radius: var(--radius-sm) !important;
+  padding: var(--spacing-sm) !important;
+  border: 2rpx solid transparent !important;
+  transition: var(--transition-fast) !important;
+}
+
+t-textarea:focus-within {
+  border-color: var(--brand-1) !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4rpx rgba(0, 82, 217, 0.1) !important;
+}
+
+t-stepper {
+  background: #F5F7FA !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12rpx var(--spacing-sm) !important;
+}
+
+/* Radio 间距 */
+t-radio {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* ====== PG-SGA 分数展示 ====== */
 .result-item {
-  background: #f0f5ff;
-  padding: 24rpx;
-  border-radius: 12rpx;
-  margin-top: 32rpx;
+  background: var(--brand-gradient-light);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-lg);
+  border: 2rpx solid rgba(0, 82, 217, 0.1);
 }
 
 .score-display {
   display: flex;
   align-items: baseline;
-  gap: 12rpx;
+  gap: var(--spacing-sm);
 }
 
 .score-value {
-  font-size: 64rpx;
-  font-weight: bold;
-  color: #0052d9;
+  font-size: var(--font-3xl);
+  font-weight: 700;
+  color: var(--brand-1);
+  line-height: 1;
 }
 
 .score-level {
-  font-size: 28rpx;
-  color: #666;
+  font-size: var(--font-base);
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
-/* 表单操作区域 */
+/* ====== 底部固定操作栏 ====== */
 .form-actions {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 24rpx 32rpx;
-  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
-  background: #fff;
-  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-md) var(--spacing-lg);
+  padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+  background: var(--bg-card);
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
+  z-index: 50;
 }
 
-/* 滑块样式覆盖 */
-t-slider .t-slider__value,
-t-slider .t-slider__bar {
-  font-size: 28rpx;
-}
-
-/* 输入框样式覆盖 */
-.form-section t-input {
-  background: #f5f5f5;
-  border-radius: 8rpx;
-}
-
-/* textarea 样式覆盖 */
-t-textarea {
-  background: #f5f5f5;
-  border-radius: 8rpx;
-  padding: 16rpx;
-}
-
-/* 步进器样式 */
-t-stepper {
-  background: #f5f5f5;
-  border-radius: 8rpx;
-  padding: 12rpx 16rpx;
-}
-
-/* TDesign Override */
-.navbar-title {
-  color: #fff !important;
+.form-actions t-button .t-button {
+  border-radius: var(--radius-md) !important;
+  height: 88rpx !important;
+  font-size: var(--font-lg) !important;
+  font-weight: 600 !important;
 }

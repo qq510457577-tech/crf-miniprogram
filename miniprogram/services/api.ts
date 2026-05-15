@@ -4,17 +4,9 @@
 
 const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
 
-// 简单的 superjson 兼容序列化
-// superjson 将值包装在 {"v": value} 中，然后 base64 编码
+// tRPC v11 的 input 格式：使用标准 JSON 字符串
 function superjsonSerialize(value: any): string {
-  const wrapped = { v: value };
-  const json = JSON.stringify(wrapped);
-  // Base64 编码并转换为 URL 安全格式
-  const base64 = btoa(unescape(encodeURIComponent(json)))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-  return base64;
+  return JSON.stringify(value);
 }
 
 function getToken(): string {
@@ -42,8 +34,8 @@ function trpcQuery<T = any>(
   const headers = getHeaders();
   let url = `${API_BASE}/${endpoint}`;
   if (params !== undefined) {
-    // 使用 superjson 序列化参数
-    url += `?input=${superjsonSerialize(params)}`;
+    // tRPC v11 使用 URL 编码的 JSON（_superjson 格式）
+    url += `?input=${encodeURIComponent(superjsonSerialize(params))}`;
   }
 
   return new Promise((resolve, reject) => {
@@ -57,7 +49,13 @@ function trpcQuery<T = any>(
         if (data.error) {
           reject(new Error(data.error.message || '请求失败'));
         } else {
-          resolve(((data.result && data.result.data) || {}) as T);
+          // tRPC v11 响应格式: { result: { data: { json: T, meta: {...} } } }
+          const resultData = data.result?.data;
+          // 如果有 superjson 包装，取 json 字段；否则直接取 data
+          const extracted = (resultData && (resultData as any).json !== undefined)
+            ? (resultData as any).json
+            : resultData;
+          resolve(extracted as T);
         }
       },
       fail(err) {
@@ -78,7 +76,7 @@ function trpcMutation<T = any>(
     wx.request({
       url: `${API_BASE}/${endpoint}`,
       method: 'POST',
-      // superjson transformer 期望 {"json": ...} 格式
+      // tRPC v11 期望 body: { json: <data> }（superjson 会自动处理）
       data: data !== undefined ? { json: data } : undefined,
       header: headers,
       timeout: 30000,
@@ -87,7 +85,12 @@ function trpcMutation<T = any>(
         if (resData.error) {
           reject(new Error(resData.error.message || '请求失败'));
         } else {
-          resolve(((resData.result && resData.result.data) || {}) as T);
+          // 响应格式: { result: { data: { json: T, meta: {...} } } } 或 { result: { data: T } }
+          const resultData = resData.result?.data;
+          const extracted = (resultData && (resultData as any).json !== undefined)
+            ? (resultData as any).json
+            : resultData;
+          resolve(extracted as T);
         }
       },
       fail(err) {
@@ -217,24 +220,25 @@ export const followUpApi = {
 
 // ============ 导出 API ============
 export const exportApi = {
+  allSubjects() {
+    return trpcQuery<any>('export.allSubjects');
+  },
+  subjectDetail(subjectId: number) {
+    return trpcQuery<any>('export.subjectDetail', { subjectId });
+  },
+  // 下载导出文件（返回 base64 数据）
   subjects(params?: { group?: string }) {
     const token = getToken();
     return new Promise<string>((resolve, reject) => {
-      let url = `${API_BASE}/export.subjects`;  // 注意：用 / 而不是 . 分隔
-      if (params) {
-        url += `?input=${encodeURIComponent(JSON.stringify(params))}`;
-      }
-      wx.request({
-        url,
-        method: 'GET',
-        header: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        responseType: 'arraybuffer',
-        success(res) {
-          const base64 = wx.arrayBufferToBase64(res.data as ArrayBuffer);
-          resolve(base64);
-        },
-        fail: reject,
-      });
+      // 使用 tRPC 查询获取所有受试者数据
+      trpcQuery<any>('export.allSubjects').then((data) => {
+        // 将数据转换为可下载的格式
+        const jsonStr = JSON.stringify(data, null, 2);
+        const base64 = wx.arrayBufferToBase64(
+          new Uint8Array(jsonStr.split('').map(c => c.charCodeAt(0))).buffer as ArrayBuffer
+        );
+        resolve(base64);
+      }).catch(reject);
     });
   },
 };

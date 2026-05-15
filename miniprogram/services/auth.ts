@@ -26,9 +26,16 @@ export function loginByPassword(username: string, password: string): Promise<Log
       success(res) {
         const data = (res.data as any) || {};
         if (res.statusCode === 200 && data.success) {
-          // 后端返回格式: { success: true, token: "...", user: {...} }
-          const user = data.user || { id: 0, username };
-          const token = data.token || ('mock_' + user.id + '_' + Date.now());
+          // 后端返回格式: { success: true, token: "...", user: { id, name, role } }
+          // 兼容不同 user 字段名
+          const rawUser = data.user || { id: 0, username };
+          const user = {
+            id: rawUser.id,
+            name: rawUser.name || rawUser.displayName || rawUser.username || username,
+            username: rawUser.username || username,
+            role: rawUser.role || '',
+          };
+          const token = data.token;
           wx.setStorageSync('token', token);
           wx.setStorageSync('userInfo', user);
           resolve({ token, user });

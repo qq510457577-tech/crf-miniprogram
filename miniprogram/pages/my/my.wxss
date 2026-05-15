@@ -1,33 +1,66 @@
-/* 个人中心页面样式 */
+/* =============== 个人中心页 - 专业医疗风格个人信息 =============== */
 
 .page-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--bg);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* 用户信息卡片 */
+.navbar-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* ====== 用户信息卡片（精美渐变） ====== */
 .user-card {
-  margin: 24rpx 32rpx;
-  padding: 40rpx 32rpx;
-  background: linear-gradient(135deg, #0052d9 0%, #4378ff 100%);
-  border-radius: 20rpx;
+  margin: var(--spacing-md) var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-lg);
+  background: var(--brand-gradient);
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
-  color: #fff;
+  color: #ffffff;
+  box-shadow: var(--shadow-brand);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装饰圆点 */
+.user-card::before,
+.user-card::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.user-card::before {
+  width: 300rpx;
+  height: 300rpx;
+  background: #ffffff;
+  top: -120rpx;
+  right: -80rpx;
+}
+.user-card::after {
+  width: 200rpx;
+  height: 200rpx;
+  background: #ffffff;
+  bottom: -80rpx;
+  left: -40rpx;
 }
 
 .avatar-wrapper {
   position: relative;
-  margin-right: 32rpx;
+  margin-right: var(--spacing-lg);
+  z-index: 2;
 }
 
 .avatar {
   width: 120rpx;
   height: 120rpx;
   border-radius: 60rpx;
-  background: #fff;
-  border: 4rpx solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+  border: 4rpx solid rgba(255, 255, 255, 0.4);
 }
 
 .role-badge {
@@ -35,99 +68,125 @@
   bottom: -8rpx;
   left: 50%;
   transform: translateX(-50%);
-  padding: 4rpx 16rpx;
+  padding: 4rpx 20rpx;
   background: rgba(255, 255, 255, 0.95);
-  color: #0052d9;
+  color: var(--brand-1);
   font-size: 20rpx;
-  border-radius: 12rpx;
+  font-weight: 600;
+  border-radius: 16rpx;
   white-space: nowrap;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .user-info {
   flex: 1;
+  z-index: 2;
 }
 
 .user-name {
-  font-size: 40rpx;
-  font-weight: bold;
-  margin-bottom: 8rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+  margin-bottom: 6rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .user-dept {
-  font-size: 26rpx;
-  opacity: 0.85;
+  font-size: var(--font-md);
+  opacity: 0.8;
+  font-weight: 300;
 }
 
-/* 快捷操作 */
+/* ====== 快捷操作 ====== */
 .quick-actions {
   display: flex;
   justify-content: space-around;
-  margin: 0 32rpx 32rpx;
-  padding: 32rpx;
-  background: #fff;
-  border-radius: 16rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  margin: 0 var(--spacing-md) var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .quick-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16rpx;
+  padding: var(--spacing-sm);
+  transition: var(--transition-fast);
+  border-radius: var(--radius-sm);
+}
+
+.quick-item:active {
+  background: var(--brand-gradient-light);
+  transform: scale(0.95);
 }
 
 .quick-icon {
   font-size: 48rpx;
-  margin-bottom: 12rpx;
+  margin-bottom: var(--spacing-xs);
 }
 
 .quick-label {
-  font-size: 24rpx;
-  color: #666;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
-/* 设置区域 */
+/* ====== 设置区域 ====== */
 .settings-section {
-  margin: 0 32rpx 24rpx;
+  margin: 0 var(--spacing-md) var(--spacing-md);
 }
 
 .settings-section t-cell-group {
-  background: #fff;
-  border-radius: 16rpx;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .settings-section t-cell-group .t-cell-group__title {
-  padding: 24rpx 32rpx 12rpx;
-  font-size: 26rpx;
-  color: #999;
+  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xs);
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  font-weight: 500;
+  letter-spacing: 2rpx;
 }
 
-/* 底部信息 */
-.footer-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 48rpx 0;
-  opacity: 0.6;
-}
-
-.footer-text {
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 8rpx;
-}
-
-.footer-version {
-  font-size: 24rpx;
-  color: #999;
-}
-
-/* TDesign Override */
-.navbar-title {
-  color: #fff !important;
+/* TDesign Cell 样式覆盖 */
+.settings-section t-cell {
+  --td-cell-left-text-color: var(--text-primary);
+  --td-cell-note-color: var(--text-tertiary);
 }
 
 .t-cell--bordered {
   border: none !important;
+}
+
+/* ====== 底部信息 ====== */
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.footer-text {
+  font-size: var(--font-base);
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-version {
+  font-size: var(--font-sm);
+  color: var(--text-placeholder);
+}
+
+/* ====== TDesign Dialog 覆盖 ====== */
+t-dialog .t-dialog {
+  --td-dialog-radius: 20rpx;
+}
+
+t-dialog .t-dialog__wrap {
+  border-radius: 20rpx !important;
 }

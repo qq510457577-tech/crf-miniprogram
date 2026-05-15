@@ -2,7 +2,7 @@
   <view class="header">
     <view class="welcome-row">
       <view>
-        <text class="welcome-title">您好，{{userInfo.displayName || userInfo.username || '研究员'}}</text>
+        <text class="welcome-title">您好，{{userInfo.name || userInfo.displayName || userInfo.username || '研究员'}}</text>
         <text class="welcome-sub">CRF数据采集平台</text>
       </view>
       <t-avatar size="large" icon="user" class="user-avatar" />

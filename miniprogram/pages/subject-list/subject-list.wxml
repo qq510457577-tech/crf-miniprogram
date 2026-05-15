@@ -6,9 +6,11 @@
   <view class="search-section">
     <t-search value="{{searchValue}}" placeholder="搜索受试者编号/姓名" bind:change="onSearchChange" bind:clear="onSearchClear" bind:submit="onSearchSubmit" confirm-type="search" />
     <view class="filter-row">
-      <t-dropdown-menu>
-        <t-dropdown-item value="{{selectedGroup}}" options="{{groupOptions}}" bind:change="onGroupChange" />
-      </t-dropdown-menu>
+      <view class="filter-left">
+        <t-dropdown-menu>
+          <t-dropdown-item value="{{selectedGroup}}" options="{{groupOptions}}" bind:change="onGroupChange" />
+        </t-dropdown-menu>
+      </view>
       <text class="total-count">共 {{total}} 人</text>
     </view>
   </view>

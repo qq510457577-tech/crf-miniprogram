@@ -45,7 +45,8 @@ Page({
     this.setData({ loading: true });
     try {
       const res = await subjectApi.list({ pageSize: 1000 });
-      const subjects = res.data.list || [];
+      // 后端返回格式: { data: [...], total: N }
+      const subjects: any[] = (res && (res as any).data) || [];
 
       const stats = {
         total: subjects.length,

@@ -32,7 +32,7 @@ Page({
 
   async loadData(reset = false) {
     const { page, searchValue, selectedGroup, pageSize, subjects } = this.data;
-    this.setData({ loading: !reset, loadingMore: !reset && !reset });
+    this.setData({ loading: reset, loadingMore: !reset });
 
     try {
       const res = await subjectApi.list({
@@ -41,11 +41,13 @@ Page({
         page: reset ? 1 : page,
         pageSize,
       });
-      const data = (res && res.data && res.data.list) || [];
+      // 后端返回格式: { data: [...], total: N, page: 1, pageSize: 20 }
+      const dataItems: any[] = (res && (res as any).data) || [];
+      const totalCount = (res && (res as any).total) || 0;
       this.setData({
-        subjects: reset ? data : [...subjects, ...data],
-        total: (res && res.data && res.data.total) || 0,
-        hasMore: data.length >= pageSize,
+        subjects: reset ? dataItems : [...subjects, ...dataItems],
+        total: totalCount,
+        hasMore: dataItems.length >= pageSize,
         page: reset ? 1 : page + 1,
         loading: false,
         loadingMore: false,

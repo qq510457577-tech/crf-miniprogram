@@ -10,7 +10,7 @@
   />
 
   <!-- 加载中状态 -->
-  <t-loading size="large" text="加载中..." />
+  <t-loading wx:if="{{loading}}" size="large" text="加载中..." />
 
   <block wx:if="{{!loading && subject}}">
     <!-- 基本信息卡片 -->
