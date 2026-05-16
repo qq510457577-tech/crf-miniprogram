@@ -1,35 +1,40 @@
 "use strict";
-// 认证服务
+// 认证服务（tRPC 接口）
 // 后端地址: https://zhongyibianzhengdafen.fun/CRF
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginByPassword = loginByPassword;
 exports.getCurrentUser = getCurrentUser;
 const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF';
-/** 用户名密码登录 */
+/** 用户名密码登录（tRPC 接口） */
 function loginByPassword(username, password) {
     return new Promise((resolve, reject) => {
         wx.request({
-            url: `${API_BASE}/api/auth/local/login`,
+            url: `${API_BASE}/trpc/crf.auth.login`,
             method: 'POST',
-            data: { username, password },
+            data: { json: { username, password } },
             header: { 'Content-Type': 'application/json' },
             timeout: 30000,
             success(res) {
                 const data = res.data || {};
-                if (res.statusCode === 200 && data.success) {
-                    // 后端返回格式: { success: true, token: "...", user: {...} }
-                    const user = data.user || { id: 0, username };
-                    const token = data.token || ('mock_' + user.id + '_' + Date.now());
-                    // 存储 token 和用户信息
+                if (res.statusCode === 200 && data.result) {
+                    const resultData = (data.result && data.result.data && data.result.data.json) || {};
+                    const { token, user: rawUser } = resultData;
+                    if (!token) {
+                        reject(new Error('登录响应异常：未返回 token'));
+                        return;
+                    }
+                    const user = {
+                        id: (rawUser && rawUser.id) || 0,
+                        name: (rawUser && (rawUser.displayName || rawUser.username)) || username,
+                        username: (rawUser && rawUser.username) || username,
+                        role: (rawUser && rawUser.role) || '',
+                    };
                     wx.setStorageSync('token', token);
                     wx.setStorageSync('userInfo', user);
                     resolve({ token, user });
-                }
-                else if (data.error) {
-                    reject(new Error(data.error));
-                }
-                else {
-                    reject(new Error(data.message || '登录失败，请检查用户名和密码'));
+                } else {
+                    const errMsg = (data.error && data.error.message) || data.error || '登录失败，请检查用户名和密码';
+                    reject(new Error(errMsg));
                 }
             },
             fail: (err) => {
@@ -55,7 +60,7 @@ function getCurrentUser() {
     }
     return new Promise((resolve) => {
         wx.request({
-            url: `${API_BASE}/api/trpc/auth.me`,
+            url: `${API_BASE}/trpc/crf.auth.me`,
             method: 'GET',
             header: { Authorization: `Bearer ${token}` },
             timeout: 10000,

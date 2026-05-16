@@ -3,7 +3,7 @@
 // 后端地址: https://zhongyibianzhengdafen.fun/CRF
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.exportApi = exports.followUpApi = exports.inflammationApi = exports.appetiteApi = exports.mfsiApi = exports.pgsgaApi = exports.gripStrengthApi = exports.bodyCompositionApi = exports.weightApi = exports.interventionApi = exports.subjectApi = void 0;
-const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
+const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/trpc';
 function getToken() {
     const app = getApp();
     return app.globalData.token || wx.getStorageSync('token') || '';
@@ -18,7 +18,7 @@ function getHeaders() {
 // tRPC 查询总是使用 GET，参数通过 URL 查询参数传递
 function trpcQuery(endpoint, params) {
     const headers = getHeaders();
-    let url = `${API_BASE}.${endpoint}`;
+    let url = `${API_BASE}/${endpoint}`;
     if (params !== undefined) {
         url += `?input=${encodeURIComponent(JSON.stringify(params))}`;
     }
@@ -33,9 +33,11 @@ function trpcQuery(endpoint, params) {
                 if (data.error) {
                     reject(new Error(data.error.message || '请求失败'));
                 }
-                else {
-                    resolve((data.result && data.result.data) || {});
-                }
+            else {
+                const resultData = data.result && data.result.data;
+                const extracted = (resultData && resultData.json !== undefined) ? resultData.json : (resultData || {});
+                resolve(extracted);
+            }
             },
             fail(err) {
                 reject(new Error('网络请求失败，请检查网络连接'));
@@ -48,7 +50,7 @@ function trpcMutation(endpoint, data) {
     const headers = getHeaders();
     return new Promise((resolve, reject) => {
         wx.request({
-            url: `${API_BASE}.${endpoint}`,
+            url: `${API_BASE}/${endpoint}`,
             method: 'POST',
             data: data !== undefined ? { input: data } : undefined,
             header: headers,
@@ -58,9 +60,11 @@ function trpcMutation(endpoint, data) {
                 if (resData.error) {
                     reject(new Error(resData.error.message || '请求失败'));
                 }
-                else {
-                    resolve((resData.result && resData.result.data) || {});
-                }
+            else {
+                const resultData = resData.result && resData.result.data;
+                const extracted = (resultData && resultData.json !== undefined) ? resultData.json : (resultData || {});
+                resolve(extracted);
+            }
             },
             fail(err) {
                 reject(new Error('网络请求失败，请检查网络连接'));
