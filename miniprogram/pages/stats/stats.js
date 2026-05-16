@@ -31,7 +31,7 @@ Page({
         this.setData({ loading: true });
         try {
             const res = await api_1.subjectApi.list({ pageSize: 1000 });
-            const subjects = res.data.list || [];
+            const subjects = (res && res.data) || [];
             const stats = {
                 total: subjects.length,
                 active: subjects.filter((s) => !s.exitDate && !s.exitReason).length,
