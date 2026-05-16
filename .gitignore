@@ -6,3 +6,4 @@ Thumbs.db
 .project.private.config.json
 node_modules
 private.key
+private.*.key
