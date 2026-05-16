@@ -42,10 +42,10 @@ Page({
                 page: reset ? 1 : page,
                 pageSize,
             });
-            const data = ((res && res.data) || {}).list || [];
+            const data = (res && res.data) || [];
             this.setData({
                 subjects: reset ? data : [...subjects, ...data],
-                total: ((res && res.data) || {}).total || 0,
+                total: (res && res.total) || 0,
                 hasMore: data.length >= pageSize,
                 page: reset ? 1 : page + 1,
                 loading: false,
