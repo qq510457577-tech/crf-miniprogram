@@ -2,7 +2,7 @@
 // 后端地址: https://zhongyibianzhengdafen.fun/CRF
 // 后端使用 superjson transformer
 
-const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/trpc';
+const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
 
 // tRPC v11 的 input 格式：使用标准 JSON 字符串
 function superjsonSerialize(value: any): string {

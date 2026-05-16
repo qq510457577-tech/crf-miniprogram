@@ -3,7 +3,7 @@
 // 后端地址: https://zhongyibianzhengdafen.fun/CRF
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.exportApi = exports.followUpApi = exports.inflammationApi = exports.appetiteApi = exports.mfsiApi = exports.pgsgaApi = exports.gripStrengthApi = exports.bodyCompositionApi = exports.weightApi = exports.interventionApi = exports.subjectApi = void 0;
-const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/trpc';
+const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
 function getToken() {
     const app = getApp();
     return app.globalData.token || wx.getStorageSync('token') || '';

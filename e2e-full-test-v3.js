@@ -20,8 +20,8 @@ async function login() {
       res.on('data', c => body += c);
       res.on('end', () => {
         const result = JSON.parse(body);
-        if (result.success) resolve(result.token);
-        else reject(new Error('登录失败'));
+        if (result.success && result.token) resolve(result.token);
+        else reject(new Error('登录失败: ' + (result.error || JSON.stringify(result))));
       });
     });
     req.write(data);
