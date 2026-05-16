@@ -4,6 +4,6 @@
     "miniprogram-ci": "^2.1.31"
   },
   "dependencies": {
-    "tdesign-miniprogram": "^1.14.0"
+    "tdesign-miniprogram": "^1.13.2"
   }
 }
