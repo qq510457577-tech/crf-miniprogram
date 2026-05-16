@@ -1,21 +1,20 @@
 const ci = require('miniprogram-ci');
+const path = require('path');
 
 const project = new ci.Project({
-  appid: 'wx51fce73370eaf709',
+  appid: 'wx41a6a2d519afd5ef',
   type: 'miniProgram',
-  projectPath: process.cwd() + '/miniprogram',
-  privateKeyPath: null, // 本地构建不需要私钥
+  projectPath: path.resolve(__dirname, 'miniprogram'),
+  privateKeyPath: path.resolve(__dirname, 'private.key'),
 });
 
-// 尝试构建 npm
 async function buildNpm() {
   try {
-    // 实际上 miniprogram-ci 主要用于上传，不能直接构建 npm
-    // 我们需要手动构建
-    console.log('请手动在微信开发者工具中执行：工具 -> 构建 npm');
-    console.log('或者，我们可以尝试使用webpack等工具手动构建');
+    console.log('构建 npm 包...');
+    const result = await ci.buildNpm(project);
+    console.log('✅ 构建成功:', JSON.stringify(result));
   } catch (error) {
-    console.error('构建失败：', error);
+    console.error('❌ 构建失败:', error.message);
   }
 }
 

@@ -69,7 +69,7 @@
     </view>
     <view wx:for="{{recentSubjects}}" wx:key="id" class="recent-item" bindtap="goToDetail" data-id="{{item.id}}">
       <view class="recent-left">
-        <view class="recent-avatar"><text>{{item.gender === '女' ? '?' : '?'}}</text></view>
+        <view class="recent-avatar"><t-icon name="{{item.gender === '女' ? 'gender-female' : 'user'}}" size="36" color="#fff" /></view>
         <view class="recent-info">
           <text class="recent-name">{{item.subjectUniqueId}}</text>
           <text class="recent-meta">{{item.gender || '未知'}} · {{item.age || '--'}}岁 · {{item.interventionGroup || '未分组'}}</text>

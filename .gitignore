@@ -5,3 +5,4 @@ miniprogram/node_modules/
 Thumbs.db
 .project.private.config.json
 node_modules
+private.key

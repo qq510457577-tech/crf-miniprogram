@@ -23,7 +23,7 @@
 
     <view wx:for="{{subjects}}" wx:key="id" class="subject-card" bindtap="goToDetail" data-id="{{item.id}}">
       <view class="card-header">
-        <view class="card-avatar">{{item.gender === '女' ? '?' : '?'}}</view>
+        <view class="card-avatar"><t-icon name="{{item.gender === '女' ? 'gender-female' : 'user'}}" size="32" color="#0052D9" /></view>
         <view class="card-title-row">
           <text class="card-title">{{item.subjectUniqueId}}</text>
           <t-tag wx:if="{{item.interventionGroup}}" theme="primary" size="small" variant="light">{{item.interventionGroup}}</t-tag>
