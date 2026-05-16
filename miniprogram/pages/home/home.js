@@ -22,7 +22,7 @@ Page({
         this.setData({ loading: true });
         try {
             const res = await api_1.subjectApi.list({ page: 1, pageSize: 5 });
-            const subjects = (res && res.data && res.data.list) || [];
+            const subjects = (res && res.data) || [];
             let b = 0, p = 0, c = 0;
             subjects.forEach((s) => {
                 if (s.interventionGroup === '八段锦训练')
@@ -32,7 +32,7 @@ Page({
                 else if (s.interventionGroup === 'PRE+八段锦联合训练')
                     c++;
             });
-            this.setData({ recentSubjects: subjects, stats: { totalSubjects: (res && res.data && res.data.total) || 0, baduanjin: b, pre: p, combined: c } });
+            this.setData({ recentSubjects: subjects, stats: { totalSubjects: (res && res.total) || 0, baduanjin: b, pre: p, combined: c } });
         }
         catch (err) {
             (0, toast_1.default)({ message: (err && err.message) || '加载失败', theme: 'error' });
