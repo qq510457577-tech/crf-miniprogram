@@ -35,7 +35,16 @@ function trpcQuery(endpoint, params) {
             header: headers,
             timeout: 30000,
             success(res) {
+                // 检查 HTTP 状态码
+                if (res.statusCode >= 400) {
+                    reject(new Error(`服务器错误 (${res.statusCode})`));
+                    return;
+                }
                 const data = res.data;
+                if (!data || typeof data !== 'object') {
+                    reject(new Error('服务器响应格式错误'));
+                    return;
+                }
                 if (data.error) {
                     reject(new Error(data.error.message || '请求失败'));
                 }
@@ -67,7 +76,16 @@ function trpcMutation(endpoint, data) {
             header: headers,
             timeout: 30000,
             success(res) {
+                // 检查 HTTP 状态码
+                if (res.statusCode >= 400) {
+                    reject(new Error(`服务器错误 (${res.statusCode})`));
+                    return;
+                }
                 const resData = res.data;
+                if (!resData || typeof resData !== 'object') {
+                    reject(new Error('服务器响应格式错误'));
+                    return;
+                }
                 if (resData.error) {
                     reject(new Error(resData.error.message || '请求失败'));
                 }
