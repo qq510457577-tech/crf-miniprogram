@@ -10,16 +10,16 @@
   ],
   "window": {
     "navigationBarTitleText": "CRF数据采集平台",
-    "navigationBarBackgroundColor": "#0A1628",
+    "navigationBarBackgroundColor": "#0052D9",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#0A0E14",
+    "backgroundColor": "#F5F5F5",
     "backgroundTextStyle": "dark"
   },
   "style": "v2",
   "tabBar": {
-    "color": "#6B7A8F",
-    "selectedColor": "#00F5D4",
-    "backgroundColor": "#0A1628",
+    "color": "#999999",
+    "selectedColor": "#0052D9",
+    "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
       {
