@@ -1,5 +1,5 @@
 "use strict";
-// 高科技风格图标组件 - 使用 Canvas 绘制精美矢量图标
+// 医疗风格图标组件 - 使用 Canvas 绘制矢量图标
 Component({
     properties: {
         name: {
@@ -16,12 +16,15 @@ Component({
         },
     },
     data: {
-        iconPath: '',
-        iconType: 'path',
+        ready: false,
     },
     lifetimes: {
         attached() {
-            this._updateIcon();
+            // 延迟初始化，等待组件完全挂载
+            setTimeout(() => {
+                this._updateIcon();
+                this.setData({ ready: true });
+            }, 100);
         },
     },
     observers: {
@@ -41,7 +44,6 @@ Component({
             const color = this.data.color;
             const size = this.data.size;
             
-            // SVG 图标路径映射
             const iconPaths = {
                 // 用户相关
                 'user': this._userPath(color),
@@ -98,71 +100,95 @@ Component({
                 'blood-pressure': this._bloodPressurePath(color),
                 'clipboard': this._clipboardPath(color),
                 'record': this._recordPath(color),
+                // 声音相关
+                'sound': this._soundPath(color),
             };
             
             const path = iconPaths[name] || this._defaultPath(color);
-            this.setData({ iconPath: path });
-            this._drawIcon();
+            this._drawIcon(path, size, color);
         },
         
-        _drawIcon() {
-            const path = this.data.iconPath;
-            if (!path) return;
-            
+        _drawIcon(pathData, size, color) {
             const query = this.createSelectorQuery();
-            query.select('#icon-canvas').fields({ node: true, size: true }).exec((res) => {
-                if (res[0]) {
-                    const canvas = res[0].node;
-                    const ctx = canvas.getContext('2d');
-                    const dpr = wx.getSystemInfoSync().pixelRatio;
-                    const size = this.data.size;
-                    
-                    canvas.width = size * dpr;
-                    canvas.height = size * dpr;
-                    canvas.style.width = size + 'px';
-                    canvas.style.height = size + 'px';
-                    
-                    ctx.scale(dpr, dpr);
-                    ctx.clearRect(0, 0, size, size);
-                    ctx.fillStyle = this.data.color;
-                    ctx.strokeStyle = this.data.color;
-                    ctx.lineWidth = 1.5;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    
-                    // 绘制路径
-                    if (Array.isArray(path)) {
-                        path.forEach(p => {
-                            if (p.type === 'path') {
-                                ctx.beginPath();
-                                ctx.fill(new Path2D(p.d));
-                            } else if (p.type === 'circle') {
-                                ctx.beginPath();
-                                ctx.arc(p.cx, p.cy, p.r, 0, Math.PI * 2);
-                                ctx.fill();
-                            } else if (p.type === 'rect') {
-                                ctx.fillRect(p.x, p.y, p.w, p.h);
-                            } else if (p.type === 'stroke') {
-                                ctx.beginPath();
-                                ctx.stroke(new Path2D(p.d));
-                            }
-                        });
-                    } else if (path.type === 'path') {
-                        ctx.beginPath();
-                        ctx.fill(new Path2D(path.d));
-                    } else if (path.type === 'circle') {
-                        ctx.beginPath();
-                        ctx.arc(path.cx, path.cy, path.r, 0, Math.PI * 2);
+            query.select('#icon-canvas').node((res) => {
+                if (!res || !res.node) {
+                    console.warn('[IconText] Canvas node not found');
+                    return;
+                }
+                
+                const canvas = res.node;
+                const ctx = canvas.getContext('2d');
+                const dpr = wx.getSystemInfoSync().pixelRatio || 2;
+                
+                // 设置 Canvas 尺寸
+                canvas.width = size * dpr;
+                canvas.height = size * dpr;
+                
+                // 清空画布
+                ctx.clearRect(0, 0, size * dpr, size * dpr);
+                
+                // 设置绘图样式
+                ctx.fillStyle = color;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1.5 * dpr;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
+                // 缩放到目标尺寸
+                ctx.scale(dpr, dpr);
+                
+                // 绘制图标
+                this._renderPath(ctx, pathData, size);
+            }).exec();
+        },
+        
+        _renderPath(ctx, pathData, size) {
+            if (!pathData) return;
+            
+            const elements = Array.isArray(pathData) ? pathData : [pathData];
+            
+            elements.forEach(el => {
+                if (!el) return;
+                
+                if (el.type === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(el.cx, el.cy, el.r, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (el.type === 'rect') {
+                    if (el.r) {
+                        // 圆角矩形
+                        this._roundRect(ctx, el.x, el.y, el.w, el.h, el.r);
                         ctx.fill();
-                    } else if (path.type === 'stroke') {
-                        ctx.beginPath();
-                        ctx.stroke(new Path2D(path.d));
+                    } else {
+                        ctx.fillRect(el.x, el.y, el.w, el.h);
                     }
+                } else if (el.type === 'path') {
+                    ctx.beginPath();
+                    ctx.fill(new Path2D(el.d));
+                } else if (el.type === 'stroke') {
+                    ctx.beginPath();
+                    ctx.stroke(new Path2D(el.d));
                 }
             });
         },
         
-        // 用户图标
+        _roundRect(ctx, x, y, w, h, r) {
+            r = Math.min(r, w / 2, h / 2);
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+        },
+        
+        // ========== 图标定义 ==========
+        
         _userPath(color) {
             return { type: 'path', d: 'M12 4a4 4 0 100 8 4 4 0 000-8zm0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z' };
         },
@@ -174,7 +200,6 @@ Component({
             ];
         },
         
-        // 性别图标
         _femalePath(color) {
             return { type: 'path', d: 'M12 2C9.24 2 7 4.24 7 7c0 2.85 2.92 7.21 5 9.88 2.11-2.69 5-7 5-9.88 0-2.76-2.24-5-5-5zm0 7.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z' };
         },
@@ -183,7 +208,6 @@ Component({
             return { type: 'path', d: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l4.59-4.58L18 11l-6 6z' };
         },
         
-        // 加号图标
         _addPath(color) {
             return [
                 { type: 'stroke', d: 'M12 5v14M5 12h14' }
@@ -197,17 +221,14 @@ Component({
             ];
         },
         
-        // 编辑图标
         _editPath(color) {
             return { type: 'path', d: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z' };
         },
         
-        // 删除图标
         _deletePath(color) {
             return { type: 'path', d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' };
         },
         
-        // 搜索图标
         _searchPath(color) {
             return [
                 { type: 'circle', cx: 10.5, cy: 10.5, r: 7.5 },
@@ -215,17 +236,14 @@ Component({
             ];
         },
         
-        // 设置图标
         _settingPath(color) {
             return { type: 'path', d: 'M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6a3.6 3.6 0 11-3.6-3.6 3.6 3.6 0 013.6 3.6z' };
         },
         
-        // 首页图标
         _homePath(color) {
             return { type: 'path', d: 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z' };
         },
         
-        // 箭头图标
         _chevronRightPath(color) {
             return { type: 'path', d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' };
         },
@@ -250,7 +268,6 @@ Component({
             return { type: 'path', d: 'M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' };
         },
         
-        // 勾选图标
         _checkPath(color) {
             return { type: 'path', d: 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z' };
         },
@@ -262,7 +279,6 @@ Component({
             ];
         },
         
-        // 关闭图标
         _closePath(color) {
             return { type: 'path', d: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z' };
         },
@@ -274,7 +290,6 @@ Component({
             ];
         },
         
-        // 信息图标
         _infoPath(color) {
             return [
                 { type: 'circle', cx: 12, cy: 12, r: 10 },
@@ -282,7 +297,6 @@ Component({
             ];
         },
         
-        // 警告图标
         _warningPath(color) {
             return [
                 { type: 'path', d: 'M12 2L1 21h22L12 2zm0 3.83L19.53 19H4.47L12 5.83z' },
@@ -290,7 +304,6 @@ Component({
             ];
         },
         
-        // 图表图标
         _chartPath(color) {
             return { type: 'path', d: 'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z' };
         },
@@ -310,17 +323,14 @@ Component({
             ];
         },
         
-        // 文件图标
         _filePath(color) {
             return { type: 'path', d: 'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z' };
         },
         
-        // 列表图标
         _listPath(color) {
             return { type: 'path', d: 'M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z' };
         },
         
-        // 其他图标
         _refreshPath(color) {
             return { type: 'path', d: 'M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z' };
         },
@@ -358,9 +368,7 @@ Component({
             ];
         },
         
-        // ========== 医疗场景图标 ==========
-        
-        // 医疗十字
+        // 医疗场景图标
         _healthPath(color) {
             return [
                 { type: 'rect', x: 10, y: 4, w: 4, h: 16 },
@@ -368,7 +376,6 @@ Component({
             ];
         },
         
-        // 医疗标志
         _medicalPath(color) {
             return [
                 { type: 'circle', cx: 12, cy: 12, r: 10 },
@@ -377,7 +384,6 @@ Component({
             ];
         },
         
-        // 药丸
         _pillPath(color) {
             return [
                 { type: 'rect', x: 3, y: 10, w: 18, h: 4, r: 2 },
@@ -385,21 +391,16 @@ Component({
             ];
         },
         
-        // 心跳/心电图
         _heartPulsePath(color) {
             return [
                 { type: 'path', d: 'M3 12h3l2-6 4 12 2-6h6' }
             ];
         },
         
-        // 心跳图标
         _heartbeatPath(color) {
-            return [
-                { type: 'path', d: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
-            ];
+            return { type: 'path', d: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' };
         },
         
-        // 体温计
         _thermometerPath(color) {
             return [
                 { type: 'circle', cx: 12, cy: 17, r: 3 },
@@ -408,7 +409,6 @@ Component({
             ];
         },
         
-        // 血压
         _bloodPressurePath(color) {
             return [
                 { type: 'circle', cx: 7, cy: 12, r: 4 },
@@ -417,17 +417,19 @@ Component({
             ];
         },
         
-        // 病历/剪贴板
         _clipboardPath(color) {
             return { type: 'path', d: 'M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z' };
         },
         
-        // 记录
         _recordPath(color) {
             return [
                 { type: 'rect', x: 4, y: 2, w: 16, h: 20, r: 2 },
                 { type: 'stroke', d: 'M8 7h8M8 11h8M8 15h5' }
             ];
+        },
+        
+        _soundPath(color) {
+            return { type: 'path', d: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z' };
         },
         
         _defaultPath(color) {
