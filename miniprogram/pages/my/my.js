@@ -34,7 +34,7 @@ Page({
                 name: userInfo.name || userInfo.username || '研究者',
                 avatar: userInfo.avatar || '',
                 role: userInfo.role || '研究者',
-                department: userInfo.department || '中山大学肿瘤防治中心',
+                department: userInfo.department || '',
             },
         });
     },

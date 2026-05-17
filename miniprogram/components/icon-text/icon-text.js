@@ -107,6 +107,12 @@ Component({
                 'hospital': this._hospitalPath(color),
                 'ambulance': this._ambulancePath(color),
                 'brain': this._brainPath(color),
+                // 场景定制图标
+                'people': this._peoplePath(color),
+                'activity': this._activityPath(color),
+                'dumbbell': this._dumbbellPath(color),
+                'partners': this._partnersPath(color),
+                'hexagon': this._hexagonPath(color),
             };
             
             const path = iconPaths[name] || this._defaultPath(color);
@@ -491,6 +497,52 @@ Component({
         
         _soundPath(color) {
             return { type: 'path', d: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z' };
+        },
+
+        // ========== 场景定制图标 ==========
+
+        _peoplePath(color) {
+            // 受试者列表 - 人物剪影（参考风格：圆头+梯形身体，填充）
+            return [
+                { type: 'circle', cx: 12, cy: 7, r: 3.5 },
+                { type: 'path', d: 'M7 11 Q12 20 17 11 Z' }
+            ];
+        },
+
+        _activityPath(color) {
+            // 八段锦 - 人体运动姿态（参考风格：简约线稿）
+            return [
+                { type: 'circle', cx: 12, cy: 7, r: 3 },
+                { type: 'stroke', d: 'M12 10v5' },
+                { type: 'stroke', d: 'M8 13 Q6 15 4 17' },
+                { type: 'stroke', d: 'M16 13 Q18 15 20 17' },
+                { type: 'stroke', d: 'M12 15 Q10 18 7 21' },
+                { type: 'stroke', d: 'M12 15 Q14 18 17 21' }
+            ];
+        },
+
+        _dumbbellPath(color) {
+            // PRE训练 - 进度环（参考风格：填充圆+弧线指示器）
+            return [
+                { type: 'circle', cx: 12, cy: 12, r: 7 },
+                { type: 'stroke', d: 'M12 5 A7 7 0 0 1 19 12' },
+                { type: 'circle', cx: 12, cy: 12, r: 2 }
+            ];
+        },
+
+        _partnersPath(color) {
+            // 联合训练 - 双人协作（参考风格：双圆头+体弧线）
+            return [
+                { type: 'circle', cx: 8, cy: 8, r: 3 },
+                { type: 'circle', cx: 16, cy: 8, r: 3 },
+                { type: 'path', d: 'M4 16 Q8 19 8 19 Q8 14 12 14 Q16 14 16 19 Q16 19 20 16 Z' },
+                { type: 'stroke', d: 'M12 6 V10 M10 8 H14' }
+            ];
+        },
+
+        _hexagonPath(color) {
+            // 六边形 - 用于设置（参考风格：正六边形描边）
+            return { type: 'stroke', d: 'M12 3 L19 7 L19 17 L12 21 L5 17 L5 7 Z' };
         },
 
         // 新增医疗图标

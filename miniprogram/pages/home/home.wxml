@@ -15,7 +15,7 @@
     <view class="quick-title">快捷入口</view>
     <view class="quick-grid">
       <view class="quick-item" bindtap="goToSubjectList">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #E3F2FD, #BBDEFB)"><icon-text name="user" size="32" color="#0088FF" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #E3F2FD, #BBDEFB)"><icon-text name="people" size="32" color="#0088FF" /></view>
         <text class="quick-label">受试者列表</text>
         <text class="quick-count">{{stats.totalSubjects || 0}}人</text>
       </view>
@@ -30,7 +30,7 @@
         <text class="quick-count">分析</text>
       </view>
       <view class="quick-item" bindtap="goToMy">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #FFEBEE, #FFCDD2)"><icon-text name="setting" size="32" color="#FF5252" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #FFEBEE, #FFCDD2)"><icon-text name="hexagon" size="32" color="#FF5252" /></view>
         <text class="quick-label">个人设置</text>
         <text class="quick-count">管理</text>
       </view>
@@ -41,17 +41,17 @@
     <view class="section-title">分组情况</view>
     <view class="stats-list">
       <view class="stat-card" bindtap="goToSubjectList" data-group="八段锦训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #E3F2FD, #BBDEFB)"><icon-text name="chart" size="28" color="#0088FF" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #E3F2FD, #BBDEFB)"><icon-text name="activity" size="28" color="#0088FF" /></view>
         <text class="stat-name">八段锦</text>
         <text class="stat-value">{{stats.baduanjin || 0}}人</text>
       </view>
       <view class="stat-card" bindtap="goToSubjectList" data-group="PRE训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #F3E5F5, #E1BEE7)"><icon-text name="chart-pie" size="28" color="#7C4DFF" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #F3E5F5, #E1BEE7)"><icon-text name="dumbbell" size="28" color="#7C4DFF" /></view>
         <text class="stat-name">PRE训练</text>
         <text class="stat-value">{{stats.pre || 0}}人</text>
       </view>
       <view class="stat-card" bindtap="goToSubjectList" data-group="PRE+八段锦联合训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #E8F5E9, #C8E6C9)"><icon-text name="connection" size="28" color="#00C853" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #E8F5E9, #C8E6C9)"><icon-text name="partners" size="28" color="#00C853" /></view>
         <text class="stat-name">联合训练</text>
         <text class="stat-value">{{stats.combined || 0}}人</text>
       </view>
