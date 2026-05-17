@@ -20,11 +20,11 @@ Component({
     },
     lifetimes: {
         attached() {
-            // 延迟初始化，等待组件完全挂载
+            // 延迟初始化，等待组件完全挂载（增加延迟避免 timeout）
             setTimeout(() => {
                 this._updateIcon();
                 this.setData({ ready: true });
-            }, 100);
+            }, 300);
         },
     },
     observers: {
