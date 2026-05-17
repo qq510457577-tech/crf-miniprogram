@@ -31,6 +31,7 @@ Page({
         this.setData({ loading: true });
         try {
             const res = await api_1.subjectApi.list({ pageSize: 1000 });
+            // 后端返回格式: { data: [...], total: N }
             const subjects = (res && res.data) || [];
             const stats = {
                 total: subjects.length,
@@ -56,13 +57,17 @@ Page({
             // 临床分期分布
             const stageMap = {};
             subjects.forEach((s) => {
-                const stage = s.clinicalStage || '未知';
-                stageMap[stage] = (stageMap[stage] || 0) + 1;
+                const stageMapKey = s.clinicalStage || 'unknown';
+                stageMap[stageMapKey] = (stageMap[stageMapKey] || 0) + 1;
             });
-            const stageOrder = ['I期', 'II期', 'III期', 'IV期', '未知'];
+            const stageOrder = ['I', 'II', 'III', 'IV', 'unknown'];
             const stageDistribution = stageOrder
                 .filter((s) => stageMap[s])
-                .map((stage) => ({ stage, count: stageMap[stage] }));
+                .map((stage) => ({
+                stage,
+                stageLabel: stage === 'unknown' ? '未知' : stage + '期',
+                count: stageMap[stage]
+            }));
             this.setData({ stats, tumorDistribution, stageDistribution, loading: false });
         }
         catch (err) {

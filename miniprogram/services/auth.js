@@ -19,16 +19,17 @@ function loginByPassword(username, password) {
                 if (res.statusCode === 200 && data.success) {
                     const rawUser = data.user || { id: 0, username };
                     const user = {
-                        id: (rawUser && rawUser.id) || 0,
-                        name: (rawUser && (rawUser.name || rawUser.displayName || rawUser.username)) || username,
-                        username: (rawUser && rawUser.username) || username,
-                        role: (rawUser && rawUser.role) || '',
+                        id: rawUser.id || 0,
+                        name: rawUser.name || rawUser.displayName || rawUser.username || username,
+                        username: rawUser.username || username,
+                        role: rawUser.role || '',
                     };
                     const token = data.token;
                     wx.setStorageSync('token', token);
                     wx.setStorageSync('userInfo', user);
                     resolve({ token, user });
-                } else {
+                }
+                else {
                     const errMsg = data.error || '登录失败，请检查用户名和密码';
                     reject(new Error(errMsg));
                 }
@@ -37,7 +38,8 @@ function loginByPassword(username, password) {
                 const errMsg = (err && err.errMsg) || '';
                 if (errMsg.indexOf('ssl') !== -1 || errMsg.indexOf('certificate') !== -1) {
                     reject(new Error('SSL证书验证失败，请在开发者工具中开启"不校验合法域名"'));
-                } else {
+                }
+                else {
                     reject(new Error('网络请求失败，请检查网络连接'));
                 }
             },

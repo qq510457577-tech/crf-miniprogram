@@ -34,7 +34,7 @@ Page({
     },
     async loadData(reset = false) {
         const { page, searchValue, selectedGroup, pageSize, subjects } = this.data;
-        this.setData({ loading: !reset, loadingMore: !reset && !reset });
+        this.setData({ loading: reset, loadingMore: !reset });
         try {
             const res = await api_1.subjectApi.list({
                 search: searchValue,
@@ -42,18 +42,20 @@ Page({
                 page: reset ? 1 : page,
                 pageSize,
             });
-            const data = (res && res.data) || [];
+            // 后端返回格式: { data: [...], total: N, page: 1, pageSize: 20 }
+            const dataItems = (res && res.data) || [];
+            const totalCount = (res && res.total) || 0;
             this.setData({
-                subjects: reset ? data : [...subjects, ...data],
-                total: (res && res.total) || 0,
-                hasMore: data.length >= pageSize,
+                subjects: reset ? dataItems : [...subjects, ...dataItems],
+                total: totalCount,
+                hasMore: dataItems.length >= pageSize,
                 page: reset ? 1 : page + 1,
                 loading: false,
                 loadingMore: false,
             });
         }
         catch (err) {
-            (0, toast_1.default)({ message: err.message || '加载失败', theme: 'error' });
+            (0, toast_1.default)({ message: (err && err.message) || '加载失败', theme: 'error' });
             this.setData({ loading: false, loadingMore: false });
         }
     },

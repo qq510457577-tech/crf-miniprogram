@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
+    "rootDir": "miniprogram",
     "ignoreDeprecations": "6.0",
     "paths": {
       "tdesign-miniprogram": ["./node_modules/tdesign-miniprogram"]
@@ -18,11 +19,11 @@
     "types": ["miniprogram-api-typings"]
   },
   "include": [
-    "miniprogram/**/*",
-    "miniprogram/types/**/*"
+    "miniprogram/**/*"
   ],
   "exclude": [
     "node_modules",
-    "miniprogram/miniprogram_npm"
+    "miniprogram/miniprogram_npm",
+    "miniprogram/node_modules"
   ]
 }

@@ -22,7 +22,9 @@ Page({
         this.setData({ loading: true });
         try {
             const res = await api_1.subjectApi.list({ page: 1, pageSize: 5 });
+            // 后端返回格式: { data: [...], total: N }
             const subjects = (res && res.data) || [];
+            const total = (res && res.total) || 0;
             let b = 0, p = 0, c = 0;
             subjects.forEach((s) => {
                 if (s.interventionGroup === '八段锦训练')
@@ -32,7 +34,7 @@ Page({
                 else if (s.interventionGroup === 'PRE+八段锦联合训练')
                     c++;
             });
-            this.setData({ recentSubjects: subjects, stats: { totalSubjects: (res && res.total) || 0, baduanjin: b, pre: p, combined: c } });
+            this.setData({ recentSubjects: subjects, stats: { totalSubjects: total, baduanjin: b, pre: p, combined: c } });
         }
         catch (err) {
             (0, toast_1.default)({ message: (err && err.message) || '加载失败', theme: 'error' });
@@ -47,7 +49,7 @@ Page({
         wx.navigateTo({ url: '/pages/subject-list/subject-list' + (group ? '?group=' + encodeURIComponent(group) : '') });
     },
     goToAddSubject() { wx.navigateTo({ url: '/pages/subject-detail/subject-detail?mode=create' }); },
-    goToStats() { wx.navigateTo({ url: '/pages/stats/stats' }); },
+    goToStats() { wx.switchTab({ url: '/pages/stats/stats' }); },
     goToMy() { wx.switchTab({ url: '/pages/my/my' }); },
     goToDetail(e) { wx.navigateTo({ url: '/pages/subject-detail/subject-detail?id=' + e.currentTarget.dataset.id }); },
 });

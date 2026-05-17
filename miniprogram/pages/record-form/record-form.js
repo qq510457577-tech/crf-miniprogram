@@ -172,7 +172,7 @@ Page({
                     });
                     break;
                 case 'weight':
-                    await api_1.weightApi.upsert(subjectId, {
+                    await api_1.weightApi.upsert(subjectId, formData.week || 1, {
                         recordDate: formData.recordDate,
                         weight: formData.weight,
                         bmi: formData.bmi,
@@ -180,7 +180,7 @@ Page({
                     });
                     break;
                 case 'bodyComposition':
-                    await api_1.bodyCompositionApi.upsert(subjectId, {
+                    await api_1.bodyCompositionApi.upsert(subjectId, formData.week || 1, {
                         recordDate: formData.recordDate,
                         calfCircumferenceLeft: formData.calfCircumferenceLeft,
                         calfCircumferenceRight: formData.calfCircumferenceRight,
@@ -190,14 +190,14 @@ Page({
                     });
                     break;
                 case 'gripStrength':
-                    await api_1.gripStrengthApi.upsert(subjectId, {
+                    await api_1.gripStrengthApi.upsert(subjectId, formData.week || 1, {
                         recordDate: formData.recordDate,
                         leftHand: formData.leftHand,
                         rightHand: formData.rightHand,
                     });
                     break;
                 case 'pgsga':
-                    await api_1.pgsgaApi.upsert(subjectId, {
+                    await api_1.pgsgaApi.upsert(subjectId, formData.week || 1, {
                         recordDate: formData.recordDate,
                         weightLoss: formData.weightLoss,
                         foodIntake: formData.foodIntake,
@@ -210,7 +210,7 @@ Page({
                     });
                     break;
                 case 'appetite':
-                    await api_1.appetiteApi.upsert(subjectId, {
+                    await api_1.appetiteApi.upsert(subjectId, formData.week || 1, {
                         recordDate: formData.recordDate,
                         score: formData.score,
                         change: formData.change,
@@ -219,7 +219,7 @@ Page({
                     });
                     break;
                 case 'inflammation':
-                    await api_1.inflammationApi.upsert(subjectId, {
+                    await api_1.inflammationApi.upsert(subjectId, formData.week || 1, {
                         recordDate: formData.recordDate,
                         crp: formData.crp,
                         albumin: formData.albumin,

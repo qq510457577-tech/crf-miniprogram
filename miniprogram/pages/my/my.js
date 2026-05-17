@@ -68,14 +68,15 @@ Page({
         }).then(async (res) => {
             if (res.confirm) {
                 try {
+                    // 先保存登录凭证
+                    const token = wx.getStorageSync('token');
+                    const userInfo = wx.getStorageSync('userInfo');
                     // 清除 Storage
                     wx.clearStorageSync();
-                    // 重新设置登录状态
-                    const app = getApp();
-                    if (app.globalData.isLoggedIn) {
-                        // 保留 token
-                        const token = wx.getStorageSync('token');
+                    // 恢复登录状态（不清除用户身份）
+                    if (token) {
                         wx.setStorageSync('token', token);
+                        wx.setStorageSync('userInfo', userInfo);
                     }
                     (0, toast_1.default)({ message: '缓存已清除', theme: 'success' });
                     this.calculateCacheSize();
