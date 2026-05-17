@@ -12,7 +12,7 @@ Component({
         },
         color: {
             type: String,
-            value: '#333',
+            value: '#0088FF',
         },
     },
     data: {
@@ -102,6 +102,11 @@ Component({
                 'record': this._recordPath(color),
                 // 声音相关
                 'sound': this._soundPath(color),
+                // 新增医疗图标
+                'injection': this._injectionPath(color),
+                'hospital': this._hospitalPath(color),
+                'ambulance': this._ambulancePath(color),
+                'brain': this._brainPath(color),
             };
             
             const path = iconPaths[name] || this._defaultPath(color);
@@ -127,12 +132,15 @@ Component({
                 // 清空画布
                 ctx.clearRect(0, 0, size * dpr, size * dpr);
                 
-                // 设置绘图样式
+                // 设置绘图样式 - 更现代的视觉效果
                 ctx.fillStyle = color;
                 ctx.strokeStyle = color;
-                ctx.lineWidth = 1.5 * dpr;
+                ctx.lineWidth = 2 * dpr; // 稍粗的线条，更清晰
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
+                // 添加微妙的阴影效果，让图标更立体
+                ctx.shadowColor = color + '20'; // 透明阴影
+                ctx.shadowBlur = 2 * dpr;
                 
                 // 缩放到目标尺寸
                 ctx.scale(dpr, dpr);
@@ -368,32 +376,36 @@ Component({
             ];
         },
         
-        // 医疗场景图标
+        // 医疗场景图标 - 优化设计
         _healthPath(color) {
+            // 健康图标：心形 + 脉搏
             return [
-                { type: 'rect', x: 10, y: 4, w: 4, h: 16 },
-                { type: 'rect', x: 4, y: 10, w: 16, h: 4 }
+                { type: 'path', d: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { type: 'stroke', d: 'M8 12h2l1-2 2 4 1-2h2' }
             ];
         },
         
         _medicalPath(color) {
+            // 医疗图标：蛇杖符号（阿斯克勒庇俄斯之杖）
             return [
-                { type: 'circle', cx: 12, cy: 12, r: 10 },
-                { type: 'rect', x: 10, y: 6, w: 4, h: 12 },
-                { type: 'rect', x: 6, y: 10, w: 12, h: 4 }
+                { type: 'path', d: 'M12 2a2 2 0 00-2 2v5a2 2 0 004 0V4a2 2 0 00-2-2z' },
+                { type: 'stroke', d: 'M5 12c0-3 1.5-5 3-6M19 12c0-3-1.5-5-3-6' },
+                { type: 'path', d: 'M8 12a4 4 0 018 0v2a4 4 0 01-8 0v-2z' }
             ];
         },
         
         _pillPath(color) {
+            // 药丸图标：更现代的设计
             return [
-                { type: 'rect', x: 3, y: 10, w: 18, h: 4, r: 2 },
-                { type: 'path', d: 'M12 6v12' }
+                { type: 'path', d: 'M7 9h10a2.5 2.5 0 010 5H7a2.5 2.5 0 010-5z' },
+                { type: 'path', d: 'M7 9v5M17 9v5' }
             ];
         },
         
         _heartPulsePath(color) {
+            // 脉搏图标：动态的心率线
             return [
-                { type: 'path', d: 'M3 12h3l2-6 4 12 2-6h6' }
+                { type: 'stroke', d: 'M2 12h3l2-4 3 8 2-12 3 6h3' }
             ];
         },
         
@@ -402,36 +414,88 @@ Component({
         },
         
         _thermometerPath(color) {
+            // 体温计图标：更现代的设计
             return [
-                { type: 'circle', cx: 12, cy: 17, r: 3 },
-                { type: 'rect', x: 10, y: 4, w: 4, h: 10, r: 2 },
-                { type: 'circle', cx: 12, cy: 17, r: 1.5 }
+                { type: 'rect', x: 9, y: 3, w: 6, h: 12, r: 3 },
+                { type: 'circle', cx: 12, cy: 18, r: 4 },
+                { type: 'rect', x: 10.5, y: 6, w: 3, h: 8, r: 1.5 },
+                { type: 'circle', cx: 12, cy: 18, r: 2 }
             ];
         },
         
         _bloodPressurePath(color) {
+            // 血压图标：双圆设计表示高低压
             return [
-                { type: 'circle', cx: 7, cy: 12, r: 4 },
-                { type: 'circle', cx: 17, cy: 12, r: 4 },
-                { type: 'stroke', d: 'M11 12h2' }
+                { type: 'circle', cx: 8, cy: 12, r: 4 },
+                { type: 'circle', cx: 16, cy: 12, r: 4 },
+                { type: 'stroke', d: 'M12 12h2' },
+                { type: 'path', d: 'M8 8v-2M8 16v2M16 8v-2M16 16v2' }
             ];
         },
         
         _clipboardPath(color) {
-            return { type: 'path', d: 'M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z' };
+            // 病历夹图标
+            return [
+                { type: 'rect', x: 4, y: 3, w: 16, h: 18, r: 2 },
+                { type: 'rect', x: 9, y: 1, w: 6, h: 4, r: 1 },
+                { type: 'stroke', d: 'M8 9h8M8 12h8M8 15h5' }
+            ];
         },
         
         _recordPath(color) {
+            // 记录图标：病历记录本
             return [
                 { type: 'rect', x: 4, y: 2, w: 16, h: 20, r: 2 },
-                { type: 'stroke', d: 'M8 7h8M8 11h8M8 15h5' }
+                { type: 'stroke', d: 'M8 7h8M8 11h8M8 15h5' },
+                { type: 'circle', cx: 17, cy: 17, r: 2 }
             ];
         },
         
         _soundPath(color) {
             return { type: 'path', d: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z' };
         },
-        
+
+        // 新增医疗图标
+        _injectionPath(color) {
+            // 注射器图标
+            return [
+                { type: 'rect', x: 9, y: 2, w: 6, h: 12, r: 1 },
+                { type: 'rect', x: 10, y: 14, w: 4, h: 2 },
+                { type: 'stroke', d: 'M8 19h8M12 16v3' },
+                { type: 'rect', x: 8, y: 4, w: 8, h: 6, r: 1 }
+            ];
+        },
+
+        _hospitalPath(color) {
+            // 医院图标
+            return [
+                { type: 'rect', x: 6, y: 4, w: 12, h: 16, r: 2 },
+                { type: 'rect', x: 10, y: 8, w: 4, h: 2 },
+                { type: 'rect', x: 10, y: 12, w: 4, h: 2 }
+            ];
+        },
+
+        _ambulancePath(color) {
+            // 救护车图标
+            return [
+                { type: 'rect', x: 2, y: 8, w: 14, h: 8, r: 1 },
+                { type: 'rect', x: 16, y: 10, w: 4, h: 6, r: 1 },
+                { type: 'circle', cx: 6, cy: 18, r: 2 },
+                { type: 'circle', cx: 18, cy: 18, r: 2 },
+                { type: 'stroke', d: 'M4 11h3M4 14h3' }
+            ];
+        },
+
+        _brainPath(color) {
+            // 大脑图标
+            return [
+                { type: 'path', d: 'M12 4c-2.5 0-4.5 1-5.5 2.5C5.5 8 4.5 10 5 12c0.5 2 2 3.5 3.5 4.5' },
+                { type: 'path', d: 'M12 4c2.5 0 4.5 1 5.5 2.5C18.5 8 19.5 10 19 12c-0.5 2-2 3.5-3.5 4.5' },
+                { type: 'path', d: 'M12 4v16' },
+                { type: 'stroke', d: 'M8.5 9c1.5-1 3.5-1 5 0M8.5 12c1.5-1 3.5-1 5 0M8.5 15c1.5-1 3.5-1 5 0' }
+            ];
+        },
+
         _defaultPath(color) {
             return { type: 'circle', cx: 12, cy: 12, r: 4 };
         },
