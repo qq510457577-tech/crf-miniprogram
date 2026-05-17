@@ -22,6 +22,15 @@ Page({
         inflammationRecords: [],
     },
     onLoad(options) {
+        // mode=create 表示新增受试者 - 跳转到表单页面
+        if (options.mode === 'create') {
+            wx.navigateTo({
+                url: `/pages/record-form/record-form?mode=create&type=subject`,
+            });
+            // 延迟返回，避免页面闪烁
+            setTimeout(() => wx.navigateBack(), 100);
+            return;
+        }
         if (options.id) {
             const id = parseInt(options.id, 10);
             this.setData({ subjectId: id });

@@ -114,40 +114,78 @@ Component({
         },
         
         _drawIcon(pathData, size, color) {
-            const query = this.createSelectorQuery();
-            query.select('#icon-canvas').node((res) => {
-                if (!res || !res.node) {
-                    console.warn('[IconText] Canvas node not found');
-                    return;
-                }
-                
-                const canvas = res.node;
-                const ctx = canvas.getContext('2d');
-                const dpr = wx.getSystemInfoSync().pixelRatio || 2;
-                
-                // 设置 Canvas 尺寸
-                canvas.width = size * dpr;
-                canvas.height = size * dpr;
-                
-                // 清空画布
-                ctx.clearRect(0, 0, size * dpr, size * dpr);
-                
-                // 设置绘图样式 - 更现代的视觉效果
-                ctx.fillStyle = color;
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 2 * dpr; // 稍粗的线条，更清晰
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                // 添加微妙的阴影效果，让图标更立体
-                ctx.shadowColor = color + '20'; // 透明阴影
-                ctx.shadowBlur = 2 * dpr;
-                
-                // 缩放到目标尺寸
-                ctx.scale(dpr, dpr);
-                
-                // 绘制图标
-                this._renderPath(ctx, pathData, size);
-            }).exec();
+            try {
+                const query = this.createSelectorQuery();
+                // 添加超时保护
+                const timeoutId = setTimeout(() => {
+                    console.warn('[IconText] Query timeout, retrying...');
+                    // 重试一次
+                    this._drawIconRetry(pathData, size, color);
+                }, 1000);
+
+                query.select('#icon-canvas').node((res) => {
+                    clearTimeout(timeoutId);
+                    if (!res || !res.node) {
+                        console.warn('[IconText] Canvas node not found');
+                        return;
+                    }
+
+                    const canvas = res.node;
+                    const ctx = canvas.getContext('2d');
+                    const dpr = wx.getSystemInfoSync().pixelRatio || 2;
+
+                    // 设置 Canvas 尺寸
+                    canvas.width = size * dpr;
+                    canvas.height = size * dpr;
+
+                    // 清空画布
+                    ctx.clearRect(0, 0, size * dpr, size * dpr);
+
+                    // 设置绘图样式 - 更现代的视觉效果
+                    ctx.fillStyle = color;
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2 * dpr; // 稍粗的线条，更清晰
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    // 添加微妙的阴影效果，让图标更立体
+                    ctx.shadowColor = color + '20'; // 透明阴影
+                    ctx.shadowBlur = 2 * dpr;
+
+                    // 缩放到目标尺寸
+                    ctx.scale(dpr, dpr);
+
+                    // 绘制图标
+                    this._renderPath(ctx, pathData, size);
+                }).exec();
+            } catch (e) {
+                console.error('[IconText] Draw error:', e);
+            }
+        },
+
+        _drawIconRetry(pathData, size, color) {
+            try {
+                const query = this.createSelectorQuery();
+                query.select('#icon-canvas').node((res) => {
+                    if (!res || !res.node) {
+                        return;
+                    }
+                    const canvas = res.node;
+                    const ctx = canvas.getContext('2d');
+                    const dpr = wx.getSystemInfoSync().pixelRatio || 2;
+                    canvas.width = size * dpr;
+                    canvas.height = size * dpr;
+                    ctx.clearRect(0, 0, size * dpr, size * dpr);
+                    ctx.fillStyle = color;
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2 * dpr;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.scale(dpr, dpr);
+                    this._renderPath(ctx, pathData, size);
+                }).exec();
+            } catch (e) {
+                console.error('[IconText] Retry failed:', e);
+            }
         },
         
         _renderPath(ctx, pathData, size) {
