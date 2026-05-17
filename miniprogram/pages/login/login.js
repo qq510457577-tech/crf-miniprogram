@@ -9,7 +9,9 @@ Page({
     data: { statusBarHeight: 20, username: '', password: '', loading: false },
     onLoad() {
         const app = getApp();
-        this.setData({ statusBarHeight: app.globalData.statusBarHeight || 20 });
+        if (app && app.globalData) {
+            this.setData({ statusBarHeight: app.globalData.statusBarHeight || 20 });
+        }
         if (wx.getStorageSync('token'))
             wx.switchTab({ url: '/pages/home/home' });
     },
@@ -29,7 +31,9 @@ Page({
         try {
             const result = await (0, auth_1.loginByPassword)(username, password);
             const app = getApp();
-            app.login(result.token, result.user);
+            if (app && app.login) {
+                app.login(result.token, result.user);
+            }
             (0, toast_1.default)({ context: this, selector: '#t-toast', message: '登录成功', theme: 'success' });
             setTimeout(() => wx.switchTab({ url: '/pages/home/home' }), 800);
         }

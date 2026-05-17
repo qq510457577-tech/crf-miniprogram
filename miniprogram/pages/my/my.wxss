@@ -1,9 +1,26 @@
-/* =============== 个人中心页 - 专业医疗风格个人信息 =============== */
+/* =============== 个人中心页 - 科技医疗风格 =============== */
 
 .page-container {
   min-height: 100vh;
   background: var(--bg);
   padding-bottom: env(safe-area-inset-bottom);
+  position: relative;
+}
+
+/* 背景网格 */
+.page-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 136, 255, 0.03) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1rpx, transparent 1rpx);
+  background-size: 60rpx 60rpx;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .navbar-title {
@@ -11,42 +28,37 @@
   font-weight: 600 !important;
 }
 
-/* ====== 用户信息卡片（精美渐变） ====== */
+/* ====== 用户信息卡片（科技渐变 + 发光） ====== */
 .user-card {
   margin: var(--spacing-md) var(--spacing-md);
   padding: var(--spacing-lg) var(--spacing-lg);
-  background: var(--brand-gradient);
+  background: linear-gradient(135deg, #0A1628 0%, #1A2F4E 50%, #0D3D56 100%);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   color: #ffffff;
-  box-shadow: var(--shadow-brand);
+  box-shadow: var(--shadow-lg), 0 0 60rpx rgba(0, 245, 212, 0.15);
   position: relative;
   overflow: hidden;
+  border: 1rpx solid rgba(0, 245, 212, 0.2);
 }
 
-/* 装饰圆点 */
-.user-card::before,
-.user-card::after {
+/* 装饰光效 */
+.user-card::before {
   content: '';
   position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  pointer-events: none;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(ellipse at 30% 30%, rgba(0, 245, 212, 0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 70%, rgba(0, 136, 255, 0.08) 0%, transparent 50%);
+  animation: cardGlow 6s ease-in-out infinite alternate;
 }
-.user-card::before {
-  width: 300rpx;
-  height: 300rpx;
-  background: #ffffff;
-  top: -120rpx;
-  right: -80rpx;
-}
-.user-card::after {
-  width: 200rpx;
-  height: 200rpx;
-  background: #ffffff;
-  bottom: -80rpx;
-  left: -40rpx;
+
+@keyframes cardGlow {
+  0% { opacity: 0.5; transform: translate(0, 0); }
+  100% { opacity: 1; transform: translate(10rpx, 10rpx); }
 }
 
 .avatar-wrapper {
@@ -59,8 +71,12 @@
   width: 120rpx;
   height: 120rpx;
   border-radius: 60rpx;
-  background: rgba(255, 255, 255, 0.2);
-  border: 4rpx solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, var(--brand-1), var(--neon-cyan));
+  border: 4rpx solid rgba(0, 245, 212, 0.4);
+  box-shadow: 0 0 40rpx rgba(0, 245, 212, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .role-badge {
@@ -68,14 +84,15 @@
   bottom: -8rpx;
   left: 50%;
   transform: translateX(-50%);
-  padding: 4rpx 20rpx;
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--brand-1);
+  padding: 6rpx 24rpx;
+  background: rgba(0, 245, 212, 0.2);
+  backdrop-filter: blur(10px);
+  color: var(--neon-cyan);
   font-size: 20rpx;
   font-weight: 600;
-  border-radius: 16rpx;
+  border-radius: 20rpx;
   white-space: nowrap;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(0, 245, 212, 0.3);
 }
 
 .user-info {
@@ -87,13 +104,13 @@
   font-size: 42rpx;
   font-weight: 700;
   margin-bottom: 6rpx;
-  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  text-shadow: 0 0 30rpx rgba(0, 245, 212, 0.5);
 }
 
 .user-dept {
   font-size: var(--font-md);
-  opacity: 0.8;
-  font-weight: 300;
+  opacity: 0.7;
+  font-weight: 400;
 }
 
 /* ====== 快捷操作 ====== */
@@ -103,26 +120,44 @@
   margin: 0 var(--spacing-md) var(--spacing-md);
   padding: var(--spacing-lg);
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--border);
+  position: relative;
+  z-index: 1;
 }
 
 .quick-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-sm);
+  transition: var(--transition-glow);
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.quick-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(0, 136, 255, 0.05));
+  opacity: 0;
   transition: var(--transition-fast);
-  border-radius: var(--radius-sm);
+}
+
+.quick-item:active::before {
+  opacity: 1;
 }
 
 .quick-item:active {
-  background: var(--brand-gradient-light);
   transform: scale(0.95);
 }
 
 .quick-icon {
-  font-size: 48rpx;
+  font-size: 52rpx;
   margin-bottom: var(--spacing-xs);
 }
 
@@ -135,31 +170,48 @@
 /* ====== 设置区域 ====== */
 .settings-section {
   margin: 0 var(--spacing-md) var(--spacing-md);
+  position: relative;
+  z-index: 1;
 }
 
 .settings-section t-cell-group {
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--border);
 }
 
 .settings-section t-cell-group .t-cell-group__title {
   padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xs);
   font-size: var(--font-sm);
-  color: var(--text-tertiary);
-  font-weight: 500;
+  color: var(--neon-cyan);
+  font-weight: 600;
   letter-spacing: 2rpx;
+  text-transform: uppercase;
+  background: rgba(0, 245, 212, 0.05);
 }
 
-/* TDesign Cell 样式覆盖 */
+/* TDesign Cell 深色样式覆盖 */
 .settings-section t-cell {
   --td-cell-left-text-color: var(--text-primary);
   --td-cell-note-color: var(--text-tertiary);
+  --td-cell-background-color: transparent;
 }
 
 .t-cell--bordered {
   border: none !important;
+  background: transparent !important;
+}
+
+.t-cell {
+  background: rgba(255, 255, 255, 0.02) !important;
+  transition: var(--transition-fast) !important;
+}
+
+.t-cell:active {
+  background: rgba(0, 245, 212, 0.08) !important;
 }
 
 /* ====== 底部信息 ====== */
@@ -168,6 +220,8 @@
   flex-direction: column;
   align-items: center;
   padding: var(--spacing-xl) 0;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-text {
@@ -179,14 +233,18 @@
 
 .footer-version {
   font-size: var(--font-sm);
-  color: var(--text-placeholder);
+  color: var(--text-tertiary);
 }
 
 /* ====== TDesign Dialog 覆盖 ====== */
 t-dialog .t-dialog {
-  --td-dialog-radius: 20rpx;
+  --td-dialog-radius: 24rpx;
+  --td-dialog-bg-color: var(--bg-card);
 }
 
 t-dialog .t-dialog__wrap {
-  border-radius: 20rpx !important;
+  border-radius: 24rpx !important;
+  backdrop-filter: blur(20px) !important;
+  background: var(--bg-card) !important;
+  border: 1rpx solid var(--border) !important;
 }

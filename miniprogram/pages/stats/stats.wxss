@@ -1,8 +1,25 @@
-/* =============== 数据统计页 - 医疗数据仪表盘 =============== */
+/* =============== 数据统计页 - 科技医疗风格仪表盘 =============== */
 
 .page-container {
   min-height: 100vh;
   background: var(--bg);
+  position: relative;
+}
+
+/* 背景网格 */
+.page-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 136, 255, 0.03) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1rpx, transparent 1rpx);
+  background-size: 60rpx 60rpx;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .navbar-title {
@@ -10,11 +27,13 @@
   font-weight: 600 !important;
 }
 
-/* ====== 分组统计卡片（三色渐变） ====== */
+/* ====== 分组统计卡片（科技渐变） ====== */
 .group-stats {
   display: flex;
   gap: var(--spacing-sm);
-  padding: 0 var(--spacing-md);
+  padding: var(--spacing-md);
+  position: relative;
+  z-index: 1;
 }
 
 .stat-card {
@@ -26,22 +45,46 @@
   align-items: center;
   gap: var(--spacing-xs);
   color: #ffffff;
+  transition: var(--transition-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
   transition: var(--transition-fast);
-  box-shadow: var(--shadow-sm);
+}
+
+.stat-card:active::before {
+  opacity: 1;
 }
 
 .stat-card:active {
   transform: scale(0.95);
 }
 
-.stat-card-1 { background: linear-gradient(135deg, #0052D9, #366EF4); }
-.stat-card-2 { background: linear-gradient(135deg, #ED7B2F, #F59E4C); }
-.stat-card-3 { background: linear-gradient(135deg, #00A870, #34D399); }
+.stat-card-1 { 
+  background: linear-gradient(135deg, #0088FF, #00BFFF); 
+  box-shadow: 0 8rpx 32rpx rgba(0, 136, 255, 0.4);
+}
+.stat-card-2 { 
+  background: linear-gradient(135deg, #7C3AED, #A855F7); 
+  box-shadow: 0 8rpx 32rpx rgba(124, 58, 237, 0.4);
+}
+.stat-card-3 { 
+  background: linear-gradient(135deg, #00E676, #00F5D4); 
+  box-shadow: 0 8rpx 32rpx rgba(0, 230, 118, 0.4);
+}
 
 .stat-card .stat-value {
   font-size: var(--font-3xl);
   font-weight: 700;
   line-height: 1.2;
+  text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.2);
 }
 
 .stat-card .stat-label {
@@ -57,14 +100,19 @@
 
 /* ====== 总览卡片 ====== */
 .overview-card {
-  margin: var(--spacing-md);
+  margin: 0 var(--spacing-md) var(--spacing-md);
   padding: var(--spacing-lg);
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--border);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 1;
 }
 
 .overview-item {
@@ -77,7 +125,8 @@
 .overview-value {
   font-size: var(--font-2xl);
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 20rpx rgba(0, 245, 212, 0.3);
 }
 
 .overview-label {
@@ -91,13 +140,17 @@
   background: var(--border);
 }
 
-/* ====== 肿瘤分布横向柱状图 ====== */
+/* ====== 分布卡片 ====== */
 .distribution-card {
   margin: 0 var(--spacing-md) var(--spacing-md);
   padding: var(--spacing-lg);
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--border);
+  position: relative;
+  z-index: 1;
 }
 
 .distribution-item {
@@ -122,23 +175,25 @@
 
 .distribution-count {
   font-size: var(--font-sm);
-  color: var(--text-secondary);
-  font-weight: 500;
+  color: var(--neon-cyan);
+  font-weight: 600;
 }
 
 .distribution-bar {
   height: 28rpx;
-  background: var(--border-light);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 14rpx;
   overflow: hidden;
+  border: 1rpx solid var(--border);
 }
 
 .distribution-fill {
   height: 100%;
-  background: var(--brand-gradient);
+  background: linear-gradient(90deg, var(--brand-1), var(--neon-cyan));
   border-radius: 14rpx;
   transition: width 0.6s ease;
   min-width: 8rpx;
+  box-shadow: 0 0 16rpx rgba(0, 245, 212, 0.3);
 }
 
 /* ====== 临床分期徽章 ====== */
@@ -146,11 +201,15 @@
   margin: 0 var(--spacing-md) var(--spacing-md);
   padding: var(--spacing-lg);
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--spacing-sm);
-  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--border);
+  position: relative;
+  z-index: 1;
 }
 
 .stage-item {
@@ -158,26 +217,27 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: #F8F9FB;
+  background: rgba(255, 255, 255, 0.03);
   border-radius: var(--radius-sm);
+  border: 1rpx solid var(--border);
 }
 
 .stage-badge {
-  padding: 4rpx 16rpx;
+  padding: 6rpx 18rpx;
   border-radius: 20rpx;
   font-size: var(--font-sm);
   font-weight: 600;
 }
 
-.stage-I { background: #E8F5E9; color: #2E7D32; }
-.stage-II { background: #E3F2FD; color: #1565C0; }
-.stage-III { background: #FFF3E0; color: #E65100; }
-.stage-IV { background: #FFF5F5; color: #C62828; }
-.stage-unknown { background: #F5F5F5; color: #9E9E9E; }
+.stage-I { background: rgba(0, 230, 118, 0.15); color: #00E676; border: 1rpx solid rgba(0, 230, 118, 0.3); }
+.stage-II { background: rgba(0, 136, 255, 0.15); color: #00BFFF; border: 1rpx solid rgba(0, 136, 255, 0.3); }
+.stage-III { background: rgba(124, 58, 237, 0.15); color: #A855F7; border: 1rpx solid rgba(124, 58, 237, 0.3); }
+.stage-IV { background: rgba(255, 82, 82, 0.15); color: #FF5252; border: 1rpx solid rgba(255, 82, 82, 0.3); }
+.stage-unknown { background: rgba(255, 255, 255, 0.05); color: var(--text-tertiary); border: 1rpx solid var(--border); }
 
 .stage-count {
   font-size: var(--font-base);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
@@ -186,8 +246,12 @@
   margin: 0 var(--spacing-md) var(--spacing-xl);
   padding: var(--spacing-md) var(--spacing-lg);
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--border);
+  position: relative;
+  z-index: 1;
 }
 
 .export-item {

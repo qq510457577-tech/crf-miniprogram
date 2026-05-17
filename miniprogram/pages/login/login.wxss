@@ -1,49 +1,67 @@
-/* =============== 登录页 - 精美渐变 + 玻璃质感表单 =============== */
+/* =============== 登录页 - 科技医疗风格 =============== */
 
+/* 动态渐变背景动画 */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+@keyframes meshMove {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(50rpx); }
+}
+
 .page {
   min-height: 100vh;
-  background: linear-gradient(-45deg, #0052D9, #1a6bff, #4F7FF7, #2563EB);
+  background: linear-gradient(135deg, #0A1628 0%, #1A2F4E 25%, #0D2847 50%, #1A2F4E 75%, #0A1628 100%);
   background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  animation: gradientShift 12s ease infinite;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
-/* ====== 装饰图形 ====== */
-.page::before,
+/* 科技网格背景 */
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 245, 212, 0.05) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(0, 245, 212, 0.05) 1rpx, transparent 1rpx);
+  background-size: 50rpx 50rpx;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center top;
+  animation: meshMove 4s ease-in-out infinite alternate;
+  opacity: 0.8;
+}
+
+/* 动态光效 */
 .page::after {
   content: '';
   position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  pointer-events: none;
-}
-.page::before {
   width: 600rpx;
   height: 600rpx;
-  background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 245, 212, 0.15) 0%, transparent 70%);
   top: -200rpx;
-  right: -150rpx;
+  right: -200rpx;
+  animation: floatGlow 6s ease-in-out infinite;
 }
-.page::after {
-  width: 400rpx;
-  height: 400rpx;
-  background: radial-gradient(circle, #ffffff 0%, transparent 70%);
-  bottom: 100rpx;
-  left: -100rpx;
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  50% { transform: translate(-30rpx, 30rpx) scale(1.1); opacity: 1; }
 }
 
 /* ====== 顶栏 ====== */
 .nav-bar {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   padding: 0 var(--spacing-lg) var(--spacing-sm);
 }
 
@@ -52,37 +70,54 @@
   font-weight: 700;
   color: #ffffff;
   text-align: center;
-  letter-spacing: 2rpx;
+  letter-spacing: 4rpx;
+  text-shadow: 0 0 30rpx rgba(0, 245, 212, 0.5);
 }
 
 /* ====== Logo 区域 ====== */
 .logo-section {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80rpx 0 60rpx;
+  padding: 100rpx 0 60rpx;
 }
 
 .logo-icon {
   width: 180rpx;
   height: 180rpx;
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(135deg, rgba(0, 245, 212, 0.2), rgba(0, 136, 255, 0.15));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 48rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 36rpx;
-  border: 2rpx solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.12);
-  transition: var(--transition-normal);
+  margin-bottom: 40rpx;
+  border: 2rpx solid rgba(0, 245, 212, 0.3);
+  box-shadow: 0 0 60rpx rgba(0, 245, 212, 0.2), 0 16rpx 48rpx rgba(0, 0, 0, 0.3);
+  transition: var(--transition-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmerBorder 3s ease-in-out infinite;
+}
+
+@keyframes shimmerBorder {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
 }
 
 .logo-icon:active {
   transform: scale(0.95);
+  box-shadow: 0 0 80rpx rgba(0, 245, 212, 0.4), 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
 }
 
 .logo-title {
@@ -91,36 +126,49 @@
   color: #ffffff;
   text-align: center;
   margin-bottom: 12rpx;
-  text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.15);
-  letter-spacing: 1rpx;
+  text-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.3);
+  letter-spacing: 2rpx;
 }
 
 .logo-sub {
   font-size: var(--font-sm);
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 4rpx;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 6rpx;
   font-weight: 300;
+  text-transform: uppercase;
 }
 
-/* ====== 表单卡片（玻璃质感） ====== */
+/* ====== 表单卡片（玻璃质感深色） ====== */
 .form-section {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   flex: 1;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(10, 22, 40, 0.85);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border-radius: 56rpx 56rpx 0 0;
   padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
-  box-shadow: 0 -8rpx 48rpx rgba(0, 0, 0, 0.08);
+  border-top: 1rpx solid rgba(0, 245, 212, 0.2);
+  box-shadow: 0 -8rpx 48rpx rgba(0, 0, 0, 0.3);
 }
 
 .form-title {
   font-size: var(--font-2xl);
   font-weight: 700;
-  color: var(--text-primary);
+  color: #ffffff;
   margin-bottom: 48rpx;
-  letter-spacing: 1rpx;
+  letter-spacing: 2rpx;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.form-title::before {
+  content: '';
+  width: 8rpx;
+  height: 40rpx;
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-blue));
+  border-radius: 4rpx;
 }
 
 /* 表单项 */
@@ -134,29 +182,36 @@
   color: var(--text-secondary);
   margin-bottom: var(--spacing-xs);
   font-weight: 500;
-  letter-spacing: 1rpx;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
 }
 
-/* TDesign Input 样式覆盖 */
+/* TDesign Input 深色样式覆盖 */
 .form-item t-input {
-  --td-input-bg-color: #F5F7FA;
-  --td-input-border-color: transparent;
+  --td-input-bg-color: rgba(26, 31, 46, 0.8);
+  --td-input-border-color: rgba(0, 136, 255, 0.2);
   --td-input-radius: 16rpx;
 }
 
 .form-item t-input .t-input {
-  background: #F5F7FA !important;
+  background: rgba(26, 31, 46, 0.8) !important;
   border-radius: 16rpx !important;
-  padding: 24rpx 28rpx !important;
-  border: 2rpx solid transparent !important;
+  padding: 28rpx 32rpx !important;
+  border: 2rpx solid rgba(0, 136, 255, 0.2) !important;
   transition: var(--transition-fast) !important;
+  color: #ffffff !important;
+  font-size: var(--font-base) !important;
+}
+
+.form-item t-input .t-input::placeholder {
+  color: var(--text-tertiary) !important;
 }
 
 .form-item t-input .t-input:focus,
 .form-item t-input .t-input.t-input--focused {
-  border-color: var(--brand-1) !important;
-  background: #ffffff !important;
-  box-shadow: 0 0 0 4rpx rgba(0, 82, 217, 0.1) !important;
+  border-color: var(--neon-cyan) !important;
+  background: rgba(26, 31, 46, 0.95) !important;
+  box-shadow: 0 0 0 6rpx rgba(0, 245, 212, 0.15) !important;
 }
 
 /* ====== 登录按钮 ====== */
@@ -164,34 +219,27 @@
   margin-top: 56rpx;
 }
 
-.form-actions t-button {
-  --td-button-primary-bg: linear-gradient(135deg, #0052D9 0%, #2563EB 100%);
-  --td-button-primary-border-color: transparent;
-  --td-button-height: 96rpx;
-  --td-button-border-radius: 24rpx;
-  --td-button-font-size: var(--font-lg);
-  --td-button-font-weight: 600;
-}
-
 .form-actions t-button .t-button--primary {
-  background: linear-gradient(135deg, #0052D9 0%, #2563EB 100%) !important;
+  background: linear-gradient(135deg, #0088FF 0%, #00F5D4 100%) !important;
   border: none !important;
-  box-shadow: 0 8rpx 24rpx rgba(0, 82, 217, 0.35) !important;
+  box-shadow: 0 8rpx 32rpx rgba(0, 245, 212, 0.35) !important;
   transition: var(--transition-fast) !important;
+  font-weight: 600 !important;
+  letter-spacing: 4rpx !important;
 }
 
 .form-actions t-button .t-button--primary:active {
-  transform: translateY(2rpx) !important;
-  box-shadow: 0 4rpx 12rpx rgba(0, 82, 217, 0.25) !important;
+  transform: translateY(2rpx) scale(0.98) !important;
+  box-shadow: 0 4rpx 16rpx rgba(0, 245, 212, 0.25) !important;
 }
 
 /* ====== 底部 ====== */
 .footer {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   text-align: center;
   padding: var(--spacing-sm);
   font-size: var(--font-xs);
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 1rpx;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 2rpx;
 }

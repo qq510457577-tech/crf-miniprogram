@@ -1,23 +1,54 @@
-/* =============== 受试者列表页 - 清爽卡片列表 =============== */
+/* =============== 受试者列表页 - 科技医疗风格 =============== */
 
 .page {
   min-height: 100vh;
   background: var(--bg);
   padding-bottom: 120rpx;
+  position: relative;
+}
+
+/* 背景网格 */
+.page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 136, 255, 0.03) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1rpx, transparent 1rpx);
+  background-size: 60rpx 60rpx;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .nav-bar {
   background: var(--brand-gradient);
+  position: relative;
+}
+
+.nav-bar::after {
+  content: '';
+  position: absolute;
+  bottom: -2rpx;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
 }
 
 /* ====== 搜索区 ====== */
 .search-section {
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   box-shadow: var(--shadow-md);
   position: relative;
   z-index: 10;
+  border-bottom: 1rpx solid var(--border);
 }
 
 .filter-row {
@@ -34,14 +65,16 @@
 
 .total-count {
   font-size: var(--font-sm);
-  color: var(--text-tertiary);
-  font-weight: 500;
+  color: var(--neon-cyan);
+  font-weight: 600;
 }
 
 /* ====== 列表容器 ====== */
 .subject-list {
   height: calc(100vh - 280rpx);
   padding: var(--spacing-md);
+  position: relative;
+  z-index: 1;
 }
 
 /* ====== 空状态 ====== */
@@ -56,17 +89,37 @@
 /* ====== 受试者卡片 ====== */
 .subject-card {
   background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-glow);
+  border: 1rpx solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4rpx;
+  height: 100%;
+  background: linear-gradient(180deg, var(--neon-cyan), var(--brand-1));
+  opacity: 0;
   transition: var(--transition-fast);
-  border: 2rpx solid transparent;
+}
+
+.subject-card:active::before {
+  opacity: 1;
 }
 
 .subject-card:active {
-  border-color: var(--brand-1);
-  box-shadow: var(--shadow-md);
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
   transform: translateY(-2rpx);
 }
 
@@ -81,12 +134,13 @@
   width: 72rpx;
   height: 72rpx;
   border-radius: 50%;
-  background: var(--brand-gradient-light);
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 36rpx;
   flex-shrink: 0;
+  box-shadow: 0 0 20rpx rgba(0, 136, 255, 0.3);
 }
 
 .card-title-row {
@@ -132,7 +186,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: var(--spacing-md);
-  border-top: 2rpx solid var(--border-light);
+  border-top: 1rpx solid var(--divider);
 }
 
 .footer-text {
@@ -144,7 +198,7 @@
 .load-more {
   text-align: center;
   padding: var(--spacing-lg);
-  color: var(--brand-1);
+  color: var(--neon-cyan);
   font-size: var(--font-base);
   font-weight: 500;
 }
@@ -152,7 +206,7 @@
 .no-more {
   text-align: center;
   padding: var(--spacing-lg);
-  color: var(--text-placeholder);
+  color: var(--text-tertiary);
   font-size: var(--font-sm);
 }
 
@@ -164,16 +218,32 @@
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  background: var(--brand-gradient);
+  background: linear-gradient(135deg, var(--brand-1), var(--neon-cyan));
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-brand);
+  box-shadow: 0 8rpx 32rpx rgba(0, 245, 212, 0.4);
   z-index: 100;
+  transition: var(--transition-glow);
+  position: fixed;
+}
+
+.fab::before {
+  content: '';
+  position: absolute;
+  inset: -4rpx;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+  z-index: -1;
+  opacity: 0;
   transition: var(--transition-fast);
 }
 
 .fab:active {
   transform: scale(0.9);
-  box-shadow: 0 4rpx 12rpx rgba(0, 82, 217, 0.3);
+  box-shadow: 0 4rpx 16rpx rgba(0, 245, 212, 0.5);
+}
+
+.fab:active::before {
+  opacity: 1;
 }

@@ -5,7 +5,7 @@
 
   <view class="logo-section">
     <view class="logo-icon">
-      <icon-text name="user" size="48" color="#0052D9" />
+      <icon-text name="user" size="48" color="#00F5D4" />
     </view>
     <view class="logo-title">八段锦联合渐进性抗阻训练研究</view>
     <view class="logo-sub">CRF Data Collection Platform</view>

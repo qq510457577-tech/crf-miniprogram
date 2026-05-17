@@ -6,7 +6,9 @@ Page({
 
   onLoad() {
     const app = getApp<IAppOption>();
-    this.setData({ statusBarHeight: app.globalData.statusBarHeight || 20 });
+    if (app && app.globalData) {
+      this.setData({ statusBarHeight: app.globalData.statusBarHeight || 20 });
+    }
     if (wx.getStorageSync('token')) wx.switchTab({ url: '/pages/home/home' });
   },
 
@@ -26,7 +28,9 @@ Page({
     try {
       const result = await loginByPassword(username, password);
       const app = getApp<IAppOption>();
-      app.login(result.token, result.user);
+      if (app && app.login) {
+        app.login(result.token, result.user);
+      }
       Toast({ context: this, selector: '#t-toast', message: '登录成功', theme: 'success' });
       setTimeout(() => wx.switchTab({ url: '/pages/home/home' }), 800);
     } catch (err: any) {

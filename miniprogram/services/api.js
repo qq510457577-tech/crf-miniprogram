@@ -5,6 +5,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.exportApi = exports.followUpApi = exports.inflammationApi = exports.appetiteApi = exports.mfsiApi = exports.pgsgaApi = exports.gripStrengthApi = exports.bodyCompositionApi = exports.weightApi = exports.interventionApi = exports.subjectApi = void 0;
 const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
+// 调试日志
+function log(tag, ...args) {
+    console.log(`[API-${tag}]`, ...args);
+}
+function logError(tag, ...args) {
+    console.error(`[API-${tag}]`, ...args);
+}
 // tRPC v11 的 input 格式：使用标准 JSON 字符串
 function superjsonSerialize(value) {
     return JSON.stringify(value);
@@ -28,24 +35,18 @@ function trpcQuery(endpoint, params) {
         // tRPC v11 使用 URL 编码的 JSON（_superjson 格式）
         url += `?input=${encodeURIComponent(superjsonSerialize(params))}`;
     }
+    log('Query', endpoint, params ? { params } : '');
     return new Promise((resolve, reject) => {
         wx.request({
             url,
             method: 'GET',
             header: headers,
-            timeout: 30000,
+            timeout: 60000, // 延长到60秒
             success(res) {
-                // 检查 HTTP 状态码
-                if (res.statusCode >= 400) {
-                    reject(new Error(`服务器错误 (${res.statusCode})`));
-                    return;
-                }
+                log('Query-Success', endpoint, { status: res.statusCode });
                 const data = res.data;
-                if (!data || typeof data !== 'object') {
-                    reject(new Error('服务器响应格式错误'));
-                    return;
-                }
                 if (data.error) {
+                    logError('Query-Error', endpoint, data.error);
                     reject(new Error(data.error.message || '请求失败'));
                 }
                 else {
@@ -59,7 +60,8 @@ function trpcQuery(endpoint, params) {
                 }
             },
             fail(err) {
-                reject(new Error('网络请求失败，请检查网络连接'));
+                logError('Query-Fail', endpoint, err);
+                reject(new Error(`请求超时或失败: ${err.errMsg || '未知错误'}`));
             },
         });
     });
@@ -67,6 +69,7 @@ function trpcQuery(endpoint, params) {
 // tRPC 变更使用 POST，使用 superjson 的 json 格式
 function trpcMutation(endpoint, data) {
     const headers = getHeaders();
+    log('Mutation', endpoint, data ? { hasData: true } : '');
     return new Promise((resolve, reject) => {
         wx.request({
             url: `${API_BASE}/${endpoint}`,
@@ -74,19 +77,12 @@ function trpcMutation(endpoint, data) {
             // tRPC v11 期望 body: { json: <data> }（superjson 会自动处理）
             data: data !== undefined ? { json: data } : undefined,
             header: headers,
-            timeout: 30000,
+            timeout: 60000, // 延长到60秒
             success(res) {
-                // 检查 HTTP 状态码
-                if (res.statusCode >= 400) {
-                    reject(new Error(`服务器错误 (${res.statusCode})`));
-                    return;
-                }
+                log('Mutation-Success', endpoint, { status: res.statusCode });
                 const resData = res.data;
-                if (!resData || typeof resData !== 'object') {
-                    reject(new Error('服务器响应格式错误'));
-                    return;
-                }
                 if (resData.error) {
+                    logError('Mutation-Error', endpoint, resData.error);
                     reject(new Error(resData.error.message || '请求失败'));
                 }
                 else {
@@ -99,7 +95,8 @@ function trpcMutation(endpoint, data) {
                 }
             },
             fail(err) {
-                reject(new Error('网络请求失败，请检查网络连接'));
+                logError('Mutation-Fail', endpoint, err);
+                reject(new Error(`请求超时或失败: ${err.errMsg || '未知错误'}`));
             },
         });
     });

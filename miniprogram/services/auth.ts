@@ -24,7 +24,7 @@ export interface LoginResult {
 }
 
 /** 用户名密码登录（REST 接口: /api/auth/local/login） */
-export function loginByPassword(username: string, _password: string): Promise<LoginResult> {
+export function loginByPassword(username: string, password: string): Promise<LoginResult> {
   return new Promise((resolve, reject) => {
     log('Login-Start', { username });
     
