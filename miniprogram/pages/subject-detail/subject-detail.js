@@ -116,7 +116,7 @@ Page({
     onRecordTap(e) {
         const { type, id, week } = e.currentTarget.dataset;
         wx.navigateTo({
-            url: `/pages/record-form/record-form?mode=view&type=${type}&id=${id}&subjectId=${this.data.subjectId}${week ? '&week=' + week : ''}`,
+            url: `/pages/record-form/record-form?mode=view&type=${type}&id=${parseInt(id, 10)}&subjectId=${this.data.subjectId}${week ? '&week=' + week : ''}`,
         });
     },
     getGroupTheme(group) {

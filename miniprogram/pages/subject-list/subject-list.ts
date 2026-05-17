@@ -64,7 +64,7 @@ Page({
   onGroupChange(e: any) { this.setData({ selectedGroup: e.detail.value }); this.loadData(true); },
   onReachBottom() { if (!this.data.loadingMore && this.data.hasMore) this.loadData(false); },
   loadMore() { if (!this.data.loadingMore && this.data.hasMore) this.loadData(false); },
-  goToDetail(e: any) { wx.navigateTo({ url: '/pages/subject-detail/subject-detail?id=' + e.currentTarget.dataset.id }); },
+  goToDetail(e: any) { wx.navigateTo({ url: '/pages/subject-detail/subject-detail?id=' + parseInt(e.currentTarget.dataset.id, 10) }); },
   goToAdd() { wx.navigateTo({ url: '/pages/subject-detail/subject-detail?mode=create' }); },
   onBack() { wx.navigateBack(); },
 });
