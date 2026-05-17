@@ -19,12 +19,12 @@
       <view class="stat-card stat-card-1" bind:tap="onFilterByGroup" data-group="八段锦训练">
         <view class="stat-value">{{stats.bajiaojin}}</view>
         <view class="stat-label">八段锦训练</view>
-        <icon-text name="health" size="14" color="#fff" />
+        <icon-text name="chart" size="14" color="#fff" />
       </view>
       <view class="stat-card stat-card-2" bind:tap="onFilterByGroup" data-group="PRE训练">
         <view class="stat-value">{{stats.pre}}</view>
         <view class="stat-label">PRE训练</view>
-        <icon-text name="chart" size="14" color="#fff" />
+        <icon-text name="chart-bar" size="14" color="#fff" />
       </view>
       <view class="stat-card stat-card-3" bind:tap="onFilterByGroup" data-group="PRE+八段锦联合训练">
         <view class="stat-value">{{stats.preBajiaojin}}</view>

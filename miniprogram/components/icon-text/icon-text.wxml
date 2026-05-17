@@ -1,1 +1,1 @@
-<text class="icon-text" style="font-size: {{size}}px; color: {{color}};">{{iconText}}</text>
+<canvas type="2d" id="icon-canvas" class="icon-canvas" style="width: {{size}}px; height: {{size}}px;"></canvas>

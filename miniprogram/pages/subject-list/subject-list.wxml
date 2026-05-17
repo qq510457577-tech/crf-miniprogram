@@ -38,7 +38,7 @@
       </view>
       <view class="card-footer">
         <text class="footer-text">入组: {{item.enrollmentDate || '--'}}</text>
-        <icon-text name="chevron-right" size="24" color="#CCC" />
+        <icon-text name="chevron-right" size="24" color="#6B7A8F" />
       </view>
     </view>
 
@@ -48,6 +48,6 @@
     <view wx:if="{{!hasMore && subjects.length > 0}}" class="no-more"><text>— 已加载全部 {{total}} 条 —</text></view>
   </scroll-view>
 
-  <view class="fab" bindtap="goToAdd"><icon-text name="add" size="32" color="#fff" /></view>
+  <view class="fab" bindtap="goToAdd"><icon-text name="add-circle" size="32" color="#fff" /></view>
   <t-toast id="t-toast" />
 </view>

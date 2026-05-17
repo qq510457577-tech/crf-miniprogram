@@ -5,7 +5,7 @@
         <text class="welcome-title">您好，{{userInfo.name || userInfo.displayName || userInfo.username || '研究员'}}</text>
         <text class="welcome-sub">CRF数据采集平台</text>
       </view>
-      <icon-text name="user" size="32" color="#0052D9" />
+      <icon-text name="user" size="32" color="#00F5D4" />
     </view>
   </view>
 
@@ -20,12 +20,12 @@
         <text class="quick-count">{{stats.totalSubjects || 0}}人</text>
       </view>
       <view class="quick-item" bindtap="goToAddSubject">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #2D1B4E, #3D2A6E)"><icon-text name="add" size="32" color="#A855F7" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #2D1B4E, #3D2A6E)"><icon-text name="add-circle" size="32" color="#A855F7" /></view>
         <text class="quick-label">新增受试者</text>
         <text class="quick-count">录入</text>
       </view>
       <view class="quick-item" bindtap="goToStats">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #0A3D2E, #0D5A46)"><icon-text name="chart" size="32" color="#00E676" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #0A3D2E, #0D5A46)"><icon-text name="chart-bar" size="32" color="#00E676" /></view>
         <text class="quick-label">数据统计</text>
         <text class="quick-count">分析</text>
       </view>
@@ -41,7 +41,7 @@
     <view class="section-title">分组情况</view>
     <view class="stats-list">
       <view class="stat-card" bindtap="goToSubjectList" data-group="八段锦训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #0A2E4D, #0D4A6E)"><icon-text name="edit" size="28" color="#00BFFF" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #0A2E4D, #0D4A6E)"><icon-text name="chart" size="28" color="#00BFFF" /></view>
         <text class="stat-name">八段锦</text>
         <text class="stat-value">{{stats.baduanjin || 0}}人</text>
       </view>
@@ -64,7 +64,7 @@
       <text class="section-more" bindtap="goToSubjectList">查看全部 ></text>
     </view>
     <view wx:if="{{recentSubjects.length === 0}}" class="empty-tip">
-      <icon-text name="info-circle" size="36" color="#CCC" />
+      <icon-text name="info-circle" size="36" color="#6B7A8F" />
       <text>暂无受试者数据</text>
     </view>
     <view wx:for="{{recentSubjects}}" wx:key="id" class="recent-item" bindtap="goToDetail" data-id="{{item.id}}">
@@ -75,7 +75,7 @@
           <text class="recent-meta">{{item.gender || '未知'}} · {{item.age || '--'}}岁 · {{item.interventionGroup || '未分组'}}</text>
         </view>
       </view>
-      <icon-text name="chevron-right" size="24" color="#CCC" />
+      <icon-text name="chevron-right" size="24" color="#6B7A8F" />
     </view>
   </view>
 
