@@ -8,6 +8,10 @@ App({
         statusBarHeight: 0,
     },
     onLaunch() {
+        const systemInfo = wx.getDeviceInfo();
+        const windowInfo = wx.getWindowInfo();
+        this.globalData.statusBarHeight = windowInfo.statusBarHeight || systemInfo.statusBarHeight || 20;
+
         const token = wx.getStorageSync('token');
         const userInfo = wx.getStorageSync('userInfo');
         if (token && userInfo) {
@@ -15,14 +19,10 @@ App({
             this.globalData.userInfo = userInfo;
             this.globalData.isLoggedIn = true;
         }
-        const systemInfo = wx.getSystemInfoSync();
-        this.globalData.statusBarHeight = systemInfo.statusBarHeight || 20;
     },
     onShow() {
-        const token = wx.getStorageSync('token');
-        if (!token) {
-            wx.redirectTo({ url: '/pages/login/login' });
-        }
+        // 不再此处做页面跳转，避免 appLaunch with non-empty page stack 错误
+        // 未登录检查由各页面自行处理
     },
     onHide() { },
     login(token, userInfo) {
