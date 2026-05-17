@@ -21,22 +21,22 @@
     </view>
     <view class="user-info">
       <view class="user-name">{{userInfo.name || '未登录'}}</view>
-      <view class="user-dept">{{userInfo.department || '中山大学肿瘤防治中心'}}</view>
+      <view class="user-dept">{{userInfo.department || '未设置部门'}}</view>
     </view>
   </view>
 
   <!-- 快捷操作 -->
   <view class="quick-actions">
     <view class="quick-item" bind:tap="onNavigate" data-url="/pages/subject-list/subject-list">
-      <view class="quick-icon">?</view>
+      <t-icon name="user-1" size="48rpx" class="quick-icon" />
       <text class="quick-label">我的受试者</text>
     </view>
     <view class="quick-item" bind:tap="onNavigate" data-url="/pages/stats/stats">
-      <view class="quick-icon">?</view>
+      <t-icon name="chart-bar" size="48rpx" class="quick-icon" />
       <text class="quick-label">数据统计</text>
     </view>
     <view class="quick-item" bind:tap="onShowAbout">
-      <view class="quick-icon">ℹ️</view>
+      <t-icon name="info-circle" size="48rpx" class="quick-icon" />
       <text class="quick-label">关于系统</text>
     </view>
   </view>
@@ -90,7 +90,7 @@
   <t-dialog
     visible="{{showAbout}}"
     title="关于系统"
-    content="CRF数据采集系统 v{{version}}\n\n面向肿瘤患者营养干预研究的移动端数据采集工具。\n\n支持功能：\n• 受试者管理\n• 多种评估量表\n• 数据导出与统计\n\n© 中山大学肿瘤防治中心"
+    content="CRF数据采集系统 v{{version}}\n\n面向肿瘤患者营养干预研究的移动端数据采集工具。\n\n支持功能：\n• 受试者管理\n• 多种评估量表\n• 数据导出与统计"
     confirm-btn="知道了"
     bind:confirm="onCloseAbout"
   />

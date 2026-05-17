@@ -21,7 +21,7 @@ Page({
       name: '',
       avatar: '',
       role: '',
-      department: '中山大学肿瘤防治中心',
+      department: '',
     },
     version: '1.0.0',
     cacheSize: '0 KB',
