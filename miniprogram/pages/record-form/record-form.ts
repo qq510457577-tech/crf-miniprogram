@@ -62,7 +62,7 @@ Page({
 
     if (mode === 'add' && subjectId) {
       // 新增模式：加载受试者基本信息
-      this.loadSubjectInfo(subjectId);
+      this.loadSubjectInfo(parseInt(subjectId, 10));
       // 初始化周次（如有传参）
       if (week) {
         this.setData({ ['formData.week']: parseInt(week, 10) });
@@ -97,7 +97,7 @@ Page({
       };
 
       if (type === 'subject') {
-        record = await subjectApi.getById(id);
+        record = await subjectApi.getById(parseInt(id, 10));
       } else if (apiMap[type]) {
         // 各记录类型暂无 getById 接口，先留空
         record = {};
