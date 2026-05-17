@@ -5,7 +5,7 @@
         <text class="welcome-title">您好，{{userInfo.name || userInfo.displayName || userInfo.username || '研究员'}}</text>
         <text class="welcome-sub">CRF数据采集平台</text>
       </view>
-      <icon-text name="user" size="32" color="#00F5D4" />
+      <icon-text name="user" size="32" color="#0052D9" />
     </view>
   </view>
 
@@ -15,17 +15,17 @@
     <view class="quick-title">快捷入口</view>
     <view class="quick-grid">
       <view class="quick-item" bindtap="goToSubjectList">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #0A2E4D, #0D4A6E)"><icon-text name="user" size="32" color="#00F5D4" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #0A2E4D, #0D4A6E)"><icon-text name="user" size="32" color="#0052D9" /></view>
         <text class="quick-label">受试者列表</text>
         <text class="quick-count">{{stats.totalSubjects || 0}}人</text>
       </view>
       <view class="quick-item" bindtap="goToAddSubject">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #2D1B4E, #3D2A6E)"><icon-text name="add-circle" size="32" color="#A855F7" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #2D1B4E, #3D2A6E)"><icon-text name="add-circle" size="32" color="#7C3AED" /></view>
         <text class="quick-label">新增受试者</text>
         <text class="quick-count">录入</text>
       </view>
       <view class="quick-item" bindtap="goToStats">
-        <view class="quick-icon" style="background:linear-gradient(135deg, #0A3D2E, #0D5A46)"><icon-text name="chart-bar" size="32" color="#00E676" /></view>
+        <view class="quick-icon" style="background:linear-gradient(135deg, #0A3D2E, #0D5A46)"><icon-text name="chart-bar" size="32" color="#00C853" /></view>
         <text class="quick-label">数据统计</text>
         <text class="quick-count">分析</text>
       </view>
@@ -41,17 +41,17 @@
     <view class="section-title">分组情况</view>
     <view class="stats-list">
       <view class="stat-card" bindtap="goToSubjectList" data-group="八段锦训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #0A2E4D, #0D4A6E)"><icon-text name="chart" size="28" color="#00BFFF" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #0A2E4D, #0D4A6E)"><icon-text name="chart" size="28" color="#0088FF" /></view>
         <text class="stat-name">八段锦</text>
         <text class="stat-value">{{stats.baduanjin || 0}}人</text>
       </view>
       <view class="stat-card" bindtap="goToSubjectList" data-group="PRE训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #2D1B4E, #3D2A6E)"><icon-text name="chart-pie" size="28" color="#A855F7" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #2D1B4E, #3D2A6E)"><icon-text name="chart-pie" size="28" color="#7C3AED" /></view>
         <text class="stat-name">PRE训练</text>
         <text class="stat-value">{{stats.pre || 0}}人</text>
       </view>
       <view class="stat-card" bindtap="goToSubjectList" data-group="PRE+八段锦联合训练">
-        <view class="stat-icon" style="background:linear-gradient(135deg, #0A3D2E, #0D5A46)"><icon-text name="connection" size="28" color="#00E676" /></view>
+        <view class="stat-icon" style="background:linear-gradient(135deg, #0A3D2E, #0D5A46)"><icon-text name="connection" size="28" color="#00C853" /></view>
         <text class="stat-name">联合训练</text>
         <text class="stat-value">{{stats.combined || 0}}人</text>
       </view>
@@ -75,7 +75,7 @@
           <text class="recent-meta">{{item.gender || '未知'}} · {{item.age || '--'}}岁 · {{item.interventionGroup || '未分组'}}</text>
         </view>
       </view>
-      <icon-text name="chevron-right" size="24" color="#6B7A8F" />
+      <icon-text name="chevron-right" size="24" color="#CCC" />
     </view>
   </view>
 
