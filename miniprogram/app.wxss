@@ -1,3 +1,11 @@
+/* 覆盖 TDesign 图标字体 - 小程序不支持外部 CDN 字体 */
+@font-face {
+  font-family: 't';
+  src: url('') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 /* =============== CRF 数据采集平台 - 全局样式系统 =============== */
 /* 设计系统：Medical Blue - 专业、信任、冷静 */
 
