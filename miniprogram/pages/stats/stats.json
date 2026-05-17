@@ -6,7 +6,8 @@
     "t-toast": "tdesign-miniprogram/toast/toast",
     "t-loading": "tdesign-miniprogram/loading/loading",
     "t-divider": "tdesign-miniprogram/divider/divider",
-    "t-icon": "tdesign-miniprogram/icon/icon"
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "icon-text": "/components/icon-text/icon-text"
   },
   "navigationStyle": "custom"
 }

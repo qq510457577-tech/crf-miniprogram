@@ -9,7 +9,8 @@
     "t-loading": "tdesign-miniprogram/loading/loading",
     "t-dropdown-menu": "tdesign-miniprogram/dropdown-menu/dropdown-menu",
     "t-dropdown-item": "tdesign-miniprogram/dropdown-item/dropdown-item",
-    "t-icon": "tdesign-miniprogram/icon/icon"
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "icon-text": "/components/icon-text/icon-text"
   },
   "navigationStyle": "custom"
 }

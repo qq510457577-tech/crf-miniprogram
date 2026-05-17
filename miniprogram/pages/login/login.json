@@ -3,7 +3,8 @@
     "t-button": "tdesign-miniprogram/button/button",
     "t-input": "tdesign-miniprogram/input/input",
     "t-toast": "tdesign-miniprogram/toast/toast",
-    "t-icon": "tdesign-miniprogram/icon/icon"
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "icon-text": "/components/icon-text/icon-text"
   },
   "navigationStyle": "custom"
 }

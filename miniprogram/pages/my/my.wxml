@@ -28,15 +28,15 @@
   <!-- 快捷操作 -->
   <view class="quick-actions">
     <view class="quick-item" bind:tap="onNavigate" data-url="/pages/subject-list/subject-list">
-      <t-icon name="user-1" size="48rpx" class="quick-icon" />
+      <icon-text name="user" size="18" color="#0052D9" />
       <text class="quick-label">我的受试者</text>
     </view>
     <view class="quick-item" bind:tap="onNavigate" data-url="/pages/stats/stats">
-      <t-icon name="chart-bar" size="48rpx" class="quick-icon" />
+      <icon-text name="chart" size="18" color="#0052D9" />
       <text class="quick-label">数据统计</text>
     </view>
     <view class="quick-item" bind:tap="onShowAbout">
-      <t-icon name="info-circle" size="48rpx" class="quick-icon" />
+      <icon-text name="info-circle" size="18" color="#0052D9" />
       <text class="quick-label">关于系统</text>
     </view>
   </view>

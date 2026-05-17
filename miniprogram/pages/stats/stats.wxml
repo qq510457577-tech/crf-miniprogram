@@ -19,17 +19,17 @@
       <view class="stat-card stat-card-1" bind:tap="onFilterByGroup" data-group="八段锦训练">
         <view class="stat-value">{{stats.bajiaojin}}</view>
         <view class="stat-label">八段锦训练</view>
-        <t-icon name="health" size="40rpx" class="stat-icon" />
+        <icon-text name="health" size="14" color="#fff" />
       </view>
       <view class="stat-card stat-card-2" bind:tap="onFilterByGroup" data-group="PRE训练">
         <view class="stat-value">{{stats.pre}}</view>
         <view class="stat-label">PRE训练</view>
-        <t-icon name="wellbeing" size="40rpx" class="stat-icon" />
+        <icon-text name="chart" size="14" color="#fff" />
       </view>
       <view class="stat-card stat-card-3" bind:tap="onFilterByGroup" data-group="PRE+八段锦联合训练">
         <view class="stat-value">{{stats.preBajiaojin}}</view>
         <view class="stat-label">联合训练</view>
-        <t-icon name="layers" size="40rpx" class="stat-icon" />
+        <icon-text name="connection" size="14" color="#fff" />
       </view>
     </view>
 

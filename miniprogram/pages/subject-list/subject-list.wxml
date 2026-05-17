@@ -23,7 +23,7 @@
 
     <view wx:for="{{subjects}}" wx:key="id" class="subject-card" bindtap="goToDetail" data-id="{{item.id}}">
       <view class="card-header">
-        <view class="card-avatar"><t-icon name="{{item.gender === '女' ? 'gender-female' : 'user'}}" size="32" color="#0052D9" /></view>
+        <view class="card-avatar"><icon-text name="{{item.gender === '女' ? 'gender-female' : 'user'}}" size="24" color="#0052D9" /></view>
         <view class="card-title-row">
           <text class="card-title">{{item.subjectUniqueId}}</text>
           <t-tag wx:if="{{item.interventionGroup}}" theme="primary" size="small" variant="light">{{item.interventionGroup}}</t-tag>
@@ -38,7 +38,7 @@
       </view>
       <view class="card-footer">
         <text class="footer-text">入组: {{item.enrollmentDate || '--'}}</text>
-        <t-icon name="chevron-right" size="32" color="#CCC" />
+        <icon-text name="chevron-right" size="24" color="#CCC" />
       </view>
     </view>
 
@@ -48,6 +48,6 @@
     <view wx:if="{{!hasMore && subjects.length > 0}}" class="no-more"><text>— 已加载全部 {{total}} 条 —</text></view>
   </scroll-view>
 
-  <view class="fab" bindtap="goToAdd"><t-icon name="add" size="48" color="#fff" /></view>
+  <view class="fab" bindtap="goToAdd"><icon-text name="add" size="32" color="#fff" /></view>
   <t-toast id="t-toast" />
 </view>

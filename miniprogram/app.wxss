@@ -1,8 +1,7 @@
 /* TDesign 图标字体 */
 @font-face {
   font-family: 't';
-  src: url('/assets/fonts/t.woff') format('woff'),
-       url('/assets/fonts/t.ttf') format('truetype');
+  src: url('./assets/fonts/t.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

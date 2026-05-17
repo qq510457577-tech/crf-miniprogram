@@ -5,7 +5,7 @@
         <text class="welcome-title">您好，{{userInfo.name || userInfo.displayName || userInfo.username || '研究员'}}</text>
         <text class="welcome-sub">CRF数据采集平台</text>
       </view>
-      <t-avatar size="large" icon="user" class="user-avatar" />
+      <icon-text name="user" size="32" color="#0052D9" />
     </view>
   </view>
 
@@ -15,22 +15,22 @@
     <view class="quick-title">快捷入口</view>
     <view class="quick-grid">
       <view class="quick-item" bindtap="goToSubjectList">
-        <view class="quick-icon" style="background:#E8F4FF"><t-icon name="user" size="44" color="#0052D9" /></view>
+        <view class="quick-icon" style="background:#E8F4FF"><icon-text name="user" size="32" color="#0052D9" /></view>
         <text class="quick-label">受试者列表</text>
         <text class="quick-count">{{stats.totalSubjects || 0}}人</text>
       </view>
       <view class="quick-item" bindtap="goToAddSubject">
-        <view class="quick-icon" style="background:#FFF7E6"><t-icon name="add" size="44" color="#FF9900" /></view>
+        <view class="quick-icon" style="background:#FFF7E6"><icon-text name="add" size="32" color="#FF9900" /></view>
         <text class="quick-label">新增受试者</text>
         <text class="quick-count">录入</text>
       </view>
       <view class="quick-item" bindtap="goToStats">
-        <view class="quick-icon" style="background:#E8FAF0"><t-icon name="chart" size="44" color="#00A870" /></view>
+        <view class="quick-icon" style="background:#E8FAF0"><icon-text name="chart" size="32" color="#00A870" /></view>
         <text class="quick-label">数据统计</text>
         <text class="quick-count">分析</text>
       </view>
       <view class="quick-item" bindtap="goToMy">
-        <view class="quick-icon" style="background:#FFF0F0"><t-icon name="setting" size="44" color="#E34D57" /></view>
+        <view class="quick-icon" style="background:#FFF0F0"><icon-text name="setting" size="32" color="#E34D57" /></view>
         <text class="quick-label">个人设置</text>
         <text class="quick-count">管理</text>
       </view>
@@ -41,17 +41,17 @@
     <view class="section-title">分组情况</view>
     <view class="stats-list">
       <view class="stat-card" bindtap="goToSubjectList" data-group="八段锦训练">
-        <view class="stat-icon" style="background:#E8F4FF"><t-icon name="edit" size="36" color="#0052D9" /></view>
+        <view class="stat-icon" style="background:#E8F4FF"><icon-text name="edit" size="28" color="#0052D9" /></view>
         <text class="stat-name">八段锦</text>
         <text class="stat-value">{{stats.baduanjin || 0}}人</text>
       </view>
       <view class="stat-card" bindtap="goToSubjectList" data-group="PRE训练">
-        <view class="stat-icon" style="background:#FFF7E6"><t-icon name="chart-pie" size="36" color="#FF9900" /></view>
+        <view class="stat-icon" style="background:#FFF7E6"><icon-text name="chart-pie" size="28" color="#FF9900" /></view>
         <text class="stat-name">PRE训练</text>
         <text class="stat-value">{{stats.pre || 0}}人</text>
       </view>
       <view class="stat-card" bindtap="goToSubjectList" data-group="PRE+八段锦联合训练">
-        <view class="stat-icon" style="background:#E8FAF0"><t-icon name="connection" size="36" color="#00A870" /></view>
+        <view class="stat-icon" style="background:#E8FAF0"><icon-text name="connection" size="28" color="#00A870" /></view>
         <text class="stat-name">联合训练</text>
         <text class="stat-value">{{stats.combined || 0}}人</text>
       </view>
@@ -64,18 +64,18 @@
       <text class="section-more" bindtap="goToSubjectList">查看全部 ></text>
     </view>
     <view wx:if="{{recentSubjects.length === 0}}" class="empty-tip">
-      <t-icon name="info-circle" size="48" color="#CCC" />
+      <icon-text name="info-circle" size="36" color="#CCC" />
       <text>暂无受试者数据</text>
     </view>
     <view wx:for="{{recentSubjects}}" wx:key="id" class="recent-item" bindtap="goToDetail" data-id="{{item.id}}">
       <view class="recent-left">
-        <view class="recent-avatar"><t-icon name="{{item.gender === '女' ? 'gender-female' : 'user'}}" size="36" color="#fff" /></view>
+        <view class="recent-avatar"><icon-text name="{{item.gender === '女' ? 'gender-female' : 'user'}}" size="24" color="#fff" /></view>
         <view class="recent-info">
           <text class="recent-name">{{item.subjectUniqueId}}</text>
           <text class="recent-meta">{{item.gender || '未知'}} · {{item.age || '--'}}岁 · {{item.interventionGroup || '未分组'}}</text>
         </view>
       </view>
-      <t-icon name="chevron-right" size="32" color="#CCC" />
+      <icon-text name="chevron-right" size="24" color="#CCC" />
     </view>
   </view>
 
