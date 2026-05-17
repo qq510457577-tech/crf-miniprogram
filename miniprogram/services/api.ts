@@ -4,6 +4,15 @@
 
 const API_BASE = 'https://zhongyibianzhengdafen.fun/CRF/api/trpc';
 
+// 调试日志
+function log(tag: string, ...args: any[]) {
+  console.log(`[API-${tag}]`, ...args);
+}
+
+function logError(tag: string, ...args: any[]) {
+  console.error(`[API-${tag}]`, ...args);
+}
+
 // tRPC v11 的 input 格式：使用标准 JSON 字符串
 function superjsonSerialize(value: any): string {
   return JSON.stringify(value);
@@ -38,15 +47,19 @@ function trpcQuery<T = any>(
     url += `?input=${encodeURIComponent(superjsonSerialize(params))}`;
   }
 
+  log('Query', endpoint, params ? { params } : '');
+
   return new Promise((resolve, reject) => {
     wx.request({
       url,
       method: 'GET',
       header: headers,
-      timeout: 30000,
+      timeout: 60000, // 延长到60秒
       success(res) {
+        log('Query-Success', endpoint, { status: res.statusCode });
         const data = res.data as TrpcResponse<T>;
         if (data.error) {
+          logError('Query-Error', endpoint, data.error);
           reject(new Error(data.error.message || '请求失败'));
         } else {
           // tRPC v11 响应格式: { result: { data: { json: T, meta: {...} } } }
@@ -59,7 +72,8 @@ function trpcQuery<T = any>(
         }
       },
       fail(err) {
-        reject(new Error('网络请求失败，请检查网络连接'));
+        logError('Query-Fail', endpoint, err);
+        reject(new Error(`请求超时或失败: ${err.errMsg || '未知错误'}`));
       },
     });
   });
@@ -72,6 +86,8 @@ function trpcMutation<T = any>(
 ): Promise<T> {
   const headers = getHeaders();
 
+  log('Mutation', endpoint, data ? { hasData: true } : '');
+
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${API_BASE}/${endpoint}`,
@@ -79,10 +95,12 @@ function trpcMutation<T = any>(
       // tRPC v11 期望 body: { json: <data> }（superjson 会自动处理）
       data: data !== undefined ? { json: data } : undefined,
       header: headers,
-      timeout: 30000,
+      timeout: 60000, // 延长到60秒
       success(res) {
+        log('Mutation-Success', endpoint, { status: res.statusCode });
         const resData = res.data as TrpcResponse<T>;
         if (resData.error) {
+          logError('Mutation-Error', endpoint, resData.error);
           reject(new Error(resData.error.message || '请求失败'));
         } else {
           // 响应格式: { result: { data: { json: T, meta: {...} } } } 或 { result: { data: T } }
@@ -94,7 +112,8 @@ function trpcMutation<T = any>(
         }
       },
       fail(err) {
-        reject(new Error('网络请求失败，请检查网络连接'));
+        logError('Mutation-Fail', endpoint, err);
+        reject(new Error(`请求超时或失败: ${err.errMsg || '未知错误'}`));
       },
     });
   });
