@@ -41,7 +41,7 @@ Page({
         this.setData({ pageTitle: prefix + (titleMap[type] || '记录') });
         if (mode === 'add' && subjectId) {
             // 新增模式：加载受试者基本信息
-            this.loadSubjectInfo(subjectId);
+            this.loadSubjectInfo(parseInt(subjectId, 10));
             // 初始化周次（如有传参）
             if (week) {
                 this.setData({ ['formData.week']: parseInt(week, 10) });
@@ -49,7 +49,7 @@ Page({
         }
         else if (id) {
             // 编辑/查看模式：加载现有数据
-            this.loadRecord(type, id);
+            this.loadRecord(type, parseInt(id, 10));
         }
     },
     async loadSubjectInfo(subjectId) {

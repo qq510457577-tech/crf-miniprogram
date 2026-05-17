@@ -69,7 +69,7 @@ Page({
       }
     } else if (id) {
       // 编辑/查看模式：加载现有数据
-      this.loadRecord(type, id);
+      this.loadRecord(type, parseInt(id, 10));
     }
   },
 
@@ -97,7 +97,7 @@ Page({
       };
 
       if (type === 'subject') {
-        record = await subjectApi.getById(parseInt(id, 10));
+        record = await subjectApi.getById(id);
       } else if (apiMap[type]) {
         // 各记录类型暂无 getById 接口，先留空
         record = {};
