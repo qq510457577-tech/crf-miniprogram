@@ -88,6 +88,16 @@ Component({
                 'lock': this._lockPath(color),
                 'star': this._starPath(color),
                 'connection': this._connectionPath(color),
+                // 医疗场景相关
+                'health': this._healthPath(color),
+                'medical': this._medicalPath(color),
+                'pill': this._pillPath(color),
+                'heart-pulse': this._heartPulsePath(color),
+                'heartbeat': this._heartbeatPath(color),
+                'thermometer': this._thermometerPath(color),
+                'blood-pressure': this._bloodPressurePath(color),
+                'clipboard': this._clipboardPath(color),
+                'record': this._recordPath(color),
             };
             
             const path = iconPaths[name] || this._defaultPath(color);
@@ -345,6 +355,78 @@ Component({
                 { type: 'circle', cx: 19, cy: 12, r: 3 },
                 { type: 'circle', cx: 12, cy: 5, r: 3 },
                 { type: 'stroke', d: 'M12 8v4m0 4v.01M7.5 10.5l4.5-5.5m5 4.5l-4.5-5' }
+            ];
+        },
+        
+        // ========== 医疗场景图标 ==========
+        
+        // 医疗十字
+        _healthPath(color) {
+            return [
+                { type: 'rect', x: 10, y: 4, w: 4, h: 16 },
+                { type: 'rect', x: 4, y: 10, w: 16, h: 4 }
+            ];
+        },
+        
+        // 医疗标志
+        _medicalPath(color) {
+            return [
+                { type: 'circle', cx: 12, cy: 12, r: 10 },
+                { type: 'rect', x: 10, y: 6, w: 4, h: 12 },
+                { type: 'rect', x: 6, y: 10, w: 12, h: 4 }
+            ];
+        },
+        
+        // 药丸
+        _pillPath(color) {
+            return [
+                { type: 'rect', x: 3, y: 10, w: 18, h: 4, r: 2 },
+                { type: 'path', d: 'M12 6v12' }
+            ];
+        },
+        
+        // 心跳/心电图
+        _heartPulsePath(color) {
+            return [
+                { type: 'path', d: 'M3 12h3l2-6 4 12 2-6h6' }
+            ];
+        },
+        
+        // 心跳图标
+        _heartbeatPath(color) {
+            return [
+                { type: 'path', d: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+            ];
+        },
+        
+        // 体温计
+        _thermometerPath(color) {
+            return [
+                { type: 'circle', cx: 12, cy: 17, r: 3 },
+                { type: 'rect', x: 10, y: 4, w: 4, h: 10, r: 2 },
+                { type: 'circle', cx: 12, cy: 17, r: 1.5 }
+            ];
+        },
+        
+        // 血压
+        _bloodPressurePath(color) {
+            return [
+                { type: 'circle', cx: 7, cy: 12, r: 4 },
+                { type: 'circle', cx: 17, cy: 12, r: 4 },
+                { type: 'stroke', d: 'M11 12h2' }
+            ];
+        },
+        
+        // 病历/剪贴板
+        _clipboardPath(color) {
+            return { type: 'path', d: 'M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z' };
+        },
+        
+        // 记录
+        _recordPath(color) {
+            return [
+                { type: 'rect', x: 4, y: 2, w: 16, h: 20, r: 2 },
+                { type: 'stroke', d: 'M8 7h8M8 11h8M8 15h5' }
             ];
         },
         

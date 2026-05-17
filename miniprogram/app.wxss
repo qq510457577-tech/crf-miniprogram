@@ -1,12 +1,3 @@
-/* TDesign 图标字体 */
-@font-face {
-  font-family: 't';
-  src: url('./assets/fonts/t.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* =============== CRF 数据采集平台 - 全局样式系统 =============== */
 /* 设计系统：Medical Blue - 专业、信任、冷静 */
 
