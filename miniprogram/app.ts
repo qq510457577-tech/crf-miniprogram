@@ -17,6 +17,14 @@ App<IAppOption>({
     }
     const systemInfo = wx.getSystemInfoSync();
     this.globalData.statusBarHeight = systemInfo.statusBarHeight || 20;
+
+    // 加载 TDesign 图标字体
+    wx.loadFontFace({
+      family: 't',
+      source: 'url("/assets/fonts/t.woff")',
+      success: () => console.log('[Font] TDesign icon font loaded'),
+      fail: (err) => console.error('[Font] TDesign icon font failed:', err),
+    });
   },
 
   onShow() {
