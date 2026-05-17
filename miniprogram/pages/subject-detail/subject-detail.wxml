@@ -22,7 +22,7 @@
         </view>
         <t-tag
           wx:if="{{subject.interventionGroup}}"
-          theme="{{getGroupTheme(subject.interventionGroup)}}"
+          theme="{{groupTheme}}"
           variant="light"
         >
           {{subject.interventionGroup}}
@@ -307,4 +307,14 @@
 
   <!-- Toast -->
   <t-toast id="t-toast" />
+  <!-- 删除确认对话框 -->
+  <t-dialog
+    id="delete-dialog"
+    title="确认删除"
+    content="确定要删除受试者吗？此操作不可撤销。"
+    confirm-btn="删除"
+    cancel-btn="取消"
+    bind:confirm="onConfirmDelete"
+    bind:cancel="onCancelDelete"
+  />
 </view>
