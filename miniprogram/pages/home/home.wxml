@@ -80,5 +80,4 @@
   </view>
 
   <t-toast id="t-toast" />
-  <t-loading size="large" fullscreen="{{loading}}" />
 </view>

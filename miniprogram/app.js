@@ -19,10 +19,8 @@ App({
         this.globalData.statusBarHeight = systemInfo.statusBarHeight || 20;
     },
     onShow() {
-        const token = wx.getStorageSync('token');
-        if (!token) {
-            wx.redirectTo({ url: '/pages/login/login' });
-        }
+        // 不要在这里做路由跳转，会导致 "appLaunch with non-empty page stack" 错误
+        // 各页面自行检查登录状态
     },
     onHide() { },
     login(token, userInfo) {

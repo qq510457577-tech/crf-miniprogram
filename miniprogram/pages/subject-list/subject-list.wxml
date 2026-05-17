@@ -50,5 +50,4 @@
 
   <view class="fab" bindtap="goToAdd"><t-icon name="add" size="48" color="#fff" /></view>
   <t-toast id="t-toast" />
-  <t-loading indicator size="large" content="加载中..." fullscreen="{{loading}}" />
 </view>
